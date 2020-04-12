@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="jiehuihui-api-common" />
+        <module name="jiehuihui-media" />
+        <module name="jiehuihui-web-body" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jiehuihui-web-admin" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jiehuihui-api-common" options="-parameters" />
+      <module name="jiehuihui-media" options="-parameters" />
+      <module name="jiehuihui-web-admin" options="-parameters" />
+      <module name="jiehuihui-web-body" options="-parameters" />
+    </option>
+  </component>
+</project>

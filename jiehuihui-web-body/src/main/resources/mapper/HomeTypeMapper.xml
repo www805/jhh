@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.home.HomeTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jiehuihui.common.entity.home.HomeType">
+        <id column="id" property="id" />
+        <result column="keyword" property="keyword" />
+        <result column="ico" property="ico" />
+        <result column="num" property="num" />
+        <result column="gotourl" property="gotourl" />
+        <result column="cityid" property="cityid" />
+        <result column="ssid" property="ssid" />
+        <result column="state" property="state" />
+        <result column="createtime" property="createtime" />
+        <association property="city" javaType="com.jiehuihui.common.entity.city.City">
+            <result column="cid" property="id"/>
+            <result column="ccityname" property="cityname"/>
+            <result column="ctypeid" property="cityfirst"/>
+            <result column="ccityfirst" property="typeid"/>
+            <result column="csortnum" property="sortnum"/>
+            <result column="cssid" property="ssid"/>
+            <result column="cstate" property="state"/>
+        </association>
+    </resultMap>
+
+    <select id="getHomeTypePage" resultMap="BaseResultMap">
+        SELECT
+            h.*,
+            c.id AS cid,
+            c.cityname AS ccityname,
+            c.typeid AS ctypeid,
+            c.cityfirst AS ccityfirst,
+            c.sortnum AS csortnum,
+            c.ssid AS cssid,
+            c.state AS cstate
+        FROM
+            jhh_base_hometype h
+            LEFT JOIN jhh_base_city c ON h.cityid = c.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectHomeTypeCount" resultType="int">
+        SELECT
+            count(h.id)
+        FROM
+            jhh_base_hometype h
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

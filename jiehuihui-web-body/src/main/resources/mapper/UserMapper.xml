@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.web.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jiehuihui.common.entity.User">
+        <id column="id" property="id" />
+        <result column="userlogin" property="userlogin" />
+        <result column="username" property="username" />
+        <result column="myname" property="myname" />
+        <result column="password" property="password" />
+        <result column="tximg" property="tximg" />
+        <result column="phone" property="phone" />
+        <result column="jifen" property="jifen" />
+        <result column="state" property="state" />
+        <result column="city" property="city" />
+        <result column="ssid" property="ssid" />
+        <result column="createtime" property="createtime" />
+        <result column="lastlogintime" property="lastlogintime" />
+        <result column="endtime" property="endtime" />
+    </resultMap>
+
+    <!--<select id="getHomeggPage" resultMap="BaseResultMap">-->
+        <!--SELECT-->
+            <!--*-->
+        <!--FROM-->
+            <!--jhh_base_homegg-->
+
+            <!--${ew.customSqlSegment}-->
+    <!--</select>-->
+
+</mapper>

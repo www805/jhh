@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.home.HomeGgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jiehuihui.common.entity.home.HomeGg">
+        <id column="id" property="id" />
+        <result column="keyword" property="keyword" />
+        <result column="sortnum" property="sortnum" />
+        <result column="cityssid" property="cityssid" />
+        <result column="ssid" property="ssid" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+        <association property="city" javaType="com.jiehuihui.common.entity.city.City">
+            <result column="cid" property="id"/>
+            <result column="ccityname" property="cityname"/>
+            <result column="ctypeid" property="cityfirst"/>
+            <result column="ccityfirst" property="typeid"/>
+            <result column="csortnum" property="sortnum"/>
+            <result column="cssid" property="ssid"/>
+            <result column="cstate" property="state"/>
+        </association>
+    </resultMap>
+
+    <select id="getHomeggPage" resultMap="BaseResultMap">
+        SELECT
+            h.*,
+            c.id AS cid,
+            c.cityname AS ccityname,
+            c.typeid AS ctypeid,
+            c.cityfirst AS ccityfirst,
+            c.sortnum AS csortnum,
+            c.ssid AS cssid,
+            c.state AS cstate
+        FROM
+            jhh_base_homegg h
+            LEFT JOIN jhh_base_city c ON h.cityssid = c.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectHomeggCount" resultType="int">
+        SELECT
+            count(h.id)
+        FROM
+            jhh_base_homegg h
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

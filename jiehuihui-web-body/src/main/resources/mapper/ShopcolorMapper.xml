@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.shop.ShopcolorMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.shop.Shopcolor" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="color" column="color" jdbcType="VARCHAR"/>
+        <result property="colorname" column="colorname" jdbcType="VARCHAR"/>
+        <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+</mapper>
