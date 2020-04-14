@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.PermissionMapper">
+
+    <resultMap type="com.jiehuihui.admin.entity.Permission" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="permissionsuper" column="permissionsuper" jdbcType="VARCHAR"/>
+        <result property="permissionname" column="permissionname" jdbcType="VARCHAR"/>
+        <result property="permissionnametype" column="permissionnametype" jdbcType="INTEGER"/>
+        <result property="permissionnamezy" column="permissionnamezy" jdbcType="VARCHAR"/>
+        <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <collection  property="children" ofType="com.jiehuihui.admin.entity.Permission">
+            <result column="id2" property="id"/>
+            <result column="permissionsuper2" property="permissionsuper"/>
+            <result column="permissionname2" property="permissionname"/>
+            <result column="permissionnametype2" property="permissionnametype"/>
+            <result column="permissionnamezy2" property="permissionnamezy"/>
+            <result column="sortnum2" property="sortnum"/>
+            <result column="state2" property="state"/>
+            <collection  property="children" ofType="com.jiehuihui.admin.entity.Permission">
+                <result column="id3" property="id"/>
+                <result column="permissionsuper3" property="permissionsuper"/>
+                <result column="permissionname3" property="permissionname"/>
+                <result column="permissionnametype3" property="permissionnametype"/>
+                <result column="permissionnamezy3" property="permissionnamezy"/>
+                <result column="sortnum3" property="sortnum"/>
+                <result column="state3" property="state"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getPermissionPage" resultMap="BaseResultMap">
+
+        SELECT
+            p.* ,
+            p2.id as id2,
+            p2.permissionsuper as permissionsuper2,
+            p2.permissionname as permissionname2,
+            p2.permissionnametype as permissionnametype2,
+            p2.permissionnamezy as permissionnamezy2,
+            p2.sortnum as sortnum2,
+            p2.state as state2,
+            p3.id as id3,
+            p3.permissionsuper as permissionsuper3,
+            p3.permissionname as permissionname3,
+            p3.permissionnametype as permissionnametype3,
+            p3.permissionnamezy as permissionnamezy3,
+            p3.sortnum as sortnum3,
+            p3.state as state3
+        FROM
+            jhh_base_permission p,
+            jhh_base_permission p2,
+            jhh_base_permission p3
+        WHERE
+            p.id = p2.permissionsuper
+            AND p2.id = p3.permissionsuper
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getPermissionList" resultMap="BaseResultMap">
+
+        SELECT
+            p.* ,
+            p2.id as id2,
+            p2.permissionsuper as permissionsuper2,
+            p2.permissionname as permissionname2,
+            p2.permissionnametype as permissionnametype2,
+            p2.permissionnamezy as permissionnamezy2,
+            p2.sortnum as sortnum2,
+            p2.state as state2,
+            p3.id as id3,
+            p3.permissionsuper as permissionsuper3,
+            p3.permissionname as permissionname3,
+            p3.permissionnametype as permissionnametype3,
+            p3.permissionnamezy as permissionnamezy3,
+            p3.sortnum as sortnum3,
+            p3.state as state3
+        FROM
+            jhh_base_permission p,
+            jhh_base_permission p2,
+            jhh_base_permission p3
+        WHERE
+            p.id = p2.permissionsuper
+            AND p2.id = p3.permissionsuper
+            OR p.id = p2.permissionsuper
+            AND
+            ${ew.sqlSegment}
+    </select>
+
+    <select id="selectPermissionCount" resultType="int">
+
+        SELECT
+            count(p.id)
+        FROM
+            jhh_base_permission p,
+            jhh_base_permission p2,
+            jhh_base_permission p3
+        WHERE
+            p.id = p2.permissionsuper
+            AND p2.id = p3.permissionsuper
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>
