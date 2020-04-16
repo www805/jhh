@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.controller;
 
-import com.jiehuihui.admin.entity.Permission;
+import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.admin.service.PermissionService;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;

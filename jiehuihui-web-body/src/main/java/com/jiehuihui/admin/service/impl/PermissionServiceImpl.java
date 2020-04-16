@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.service.impl;
 
-import com.jiehuihui.admin.entity.Permission;
+import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.admin.mapper.PermissionMapper;
 import com.jiehuihui.admin.service.PermissionService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -10,13 +10,15 @@ import com.jiehuihui.admin.req.AddUpdatePermissionParam;
 import com.jiehuihui.admin.req.DeletePermissionParam;
 import com.jiehuihui.admin.req.GetPermissionPageParam;
 import com.jiehuihui.admin.vo.GetPermissionVO;
+import com.jiehuihui.common.entity.PermissionEntity;
 import com.jiehuihui.common.utils.LogUtil;
-import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -33,13 +35,11 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public RResult getPermission(RResult result) {
         UpdateWrapper<Permission> ew = new UpdateWrapper<>();
-        ew.eq("p.state", 1);
-        ew.eq("p2.state", 1);
-        ew.eq("p3.state", 1);
-        ew.orderByDesc("p.sortnum");
-        ew.orderByDesc("p2.sortnum");
-        ew.orderByDesc("p3.sortnum");
-        List<Permission> permissions = permissionMapper.getPermissionList(ew);
+        ew.eq("permissionsuper", 0);
+        ew.eq("permissionnametype", 1);
+        ew.orderByDesc("sortnum");
+        List<PermissionEntity> permissions = permissionMapper.getPermissionList(ew);
+        findPermissionEntity(permissions);
         result.changeToTrue(permissions);
         return result;
     }
@@ -63,19 +63,25 @@ public class PermissionServiceImpl implements PermissionService {
         GetPermissionVO permissionVO = new GetPermissionVO();
 
         UpdateWrapper<Permission> ew = new UpdateWrapper<>();
+        ew.eq("permissionsuper", 0);
+        ew.eq("permissionnametype", 1);
 
-        ew.orderByDesc("p.sortnum");
-        ew.orderByDesc("p2.sortnum");
-        ew.orderByDesc("p3.sortnum");
+        ew.orderByDesc("sortnum");
+//        ew.orderByDesc("p2.sortnum");
+//        ew.orderByDesc("p3.sortnum");
 
-        Integer count = permissionMapper.selectPermissionCount(ew);
+        Integer count = permissionMapper.selectCount(ew);
         param.setRecordCount(count);
 
         Page<Permission> page = new Page<>(param.getCurrPage(), param.getPageSize());
         page.setTotal(count);
-        IPage<Permission> sqCacheList = permissionMapper.getPermissionPage(page, ew);
+        IPage<Permission> sqCacheList = permissionMapper.selectPage(page, ew);
 
-        permissionVO.setPagelist(sqCacheList.getRecords());
+        List<Permission> permissionList = sqCacheList.getRecords();
+        findPermission(permissionList);
+
+
+        permissionVO.setPagelist(permissionList);
         permissionVO.setPageparam(param);
 
         result.changeToTrue(permissionVO);
@@ -141,6 +147,7 @@ public class PermissionServiceImpl implements PermissionService {
         return result;
     }
 
+    @Transactional
     @Override
     public RResult deletePermission(RResult result, DeletePermissionParam param) {
         UpdateWrapper<Permission> ew = new UpdateWrapper();
@@ -152,6 +159,11 @@ public class PermissionServiceImpl implements PermissionService {
             return result;
         }
 
+        UpdateWrapper<Permission> ew2 = new UpdateWrapper<>();
+        ew2.eq("permissionsuper", permission.getId());
+        List<Permission> permissions = permission.selectList(ew2);
+        deletes(permissions);
+
         int delete = permissionMapper.delete(ew);
         if (delete > 0) {
             result.changeToTrue(delete);
@@ -159,5 +171,84 @@ public class PermissionServiceImpl implements PermissionService {
         }
         LogUtil.intoLog("用户：删除了一条数据！" + permission.getPermissionname());
         return result;
+    }
+
+
+    /**
+     * 查所有询子权限
+     * @param permissionList
+     */
+    public void findPermission(List<Permission> permissionList){
+
+        if(permissionList.size() == 0){
+            return;
+        }
+
+        for (int i = 0; i < permissionList.size(); i++) {
+            Permission permission = permissionList.get(i);
+            UpdateWrapper<Permission> ew2 = new UpdateWrapper<>();
+            ew2.eq("permissionsuper", permission.getId());
+            List<Permission> selectList = permission.selectList(ew2);
+            if (selectList.size() > 0) {
+                Collections.sort(selectList, new Comparator<Permission>() {
+                    @Override
+                    public int compare(Permission o1, Permission o2) {
+                        return o2.getSortnum() - o1.getSortnum();
+                    }
+                });
+                permission.setChildren(selectList);
+                findPermission(selectList);
+            }
+        }
+    }
+
+    /**
+     * 查所有询子权限
+     * @param permissionList
+     */
+    public void findPermissionEntity(List<PermissionEntity> permissionList){
+
+        if(permissionList.size() == 0){
+            return;
+        }
+
+        for (int i = 0; i < permissionList.size(); i++) {
+            PermissionEntity permission = permissionList.get(i);
+            UpdateWrapper<PermissionEntity> ew = new UpdateWrapper<>();
+            ew.eq("permissionsuper", permission.getId());
+            List<PermissionEntity> selectList = permissionMapper.getPermissionList(ew);
+            if (selectList.size() > 0) {
+                Collections.sort(selectList, new Comparator<PermissionEntity>() {
+                    @Override
+                    public int compare(PermissionEntity o1, PermissionEntity o2) {
+                        return o2.getSortnum() - o1.getSortnum();
+                    }
+                });
+                permission.setChildren(selectList);
+                findPermissionEntity(selectList);
+            }
+        }
+    }
+
+    /**
+     * 删除所属全部子权限
+     * @param permissionList
+     */
+    public void deletes(List<Permission> permissionList){
+
+        if(null == permissionList || permissionList.size() == 0){
+            return;
+        }
+
+        for (int i = 0; i < permissionList.size(); i++) {
+            Permission permission = permissionList.get(i);
+            UpdateWrapper<Permission> ew2 = new UpdateWrapper<>();
+            ew2.eq("permissionsuper", permission.getId());
+            List<Permission> selectList = permission.selectList(ew2);
+            if (selectList.size() > 0) {
+                deletes(selectList);
+            }
+            permission.deleteById();
+        }
     }
 }

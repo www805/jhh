@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.vo;
 
-import com.jiehuihui.admin.entity.Permission;
+import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.admin.req.GetPermissionPageParam;
 import java.util.List;
 import lombok.Data;

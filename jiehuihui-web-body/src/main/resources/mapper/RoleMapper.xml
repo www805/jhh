@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.RoleMapper">
+
+    <resultMap type="com.jiehuihui.admin.entity.Role" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="rolename" column="rolename" jdbcType="VARCHAR"/>
+        <result property="usersize" column="usersize" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <collection property="permissions" ofType="com.jiehuihui.common.entity.Permission">
+            <result property="id" column="pid" jdbcType="INTEGER"/>
+            <result property="permissionsuper" column="ppermissionsuper" jdbcType="VARCHAR"/>
+            <result property="permissionname" column="ppermissionname" jdbcType="VARCHAR"/>
+            <result property="permissionnametype" column="ppermissionnametype" jdbcType="INTEGER"/>
+            <result property="permissionnamezy" column="ppermissionnamezy" jdbcType="VARCHAR"/>
+            <result property="sortnum" column="psortnum" jdbcType="INTEGER"/>
+            <result property="state" column="pstate" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="getRolePage" resultMap="BaseResultMap">
+        SELECT
+            r.*,
+            p.id as pid,
+            p.permissionsuper as ppermissionsuper,
+            p.permissionname as ppermissionname,
+            p.permissionnametype as ppermissionnametype,
+            p.permissionnamezy as ppermissionnamezy,
+            p.sortnum as psortnum,
+            p.state as pstate
+        FROM
+            jhh_base_role r
+            LEFT JOIN jhh_base_roletopermission rp ON r.id = rp.roleid
+            LEFT JOIN jhh_base_permission p ON rp.permissionid = p.id
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectRoleCount" resultType="int">
+        SELECT
+            count(r.id)
+        FROM
+            jhh_base_role r
+            LEFT JOIN jhh_base_roletopermission rp ON r.id = rp.roleid
+            LEFT JOIN jhh_base_permission p ON rp.permissionid = p.id
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

@@ -1,33 +1,38 @@
 package com.jiehuihui.admin.entity;
 
+import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.common.entity.city.City;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-                            
+                    
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+        
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * (Permission)实体类
+ * (Role)实体类
  *
  * @author zhuang
- * @since 2020-04-12 20:58:37
+ * @since 2020-04-16 21:56:13
  */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@TableName("jhh_base_permission")
-public class Permission extends Model<Permission> implements Serializable {
+@TableName("jhh_base_role")
+public class Role extends Model<Role> implements Serializable {
 
     @TableField(exist = false)
-    private static final long serialVersionUID = -23333529607603286L;
+    private static final long serialVersionUID = 357727296453458168L;
 
     /**
     * 主键
@@ -36,44 +41,29 @@ public class Permission extends Model<Permission> implements Serializable {
     private Long id;
 
     /**
-    * 父级权限
+    * 角色名
     */
         
-    private String permissionsuper;
+    private String rolename;
 
     /**
-    * 权限名称
+    * 用户关联数
     */
         
-    private String permissionname;
+    private Long usersize;
 
     /**
-    * 权限类型
+    * 创建时间
     */
-        
-    private Integer permissionnametype;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")     
+    private Date createtime;
 
     /**
-    * 标识
-    */
-        
-    private String permissionnamezy;
-
-    /**
-    * 排序
-    */
-        
-    private Integer sortnum;
-
-    /**
-    * 状态
+    * 状态0禁用 1正常
     */
         
     private Integer state;
 
-    /**
-     * 下级权限集合
-     */
     @TableField(exist = false)
-    private List<Permission> children;
+    private List<Permission> permissions;
 }

@@ -1,10 +1,11 @@
 package com.jiehuihui.admin.mapper;
 
-import com.jiehuihui.admin.entity.Permission;
+import com.jiehuihui.common.entity.Permission;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jiehuihui.common.entity.PermissionEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
     IPage<Permission> getPermissionPage(Page<?> page, @Param("ew") Wrapper wrapper);
 
     //列表查询
-    List<Permission> getPermissionList(@Param("ew") Wrapper wrapper);
+    List<PermissionEntity> getPermissionList(@Param("ew") Wrapper wrapper);
 
     int selectPermissionCount(@Param("ew") Wrapper wrapper);
 

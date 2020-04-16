@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class AddUpdatePermissionParam {
 
-    @Min(value = 0,message = "id不能为空", groups = {Create.class, Update.class})
+    @Min(value = 0,message = "id不能为空", groups = {Update.class})
     private Long id;
     @NotBlank(message = "父级权限不能为空", groups = {Create.class, Update.class}) 
     private String permissionsuper; //父级权限 
