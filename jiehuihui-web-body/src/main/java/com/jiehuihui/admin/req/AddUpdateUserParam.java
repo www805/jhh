@@ -1,0 +1,49 @@
+package com.jiehuihui.admin.req;
+
+import com.jiehuihui.common.base.check.Create;
+import com.jiehuihui.common.base.check.Update;
+import com.jiehuihui.common.entity.Role;
+import com.jiehuihui.common.entity.city.City;
+import lombok.Data;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+
+/**
+ * (User)表添加删除参数类
+ *
+ * @author zhuang
+ * @since 2020-04-19 09:54:34
+ */
+
+@Data
+public class AddUpdateUserParam {
+
+
+    private Long id; //主键id
+    @NotBlank(message = "登录名不能为空", groups = {Create.class, Update.class}) 
+    private String userlogin; //登录名 
+    @NotBlank(message = "用户名不能为空", groups = {Create.class, Update.class}) 
+    private String username; //用户名 
+    @NotBlank(message = "真实名字不能为空", groups = {Create.class, Update.class}) 
+    private String myname; //真实名字 
+    @NotBlank(message = "密码不能为空", groups = {Create.class, Update.class}) 
+    private String password; //密码 
+    @NotBlank(message = "头像图片地址不能为空", groups = {Create.class, Update.class}) 
+    private String tximg; //头像图片地址 
+    @NotBlank(message = "手机号码不能为空", groups = {Create.class, Update.class}) 
+    private String phone; //手机号码
+    private Long sign; //积分
+    @Min(value = 0,message = "状态0禁用 1正常 2删除不能为空", groups = {Create.class, Update.class}) 
+    private Integer state; //状态0禁用 1正常 2删除 
+    @NotBlank(message = "唯一id不能为空", groups = { Update.class}) 
+    private String ssid; //唯一id
+
+
+    private List<Role> roleList;//角色数组
+    private List<String> cityList;//城市地区id
+
+//    @NotBlank(message = "请选择关联的城市", groups = {Create.class, Update.class})
+    private String cityssid;
+}

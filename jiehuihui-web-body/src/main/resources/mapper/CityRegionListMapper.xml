@@ -86,6 +86,36 @@
 
     </select>
 
+    <select id="getCityList" resultMap="BaseResultMap">
+        SELECT
+            p.id AS pid,
+            p.provincename,
+            p.typeid AS ptypeid,
+            p.sortnum AS psortnum,
+            p.ssid AS pssid,
+            p.state AS pstate,
+            c.id AS cid,
+            c.cityname,
+            c.typeid AS ctypeid,
+            c.cityfirst AS ccityfirst,
+            c.sortnum AS csortnum,
+            c.ssid AS cssid,
+            c.state AS cstate,
+            a.id AS aid,
+            a.areaname,
+            a.typeid AS atypeid,
+            a.sortnum AS asortnum,
+            a.ssid AS assid,
+            a.state AS astate
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        ${ew.customSqlSegment}
+
+    </select>
+
 
     <select id="getCityParentList" resultMap="parentResultMap">
         SELECT

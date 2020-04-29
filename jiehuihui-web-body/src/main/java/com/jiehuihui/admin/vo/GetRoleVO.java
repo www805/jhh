@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.vo;
 
-import com.jiehuihui.admin.entity.Role;
+import com.jiehuihui.common.entity.Role;
 import com.jiehuihui.admin.req.GetRolePageParam;
 import java.util.List;
 import lombok.Data;

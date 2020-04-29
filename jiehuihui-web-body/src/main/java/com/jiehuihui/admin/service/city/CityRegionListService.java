@@ -6,9 +6,11 @@ import com.jiehuihui.common.utils.RResult;
 
 public interface CityRegionListService {
 
+    //获取所有城市区域
+    RResult getCityList(RResult result, GetCityListParam param);
 
     //获取所有城市区域，后台分页
-    RResult getCityList(RResult result, GetCityListParam param);
+    RResult getCityListPage(RResult result, GetCityListParam param);
 
     //添加城市区域
     RResult addCityRegion(RResult result, UpdateAddCityParam param);

@@ -1827,10 +1827,12 @@
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="402" parent="244" name="personnum">
+    <column id="402" parent="244" name="usersize">
       <Position>3</Position>
-      <Comment>用户关联id</Comment>
-      <DataType>varchar(255)|0s</DataType>
+      <Comment>用户关联数</Comment>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="403" parent="244" name="createtime">
@@ -1845,6 +1847,8 @@
       <Position>5</Position>
       <Comment>状态0禁用 1正常</Comment>
       <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>1</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="405" parent="244" name="PRIMARY">

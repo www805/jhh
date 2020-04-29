@@ -1,6 +1,7 @@
 package com.jiehuihui.admin.controller;
 
-import com.jiehuihui.admin.entity.Role;
+import com.jiehuihui.common.entity.Role;
+import com.jiehuihui.admin.req.AddUpdateRolePermissionParam;
 import com.jiehuihui.admin.service.RoleService;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
@@ -82,6 +83,14 @@ public class RoleController {
     public RResult deleteRole(@ApiParam(name="角色删除参数",value="传入json格式",required=true) @RequestBody DeleteRoleParam param){
         RResult<Role> result = new RResult<>();
         return roleService.deleteRole (result, param);
+    }
+
+    //新增角色权限
+    @ApiOperation(value = "新增角色权限", notes = "新增角色权限")
+    @PostMapping("/addRolePermission")
+    public RResult addRolePermission(@ApiParam(name="新增角色权限参数",value="传入json格式",required=true) @RequestBody @Validated AddUpdateRolePermissionParam param){
+        RResult<Role> result = new RResult<>();
+        return roleService.addRolePermission (result, param);
     }
 
 }

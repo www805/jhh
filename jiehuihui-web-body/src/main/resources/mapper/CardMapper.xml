@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.CardMapper">
+
+    <resultMap type="com.jiehuihui.admin.entity.Card" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="cardnum" column="cardnum" jdbcType="VARCHAR"/>
+        <result property="cardtype" column="cardtype" jdbcType="INTEGER"/>
+        <result property="cardsupertype" column="cardsupertype" jdbcType="INTEGER"/>
+        <result property="userid" column="userid" jdbcType="VARCHAR"/>
+        <result property="tupupid" column="tupupid" jdbcType="VARCHAR"/>
+        <result property="parentuserid" column="parentuserid" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="employtime" column="employtime" jdbcType="TIMESTAMP"/>
+        <association property="parentuser" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="upid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="upuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="upusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="upmyname" jdbcType="VARCHAR"/>
+            <result property="password" column="uppassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="uptximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="upphone" jdbcType="VARCHAR"/>
+            <result property="state" column="upstate" jdbcType="INTEGER"/>
+            <result property="sign" column="upsign" jdbcType="INTEGER"/>
+            <result property="ssid" column="upssid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="upcreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="uplastlogintime" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="tupup" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="utid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="utuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="utusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="utmyname" jdbcType="VARCHAR"/>
+            <result property="password" column="utpassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="uttximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="utphone" jdbcType="VARCHAR"/>
+            <result property="state" column="utstate" jdbcType="INTEGER"/>
+            <result property="sign" column="utsign" jdbcType="INTEGER"/>
+            <result property="ssid" column="utssid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="utcreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="utlastlogintime" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="user" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="uid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="uuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="uusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="umyname" jdbcType="VARCHAR"/>
+            <result property="password" column="upassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="utximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="uphone" jdbcType="VARCHAR"/>
+            <result property="state" column="ustate" jdbcType="INTEGER"/>
+            <result property="sign" column="usign" jdbcType="INTEGER"/>
+            <result property="ssid" column="ussid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="ucreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="ulastlogintime" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <select id="getCardPage" resultMap="BaseResultMap">
+        SELECT
+            c.*,
+            up.id as upid,
+            up.userlogin as upuserlogin,
+            up.username as upusername,
+            up.myname as upmyname,
+            up.password as uppassword,
+            up.tximg as uptximg,
+            up.phone as upphone,
+            up.sign as upsign,
+            up.state as upstate,
+            up.ssid as upssid,
+            up.createtime as upcreatetime,
+            up.lastlogintime as uplastlogintime,
+            ut.id as tid,
+            ut.userlogin as utuserlogin,
+            ut.username as utusername,
+            ut.myname as utmyname,
+            ut.password as utpassword,
+            ut.tximg as uttximg,
+            ut.phone as utphone,
+            ut.sign as utsign,
+            ut.state as utstate,
+            ut.ssid as utssid,
+            ut.createtime as utcreatetime,
+            ut.lastlogintime as utlastlogintime,
+            u.id as uid,
+            u.userlogin as uuserlogin,
+            u.username as uusername,
+            u.myname as umyname,
+            u.password as upassword,
+            u.tximg as utximg,
+            u.phone as uphone,
+            u.sign as usign,
+            u.state as ustate,
+            u.ssid as ussid,
+            u.createtime as ucreatetime,
+            u.lastlogintime as ulastlogintime
+        FROM
+            jhh_base_card c
+            LEFT JOIN jhh_user up ON c.parentuserid = up.ssid
+            left join jhh_user ut on c.tupupid = ut.ssid
+            left join jhh_user u on c.userid = u.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectCardCount" resultType="int">
+        SELECT
+            count(c.id)
+        FROM
+            jhh_base_card c
+            LEFT JOIN jhh_user up ON c.parentuserid = up.ssid
+            left join jhh_user ut on c.tupupid = ut.ssid
+            left join jhh_user u on c.userid = u.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

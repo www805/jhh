@@ -1,7 +1,7 @@
 package com.jiehuihui.admin.service;
 
-import com.jiehuihui.admin.entity.Role;
 import com.jiehuihui.admin.req.AddUpdateRoleParam;
+import com.jiehuihui.admin.req.AddUpdateRolePermissionParam;
 import com.jiehuihui.admin.req.DeleteRoleParam;
 import com.jiehuihui.admin.req.GetRolePageParam;
 import com.jiehuihui.common.utils.RResult;
@@ -32,4 +32,6 @@ public interface RoleService {
     //删除角色
     RResult deleteRole(RResult result, DeleteRoleParam param);
 
+    //新增角色权限
+    RResult addRolePermission(RResult result, AddUpdateRolePermissionParam param);
 }

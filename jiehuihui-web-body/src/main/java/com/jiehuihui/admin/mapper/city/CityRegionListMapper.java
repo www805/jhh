@@ -19,6 +19,10 @@ public interface CityRegionListMapper extends BaseMapper<ProvinceVO> {
 
     IPage<ProvinceVO> getCityListPage(Page<?> page, @Param("ew") Wrapper wrapper);
 
+    //获取所有城市区域无分页
+    List<ProvinceVO> getCityList(@Param("ew") Wrapper wrapper);
+
+    //获取父级目录
     List<ProvinceVO> getCityParentList(@Param("ew") Wrapper wrapper);
 
 }

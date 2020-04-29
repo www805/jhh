@@ -1,32 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiehuihui.web.mapper.UserMapper">
+<mapper namespace="com.jiehuihui.admin.mapper.UserMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jiehuihui.common.entity.User">
-        <id column="id" property="id" />
-        <result column="userlogin" property="userlogin" />
-        <result column="username" property="username" />
-        <result column="myname" property="myname" />
-        <result column="password" property="password" />
-        <result column="tximg" property="tximg" />
-        <result column="phone" property="phone" />
-        <result column="jifen" property="jifen" />
-        <result column="state" property="state" />
-        <result column="city" property="city" />
-        <result column="ssid" property="ssid" />
-        <result column="createtime" property="createtime" />
-        <result column="lastlogintime" property="lastlogintime" />
-        <result column="endtime" property="endtime" />
+    <resultMap type="com.jiehuihui.common.entity.User" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userlogin" column="userlogin" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="myname" column="myname" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="tximg" column="tximg" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="yhjid" column="yhjid" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="lastlogintime" column="lastlogintime" jdbcType="TIMESTAMP"/>
+        <result property="vipstatetime" column="vipstatetime" jdbcType="TIMESTAMP"/>
+        <result property="vipendtime" column="vipendtime" jdbcType="TIMESTAMP"/>
+        <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
+        <collection property="roleList" column="{id=id}" select="getUserIdByRole" ofType="com.jiehuihui.common.entity.Role"/>
     </resultMap>
 
-    <!--<select id="getHomeggPage" resultMap="BaseResultMap">-->
-        <!--SELECT-->
-            <!--*-->
-        <!--FROM-->
-            <!--jhh_base_homegg-->
+    <select id="getUserPage" resultMap="BaseResultMap">
+        SELECT
+            u.*
+        FROM
+            jhh_user u
 
-            <!--${ew.customSqlSegment}-->
-    <!--</select>-->
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
+        SELECT
+            z.id,
+            p.id AS pid,
+            c.id AS cid,
+            a.id AS aid,
+            p.provincename,
+            c.cityname,
+            a.areaname
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        where
+            z.id = #{cityzhongid}
+    </select>
+
+    <select id="getUserIdByRole" resultType="com.jiehuihui.common.entity.Role">
+        SELECT
+		r.*
+        FROM
+            jhh_base_role r
+            left join jhh_base_usertorole ur on ur.roleid = r.id
+        where
+            ur.userid = #{id}
+    </select>
+
+    <select id="selectUserCount" resultType="int">
+        SELECT
+            count(u.id)
+        FROM
+            jhh_user u
+
+            ${ew.customSqlSegment}
+    </select>
 
 </mapper>

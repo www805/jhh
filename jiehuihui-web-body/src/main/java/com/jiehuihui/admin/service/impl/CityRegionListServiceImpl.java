@@ -41,23 +41,39 @@ public class CityRegionListServiceImpl implements CityRegionListService {
     @Resource
     private CityzhongMapper cityzhongMapper;
 
+
     @Override
     public RResult getCityList(RResult result, GetCityListParam param) {
+
+        UpdateWrapper<ProvinceVO> ew = new UpdateWrapper<>();
+        ew.ne("p.state", -1);//隐藏可显示没区域的省市
+        ew.ne("c.state", -1);
+        ew.ne("a.state", -1);
+        ew.orderByDesc("psortnum");
+        ew.orderByDesc("csortnum");
+        ew.orderByDesc("asortnum");
+
+        List<ProvinceVO> cityParentList = cityRegionListMapper.getCityList(ew);
+        result.changeToTrue(cityParentList);
+
+        return result;
+    }
+
+    @Override
+    public RResult getCityListPage(RResult result, GetCityListParam param) {
 
         GetCityListVO getCityListVO = new GetCityListVO();
 
         UpdateWrapper<ProvinceVO> ew = new UpdateWrapper<>();
 
-        Integer count = cityRegionListMapper.getCityListCount(ew);
-        param.setRecordCount(count);
-
+//        Integer count = cityRegionListMapper.getCityListCount(ew);
         Page<ProvinceVO> page = new Page<>(param.getCurrPage(), param.getPageSize());
-        page.setTotal(count);
 
         ew.orderByDesc("psortnum");
         ew.orderByDesc("csortnum");
         ew.orderByDesc("asortnum");
         IPage<ProvinceVO> sqCacheList = cityRegionListMapper.getCityListPage(page, ew);
+        param.setRecordCount(Integer.parseInt(sqCacheList.getTotal() + ""));
 
         getCityListVO.setPagelist(sqCacheList.getRecords());
         getCityListVO.setPageparam(param);

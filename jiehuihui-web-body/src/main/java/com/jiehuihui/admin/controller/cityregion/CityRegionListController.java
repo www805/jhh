@@ -26,14 +26,21 @@ public class CityRegionListController {
     @Resource
     private CityRegionListService cityRegionListService;
 
-
-    //获取所有城市区域
-//    @RequiresAuthentication
     @ApiOperation(value = "获取所有城市区域", notes = "获取所有城市区域,带分页")
     @PostMapping("/getCityList")
     public RResult getCityList(@RequestBody GetCityListParam param){
         RResult<ProvinceVO> result = new RResult<>();
         return cityRegionListService.getCityList(result, param);
+    }
+
+
+    //获取所有城市区域（带分页）
+//    @RequiresAuthentication
+    @ApiOperation(value = "获取所有城市区域", notes = "获取所有城市区域,带分页")
+    @PostMapping("/getCityListPage")
+    public RResult getCityListPage(@RequestBody GetCityListParam param){
+        RResult<ProvinceVO> result = new RResult<>();
+        return cityRegionListService.getCityListPage(result, param);
     }
 
     //添加城市区域

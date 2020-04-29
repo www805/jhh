@@ -1,0 +1,31 @@
+{
+  "name" : "JhhBaseUsertorole",
+  "comment" : null,
+  "fullColumn" : [ {
+    "name" : "id",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "roleid",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "userid",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.jiehuihui.common.entity",
+  "savePath" : "./jiehuihui-api-common/src/main/java/com/jiehuihui/common/entity",
+  "saveModelName" : "jiehuihui-api-common"
+}
