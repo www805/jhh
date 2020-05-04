@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.mapper;
 
-import com.jiehuihui.common.entity.Card;
+import com.jiehuihui.common.entity.Blinddateinfo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,15 +8,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * (Card)表数据库访问层
+ * (Blinddateinfo)表数据库访问层
  *
  * @author zhuang
- * @since 2020-04-23 23:34:41
+ * @since 2020-05-03 22:48:58
  */
-public interface CardMapper extends BaseMapper<Card> {
+public interface BlinddateinfoMapper extends BaseMapper<Blinddateinfo> {
 
-    IPage<Card> getCardPage(Page<?> page, @Param("ew") Wrapper wrapper);
+    IPage<Blinddateinfo> getBlinddateinfoPage(Page<?> page, @Param("ew") Wrapper wrapper);
 
-    int selectCardCount(@Param("ew") Wrapper wrapper);
+    int selectBlinddateinfoCount(@Param("ew") Wrapper wrapper);
 
 }

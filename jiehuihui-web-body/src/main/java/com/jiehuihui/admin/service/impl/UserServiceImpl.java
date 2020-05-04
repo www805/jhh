@@ -156,6 +156,7 @@ public class UserServiceImpl implements UserService {
         user.setMyname(param.getMyname());
         user.setPhone(param.getPhone());
         user.setTximg(param.getTximg());
+        user.setVipendtime(param.getVipendtime());
         user.setSsid(ssid);
         user.setState(param.getState());
         if(null != cityzhong){
@@ -216,6 +217,26 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        if(null != param.getVipendtime()){
+            //判断是否是修改，如果是修改就查是否本来就会员，是就让他修改
+            UpdateWrapper<User> uew = new UpdateWrapper<>();
+            uew.eq("ssid", param.getSsid());
+            uew.ne("vipendtime", param.getVipendtime());
+            Integer ucount = userMapper.selectCount(uew);
+            if(ucount > 0){
+                UpdateWrapper<Usertorole> ewRolecache = new UpdateWrapper<>();
+                ewRolecache.eq("roleid", "1").eq("userid",param.getId());
+                ewRolecache.or().eq("roleid", "2").eq("userid",param.getId());
+                ewRolecache.or().eq("roleid", "3").eq("userid",param.getId());
+                Integer rolecout = userToRoleMapper.selectCount(ewRolecache);
+                if(rolecout == 0){
+                    result.setMessage("该用户不是会员身份，不能修改vip到期时间");
+                    return result;
+                }
+            }
+        }
+
+
         UpdateWrapper<User> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
 
@@ -245,6 +266,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(param.getPhone());
         user.setTximg(param.getTximg());
         user.setSign(param.getSign());
+        user.setVipendtime(param.getVipendtime());
         user.setState(param.getState());
         user.setRolelistid(addrolelist.toString());
 

@@ -1,6 +1,5 @@
 package com.jiehuihui.admin.service;
 
-import com.jiehuihui.admin.entity.Card;
 import com.jiehuihui.admin.req.AddUpdateCardParam;
 import com.jiehuihui.admin.req.DeleteCardParam;
 import com.jiehuihui.admin.req.GetCardPageParam;

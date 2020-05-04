@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.vo;
 
-import com.jiehuihui.admin.entity.Card;
+import com.jiehuihui.common.entity.Card;
 import com.jiehuihui.admin.req.GetCardPageParam;
 import java.util.List;
 import lombok.Data;

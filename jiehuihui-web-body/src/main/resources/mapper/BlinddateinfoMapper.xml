@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.BlinddateinfoMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.Blinddateinfo" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="myname" column="myname" jdbcType="VARCHAR"/>
+        <result property="xqdescribe" column="xqdescribe" jdbcType="VARCHAR"/>
+        <result property="tabs" column="tabs" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="wxnum" column="wxnum" jdbcType="VARCHAR"/>
+        <result property="matchmakerid" column="matchmakerid" jdbcType="VARCHAR"/>
+        <result property="userid" column="userid" jdbcType="VARCHAR"/>
+        <result property="cityzhongid" column="cityzhongid" jdbcType="VARCHAR"/>
+        <result property="tximg" column="tximg" jdbcType="VARCHAR"/>
+        <result property="fmimglist" column="fmimglist" jdbcType="VARCHAR"/>
+        <result property="topnum" column="topnum" jdbcType="INTEGER"/>
+        <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
+        <result property="topendtime" column="topendtime" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <association property="matchmakeruser" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="muid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="muuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="muusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="mumyname" jdbcType="VARCHAR"/>
+            <result property="password" column="mupassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="mutximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="muphone" jdbcType="VARCHAR"/>
+            <result property="state" column="mustate" jdbcType="INTEGER"/>
+            <result property="sign" column="musign" jdbcType="INTEGER"/>
+            <result property="ssid" column="mussid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="mucreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="mulastlogintime" jdbcType="TIMESTAMP"/>
+            <result property="vipstatetime" column="muvipstatetime" jdbcType="TIMESTAMP"/>
+            <result property="vipendtime" column="muvipendtime" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="user" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="uid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="uuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="uusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="umyname" jdbcType="VARCHAR"/>
+            <result property="password" column="upassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="utximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="uphone" jdbcType="VARCHAR"/>
+            <result property="state" column="ustate" jdbcType="INTEGER"/>
+            <result property="sign" column="usign" jdbcType="INTEGER"/>
+            <result property="ssid" column="ussid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="ucreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="ulastlogintime" jdbcType="TIMESTAMP"/>
+            <result property="vipstatetime" column="uvipstatetime" jdbcType="TIMESTAMP"/>
+            <result property="vipendtime" column="uvipendtime" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
+    </resultMap>
+
+    <select id="getBlinddateinfoPage" resultMap="BaseResultMap">
+        SELECT
+            b.*,
+            mu.id AS muid,
+            mu.userlogin AS muuserlogin,
+            mu.username AS muusername,
+            mu.myname AS mumyname,
+            mu.password AS mupassword,
+            mu.tximg AS mutximg,
+            mu.phone AS muphone,
+            mu.sign AS musign,
+            mu.state AS mustate,
+            mu.ssid AS mussid,
+            mu.yhjid AS muyhjid,
+            mu.cityzhongid AS mucityzhongid,
+            mu.rolelistid AS murolelistid,
+            mu.createtime AS mucreatetime,
+            mu.lastlogintime AS mulastlogintime,
+            mu.vipstatetime AS muvipstatetime,
+            mu.vipendtime AS muvipendtime,
+            u.id AS uid,
+            u.userlogin AS uuserlogin,
+            u.username AS uusername,
+            u.myname AS umyname,
+            u.password AS upassword,
+            u.tximg AS utximg,
+            u.phone AS uphone,
+            u.sign AS usign,
+            u.state AS ustate,
+            u.ssid AS ussid,
+            u.yhjid AS uyhjid,
+            u.cityzhongid AS ucityzhongid,
+            u.rolelistid AS urolelistid,
+            u.createtime AS ucreatetime,
+            u.lastlogintime AS ulastlogintime,
+            u.vipstatetime AS uvipstatetime,
+            u.vipendtime AS uvipendtime
+        FROM
+            jhh_blinddateinfo b
+            LEFT JOIN jhh_user mu ON b.matchmakerid = mu.ssid
+            left join jhh_user u on b.userid = u.ssid
+            left join jhh_base_cityzhong z on b.cityzhongid = z.id
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectBlinddateinfoCount" resultType="int">
+        SELECT
+            count(b.id)
+        FROM
+            jhh_blinddateinfo b
+            LEFT JOIN jhh_user mu ON b.matchmakerid = mu.ssid
+            left join jhh_user u on b.userid = u.ssid
+            left join jhh_base_cityzhong z on b.cityzhongid = z.id
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
+        SELECT
+            z.id,
+            p.id AS pid,
+            c.id AS cid,
+            a.id AS aid,
+            p.provincename,
+            c.cityname,
+            a.areaname
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        where
+            z.id = #{cityzhongid}
+    </select>
+
+</mapper>

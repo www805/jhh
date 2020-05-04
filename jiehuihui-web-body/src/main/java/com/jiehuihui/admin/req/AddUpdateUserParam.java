@@ -1,13 +1,17 @@
 package com.jiehuihui.admin.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
 import com.jiehuihui.common.entity.Role;
 import com.jiehuihui.common.entity.city.City;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +44,9 @@ public class AddUpdateUserParam {
     @NotBlank(message = "唯一id不能为空", groups = { Update.class}) 
     private String ssid; //唯一id
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date vipendtime; //使用时间
 
     private List<Role> roleList;//角色数组
     private List<String> cityList;//城市地区id

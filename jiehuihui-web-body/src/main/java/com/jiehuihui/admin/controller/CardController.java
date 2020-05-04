@@ -1,6 +1,6 @@
 package com.jiehuihui.admin.controller;
 
-import com.jiehuihui.admin.entity.Card;
+import com.jiehuihui.common.entity.Card;
 import com.jiehuihui.admin.req.UseCardParam;
 import com.jiehuihui.admin.service.CardService;
 import com.jiehuihui.common.base.check.Create;

@@ -1,7 +1,7 @@
 package com.jiehuihui.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.jiehuihui.admin.entity.Card;
+import com.jiehuihui.common.entity.Card;
 import com.jiehuihui.admin.mapper.CardMapper;
 import com.jiehuihui.admin.mapper.UserMapper;
 import com.jiehuihui.admin.mapper.UserToRoleMapper;
@@ -156,7 +156,7 @@ public class CardServiceImpl implements CardService {
                 }
             }
 
-            user.setRolelistid(roles.toString());
+            user.setRolelistid(roles.toString().trim());
         }
 
         Calendar cal = Calendar.getInstance();
