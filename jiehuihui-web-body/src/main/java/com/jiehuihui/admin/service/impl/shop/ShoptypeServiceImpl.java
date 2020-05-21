@@ -85,7 +85,7 @@ public class ShoptypeServiceImpl implements ShoptypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shoptype> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shoptypeMapper.selectList(ew)){
+            if(null != shoptypeMapper.selectList(ew) && shoptypeMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

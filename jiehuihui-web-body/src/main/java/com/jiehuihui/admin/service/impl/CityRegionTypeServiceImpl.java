@@ -72,7 +72,7 @@ public class CityRegionTypeServiceImpl implements CityRegionTypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<CityRegionType> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != cityRegionTypeMapper.selectList(ew)){
+            if(null != cityRegionTypeMapper.selectList(ew) && cityRegionTypeMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

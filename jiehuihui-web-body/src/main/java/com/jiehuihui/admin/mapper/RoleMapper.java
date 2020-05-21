@@ -20,6 +20,8 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     IPage<Role> getRolePage(Page<?> page, @Param("ew") Wrapper wrapper);
 
+    IPage<Role> selectRoleToPage(Page<?> page, @Param("ew") Wrapper wrapper);
+
     int selectRoleCount(@Param("ew") Wrapper wrapper);
 
     List<Permission> getRoleToPermission(@Param("ew") Wrapper wrapper);

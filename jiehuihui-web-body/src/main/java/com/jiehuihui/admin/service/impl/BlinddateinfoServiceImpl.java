@@ -115,7 +115,7 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Blinddateinfo> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != blinddateinfoMapper.selectList(ew)){
+            if(null != blinddateinfoMapper.selectList(ew) && blinddateinfoMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }
@@ -152,6 +152,9 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
                 blinddateinfo.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
             }
         }
 
@@ -173,6 +176,7 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
         int insert = blinddateinfoMapper.insert(blinddateinfo);
         if (insert > 0) {
             result.changeToTrue(insert);
+            result.setMessage("新增相亲帖成功！");
         }
         return result;
     }
@@ -213,6 +217,9 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
                 blinddateinfo.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
             }
         }
 

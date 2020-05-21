@@ -1,4 +1,4 @@
-package com.jiehuihui.common.shiro;
+package com.jiehuihui.shiro;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;

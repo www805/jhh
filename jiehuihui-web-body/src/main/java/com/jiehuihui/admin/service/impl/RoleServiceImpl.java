@@ -91,8 +91,18 @@ public class RoleServiceImpl implements RoleService {
         for (Role role : roleList) {
             UpdateWrapper<Role> ewq = new UpdateWrapper<>();
             ewq.eq("rp.roleid", role.getId());
+            ewq.eq("p.permissionnametype", 2);//不是菜单的
             List<Permission> permissions = roleMapper.getRoleToPermission(ewq);
             role.setPermissions(permissions);
+
+            UpdateWrapper<Usertorole> urwq = new UpdateWrapper<>();
+            urwq.eq("roleid", role.getId());
+            Integer usersize = userToRoleMapper.selectCount(urwq);
+            long userCount = Long.parseLong(usersize + "");
+            if(role.getUsersize() != userCount){
+                role.setUsersize(userCount);
+            }
+
         }
 
         roleVO.setPagelist(roleList);

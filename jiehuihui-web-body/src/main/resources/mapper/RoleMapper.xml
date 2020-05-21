@@ -19,6 +19,14 @@
         </collection>
     </resultMap>
 
+    <resultMap type="com.jiehuihui.common.entity.Role" id="BaseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="rolename" column="rolename" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <association property="usersize" column="id" select="getRoleByAllCount" javaType="int" />
+    </resultMap>
+
     <select id="getRolePage" resultMap="BaseResultMap">
         SELECT
             r.*,
@@ -55,6 +63,25 @@
             LEFT JOIN jhh_base_roletopermission rp ON rp.permissionid = p.id
 
             ${ew.customSqlSegment}
+    </select>
+
+
+    <select id="selectRoleToPage" resultMap="BaseMap">
+        SELECT
+            r.*
+        FROM
+            jhh_base_role r
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getRoleByAllCount" resultType="int">
+        SELECT
+            count(ur.id)
+        FROM
+            jhh_base_usertorole ur
+        where
+            ur.roleid = #{id}
     </select>
 
 </mapper>

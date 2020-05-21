@@ -113,7 +113,7 @@ public class FriendsServiceImpl implements FriendsService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Friends> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != friendsMapper.selectList(ew)){
+            if(null != friendsMapper.selectList(ew) && friendsMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }
@@ -140,6 +140,9 @@ public class FriendsServiceImpl implements FriendsService {
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
                 friends.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
             }
         }
 
@@ -189,6 +192,9 @@ public class FriendsServiceImpl implements FriendsService {
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
                 friends.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
             }
         }
 

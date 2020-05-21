@@ -1,4 +1,4 @@
-package com.jiehuihui.common.shiro;
+package com.jiehuihui.shiro;
 
 import java.io.Serializable;
 import java.util.Deque;

@@ -3,9 +3,8 @@ package com.jiehuihui.admin.req;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
 import lombok.Data;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.*;
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ public class AddUpdateBlinddateParam {
     private String blinddateid; //相亲帖关联id
 
     @NotBlank(message = "备注不能为空", groups = {Create.class, Update.class})
-    private String describe; //备注
+    private String xqdescribe; //备注
     @Min(value = 0,message = "排序不能为空", groups = {Create.class, Update.class})
     private Integer sortnum; //排序
     @Min(value = 0,message = "状态不能为空", groups = {Create.class, Update.class})
@@ -39,7 +38,8 @@ public class AddUpdateBlinddateParam {
     @NotBlank(message = "唯一id不能为空", groups = { Update.class}) 
     private String ssid; //唯一id 
 
-    @NotBlank(message = "请选择关联的城市", groups = {Create.class, Update.class})
+    @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
+    @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<String> cityList;//城市地区
 
 }

@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
     public RResult getUserList(RResult result) {
         UpdateWrapper<User> ew = new UpdateWrapper<>();
         ew.eq("state", 1);
-        ew.orderByDesc("num");
         List<User> users = userMapper.selectList(ew);
         result.changeToTrue(users);
         return result;

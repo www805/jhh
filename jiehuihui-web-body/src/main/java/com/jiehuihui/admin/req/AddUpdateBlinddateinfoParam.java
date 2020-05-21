@@ -6,9 +6,7 @@ import com.jiehuihui.common.base.check.Update;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class AddUpdateBlinddateinfoParam {
     private String username; //名字
     @NotBlank(message = "相亲人名字不能为空", groups = {Create.class, Update.class})
     private String myname; //相亲人名字名字
-    @NotBlank(message = "基本信息|分割不能为空", groups = {Create.class, Update.class})
+    @NotBlank(message = "基本信息不能为空", groups = {Create.class, Update.class})
     private String tabs; //基本信息|分割
     @NotBlank(message = "择偶条件描述不能为空", groups = {Create.class, Update.class}) 
     private String xqdescribe; //择偶条件描述
@@ -41,7 +39,9 @@ public class AddUpdateBlinddateinfoParam {
     private String userid; //发表用户关联id
 
     private String tximg; //发表用户关联id
-    private List<String> fmimglist; //发表用户关联id
+    private List<String> fmimglist; //图片集合
+    @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
+    @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<String> cityList;//城市地区
 
     private Integer topnum; //置顶

@@ -85,7 +85,7 @@ public class SoutypeServiceImpl implements SoutypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Soutype> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != soutypeMapper.selectList(ew)){
+            if(null != soutypeMapper.selectList(ew) && soutypeMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

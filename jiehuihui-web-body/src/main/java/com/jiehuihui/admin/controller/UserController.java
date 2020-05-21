@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * (User)用户信息表控制层
@@ -39,7 +40,8 @@ public class UserController {
     //获取用户信息
     @ApiOperation(value = "获取用户信息", notes = "获取所有用户信息,没分页")
     @GetMapping("/getUserList")
-    public RResult getUserList(){
+    public RResult getUserList(HttpServletRequest request){
+        String header = request.getHeader("Authorization");
         RResult<User> result = new RResult<>();
         return userService.getUserList (result);
     }

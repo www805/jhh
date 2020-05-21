@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.ShopinfoupMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.Shopinfoup" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="shopname" column="shopname" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="dpdescribe" column="dpdescribe" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="sfzimg" column="sfzimg" jdbcType="VARCHAR"/>
+        <result property="yyzzimg" column="yyzzimg" jdbcType="VARCHAR"/>
+        <result property="userid" column="userid" jdbcType="VARCHAR"/>
+        <result property="shoptypessid" column="shoptypessid" jdbcType="VARCHAR"/>
+        <result property="cityzhongid" column="cityzhongid" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <association property="shoptype" javaType="com.jiehuihui.common.entity.shop.Shoptype">
+            <result property="id" column="tid" jdbcType="INTEGER"/>
+            <result property="typename" column="ttypename" jdbcType="VARCHAR"/>
+            <result property="sortnum" column="tsortnum" jdbcType="VARCHAR"/>
+            <result property="ssid" column="tssid" jdbcType="VARCHAR"/>
+        </association>
+        <association property="user" javaType="com.jiehuihui.common.entity.User">
+            <result property="id" column="uid" jdbcType="INTEGER"/>
+            <result property="userlogin" column="uuserlogin" jdbcType="VARCHAR"/>
+            <result property="username" column="uusername" jdbcType="VARCHAR"/>
+            <result property="myname" column="umyname" jdbcType="VARCHAR"/>
+            <result property="password" column="upassword" jdbcType="VARCHAR"/>
+            <result property="tximg" column="utximg" jdbcType="VARCHAR"/>
+            <result property="phone" column="uphone" jdbcType="VARCHAR"/>
+            <result property="state" column="ustate" jdbcType="INTEGER"/>
+            <result property="sign" column="usign" jdbcType="INTEGER"/>
+            <result property="ssid" column="ussid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="ucreatetime" jdbcType="TIMESTAMP"/>
+            <result property="lastlogintime" column="ulastlogintime" jdbcType="TIMESTAMP"/>
+            <result property="vipstatetime" column="uvipstatetime" jdbcType="TIMESTAMP"/>
+            <result property="vipendtime" column="uvipendtime" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
+    </resultMap>
+
+    <select id="getShopinfoupPage" resultMap="BaseResultMap">
+        SELECT
+            s.*,
+            t.id AS tid,
+            t.typename AS ttypename,
+            t.sortnum AS tsortnum,
+            t.ssid AS tssid,
+            u.id AS uid,
+            u.userlogin AS uuserlogin,
+            u.username AS uusername,
+            u.myname AS umyname,
+            u.password AS upassword,
+            u.tximg AS utximg,
+            u.phone AS uphone,
+            u.sign AS usign,
+            u.state AS ustate,
+            u.ssid AS ussid,
+            u.yhjid AS uyhjid,
+            u.cityzhongid AS ucityzhongid,
+            u.rolelistid AS urolelistid,
+            u.createtime AS ucreatetime,
+            u.lastlogintime AS ulastlogintime,
+            u.vipstatetime AS uvipstatetime,
+            u.vipendtime AS uvipendtime
+        FROM
+            jhh_shopinfoup s
+            left join jhh_base_shoptype t on s.shoptypessid = t.ssid
+            left join jhh_base_cityzhong z on s.cityzhongid = z.id
+            left join jhh_user u on s.userid = u.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectShopinfoupCount" resultType="int">
+        SELECT
+            count(s.id)
+        FROM
+            jhh_shopinfoup s
+            left join jhh_base_shoptype t on s.shoptypessid = t.ssid
+            left join jhh_base_cityzhong z on s.cityzhongid = z.id
+            left join jhh_user u on s.userid = u.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
+        SELECT
+            z.id,
+            p.id AS pid,
+            c.id AS cid,
+            a.id AS aid,
+            p.provincename,
+            c.cityname,
+            a.areaname
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        where
+            z.id = #{cityzhongid}
+    </select>
+
+</mapper>

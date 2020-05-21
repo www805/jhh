@@ -1,0 +1,41 @@
+#开发环境
+#端口
+server:
+  port: 5001
+
+#mysq;
+spring:
+  application:
+    name: jiehuihui-web-body #指定服务名
+  datasource:
+#    url: jdbc:mysql://192.168.1.103:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://144.48.9.35:3377/jiehuihui?useUnicode=true&characterEncoding=utf8
+    username: root
+#    password: root
+    password: jiehuihui520
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 144.48.9.35
+    port: 6379
+    password: jiehuihui520
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:6868/eureka  #注册中心服务地址
+  instance:
+    prefer-ip-address: true  #注册中心以ip地址形式注册
+
+#配置mybatisplus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**.xml
+
+
+#配置redis
+
+#日志
+#logging.file=ec.log
+#logging:
+#  config: classpath:logback.xml
+

@@ -87,7 +87,7 @@ public class HotsouServiceImpl implements HotsouService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Hotsou> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != hotsouMapper.selectList(ew)){
+            if(null != hotsouMapper.selectList(ew) && hotsouMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

@@ -85,7 +85,7 @@ public class HomeGgServiceImpl implements HomeGgService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeGg> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != homeggMapper.selectList(ew)){
+            if(null != homeggMapper.selectList(ew) && homeggMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

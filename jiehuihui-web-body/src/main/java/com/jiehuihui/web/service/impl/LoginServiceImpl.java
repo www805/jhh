@@ -34,12 +34,13 @@ public class LoginServiceImpl implements LoginService {
             String sessionId = (String) subject.getSession().getId();
             //登录成功，返回sessionId
             result.changeToTrue(sessionId);
+            result.setMessage("登录成功！");
             LogUtil.intoLog("用户：" + userlogin + " 登录成功！");
         } catch (DisabledAccountException e) {
-            result.changeToTrue("该用户已被禁用");
+            result.setMessage("该用户已被禁用");
             LogUtil.intoLog("用户：" + userlogin + " 登录失败，该用户已被禁用");
         }catch (Exception e) {
-            result.changeToTrue("用户名或密码错误");
+            result.setMessage("用户名或密码错误");
             LogUtil.intoLog("用户：" + userlogin + " 登录失败，用户名或密码错误");
         }
 

@@ -1,8 +1,6 @@
-package com.jiehuihui.common.shiro;
+package com.jiehuihui.shiro;
 
 
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -18,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;

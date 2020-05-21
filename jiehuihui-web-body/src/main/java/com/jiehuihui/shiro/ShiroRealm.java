@@ -1,4 +1,4 @@
-package com.jiehuihui.common.shiro;
+package com.jiehuihui.shiro;
 
 import com.jiehuihui.common.entity.User;
 import org.apache.shiro.authc.*;
@@ -53,9 +53,9 @@ public class ShiroRealm extends AuthorizingRealm {
         String password = new String(usernamePasswordToken.getPassword());
 
         //判断用户是否存在，用户密码是否和输入的一致
-        if(!"root".equalsIgnoreCase(username) || !"90b79457e57f27851fed6b010288fdf7".equalsIgnoreCase(password)){
-            return null;
-        }
+//        if(!"root".equalsIgnoreCase(username) || !"90b79457e57f27851fed6b010288fdf7".equalsIgnoreCase(password)){
+//            return null;
+//        }
         User user = new User();
         user.setUserlogin(username);
         user.setPassword(password);

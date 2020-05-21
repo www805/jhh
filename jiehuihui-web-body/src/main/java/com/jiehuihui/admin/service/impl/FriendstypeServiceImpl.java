@@ -85,7 +85,7 @@ public class FriendstypeServiceImpl implements FriendstypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Friendstype> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != friendstypeMapper.selectList(ew)){
+            if(null != friendstypeMapper.selectList(ew) && friendstypeMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

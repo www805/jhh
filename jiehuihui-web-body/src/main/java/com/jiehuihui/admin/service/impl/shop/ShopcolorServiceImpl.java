@@ -89,7 +89,7 @@ public class ShopcolorServiceImpl implements ShopcolorService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shopcolor> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shopcolorMapper.selectList(ew)){
+            if(null != shopcolorMapper.selectList(ew) && shopcolorMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

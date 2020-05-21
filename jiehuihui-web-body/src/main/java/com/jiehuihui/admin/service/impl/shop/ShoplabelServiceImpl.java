@@ -87,7 +87,7 @@ public class ShoplabelServiceImpl implements ShoplabelService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shoplabel> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shoplabelMapper.selectList(ew)){
+            if(null != shoplabelMapper.selectList(ew) && shoplabelMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

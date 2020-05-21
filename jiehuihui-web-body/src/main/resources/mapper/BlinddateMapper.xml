@@ -7,7 +7,7 @@
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="wxnum" column="wxnum" jdbcType="VARCHAR"/>
-        <result property="describe" column="describe" jdbcType="VARCHAR"/>
+        <result property="xqdescribe" column="xqdescribe" jdbcType="VARCHAR"/>
         <result property="matchmakerid" column="matchmakerid" jdbcType="VARCHAR"/>
         <result property="blinddateid" column="blinddateid" jdbcType="VARCHAR"/>
         <result property="cityzhongid" column="cityzhongid" jdbcType="VARCHAR"/>

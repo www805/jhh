@@ -81,7 +81,7 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeSlideshow> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != homeSlideshowMapper.selectList(ew)){
+            if(null != homeSlideshowMapper.selectList(ew) && homeSlideshowMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

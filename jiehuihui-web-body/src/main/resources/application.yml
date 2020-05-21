@@ -1,30 +1,3 @@
-#端口
-server:
-  port: 5001
-
-#mysq;
 spring:
-  datasource:
-    url: jdbc:mysql://192.168.0.100:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    host: 192.168.0.100
-    port: 6379
-    password: 123456
-
-
-
-#配置mybatisplus
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**.xml
-
-
-#配置redis
-
-#日志
-#logging.file=ec.log
-#logging:
-#  config: classpath:logback.xml
-
+  profiles:
+    active: dev

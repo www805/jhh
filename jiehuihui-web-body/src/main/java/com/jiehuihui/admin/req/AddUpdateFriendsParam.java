@@ -6,9 +6,7 @@ import com.jiehuihui.common.base.check.Update;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +50,8 @@ public class AddUpdateFriendsParam {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endtime; //活动结束时间 
 
+    @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
+    @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<String> cityList;//城市地区
     private List<String> fmimglist;//角色数组
 }

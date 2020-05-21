@@ -1,7 +1,7 @@
 package com.jiehuihui.web.controller;
 
 import com.jiehuihui.common.entity.User;
-import com.jiehuihui.common.shiro.ShiroSessionListener;
+import com.jiehuihui.shiro.ShiroSessionListener;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.LoginParam;
 import com.jiehuihui.web.service.LoginService;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 public class LoginController {
 
     @Autowired

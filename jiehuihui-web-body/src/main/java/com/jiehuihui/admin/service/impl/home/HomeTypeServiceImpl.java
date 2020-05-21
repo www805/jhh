@@ -91,7 +91,7 @@ public class HomeTypeServiceImpl implements HomeTypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeType> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != hometypeMapper.selectList(ew)){
+            if(null != hometypeMapper.selectList(ew) && hometypeMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

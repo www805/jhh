@@ -8,9 +8,7 @@ import com.jiehuihui.common.entity.city.City;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +46,11 @@ public class AddUpdateUserParam {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date vipendtime; //使用时间
 
+    @NotNull(message = "角色不能为空", groups = {Create.class, Update.class})
+    @Size(min = 1,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<Role> roleList;//角色数组
+    @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
+    @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<String> cityList;//城市地区id
 
 //    @NotBlank(message = "请选择关联的城市", groups = {Create.class, Update.class})

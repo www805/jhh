@@ -1,4 +1,4 @@
-package com.jiehuihui.common.shiro;
+package com.jiehuihui.shiro;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;

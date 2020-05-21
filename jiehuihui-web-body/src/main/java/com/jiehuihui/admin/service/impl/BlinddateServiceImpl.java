@@ -123,33 +123,64 @@ public class BlinddateServiceImpl implements BlinddateService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Blinddate> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != blinddateMapper.selectList(ew)){
+            if(null != blinddateMapper.selectList(ew) && blinddateMapper.selectList(ew).size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }
             ssid = param.getSsid();
         }
-//        UpdateWrapper<Blinddate> ew = new UpdateWrapper<>();
-//        ew.eq("keyword", param.getKeyword());
-//        ew.eq("cityid", param.getCityssid());
-//        List<Blinddate> TypeList = blinddateMapper.selectList(ew);
-//        if (null != TypeList && TypeList.size() > 0) {
-//            result.setMessage("该数据已经存在，不能添加");
-//            return result;
-//        }
-//
-//        Blinddate blinddate = new Blinddate();
-//        blinddate.setKeyword(param.getKeyword());
-//        blinddate.setIco(param.getIco());
-//        blinddate.setNum(param.getNum());
-//        blinddate.setSsid(ssid);
-//        blinddate.setCityid(param.getCityssid());
-//        blinddate.setGotourl(param.getGotourl());
-//        blinddate.setState(param.getState());
-//        int insert = blinddateMapper.insert(blinddate);
-//        if (insert > 0) {
-//            result.changeToTrue(insert);
-//        }
+
+        //查询红娘信息
+        UpdateWrapper<User> muew = new UpdateWrapper<User>();
+        muew.eq("username", param.getMatchmake());
+        List<User> musers = userMapper.selectList(muew);
+        if(musers.size() == 0){
+            result.setMessage("没找到红娘用户，修改申请相亲申请失败");
+            return result;
+        }
+
+        UpdateWrapper<Blinddateinfo> bew = new UpdateWrapper<Blinddateinfo>();
+        bew.eq("ssid", param.getBlinddateid());
+        List<Blinddateinfo> blinddateinfos = blinddateinfoMapper.selectList(bew);
+        if(blinddateinfos.size() == 0){
+            result.setMessage("没找到相亲帖，修改申请相亲申请失败");
+            return result;
+        }
+
+        Blinddate blinddate = new Blinddate();
+
+        List<String> cityList = param.getCityList();
+        if(null != cityList && cityList.size() == 3){
+            UpdateWrapper<Cityzhong> zew = new UpdateWrapper<>();
+            zew.eq("provinceid", cityList.get(0));
+            zew.eq("cityid", cityList.get(1));
+            zew.eq("areaid", cityList.get(2));
+            List<Cityzhong> cityzhongs = cityzhongMapper.selectList(zew);
+            if(cityzhongs.size() > 0){
+                Cityzhong cityzhong = cityzhongs.get(0);
+                blinddate.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
+            }
+        }
+
+        blinddate.setUsername(param.getUsername());
+        blinddate.setPhone(param.getPhone());
+        blinddate.setWxnum(param.getWxnum());
+        blinddate.setXqdescribe(param.getXqdescribe());
+        blinddate.setMatchmakerid(musers.get(0).getSsid());
+        blinddate.setBlinddateid(blinddateinfos.get(0).getSsid());
+        blinddate.setSortnum(param.getSortnum());
+        blinddate.setSsid(param.getSsid());
+        blinddate.setState(param.getState());
+
+        int insert = blinddateMapper.insert(blinddate);
+        if (insert > 0) {
+            result.changeToTrue(insert);
+            result.setMessage("相亲申请成功！");
+        }
+
         return result;
     }
 
@@ -189,13 +220,16 @@ public class BlinddateServiceImpl implements BlinddateService {
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
                 blinddate.setCityzhongid(cityzhong.getId() + "");
+            }else{
+                result.setMessage("城市没找到，无法处理");
+                return result;
             }
         }
 
         blinddate.setUsername(param.getUsername());
         blinddate.setPhone(param.getPhone());
         blinddate.setWxnum(param.getWxnum());
-        blinddate.setDescribe(param.getDescribe());
+        blinddate.setXqdescribe(param.getXqdescribe());
         blinddate.setMatchmakerid(musers.get(0).getSsid());
         blinddate.setBlinddateid(blinddateinfos.get(0).getSsid());
         blinddate.setSortnum(param.getSortnum());
@@ -223,11 +257,15 @@ public class BlinddateServiceImpl implements BlinddateService {
             return result;
         }
 
-        int delete = blinddateMapper.delete(ew);
+        Blinddate blind = new Blinddate();
+        blind.setState(2);
+
+        int delete = blinddateMapper.update(blind,ew);
         if (delete > 0) {
             result.changeToTrue(delete);
             result.setMessage("删除成功！");
         }
+
         LogUtil.intoLog("用户：删除了一条数据！" + blinddate.getUsername());
         return result;
     }

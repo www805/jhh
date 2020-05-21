@@ -1,11 +1,12 @@
 package com.jiehuihui.admin.req;
 
+import com.jiehuihui.common.base.check.Create;
+import com.jiehuihui.common.base.check.Update;
 import com.jiehuihui.common.entity.Role;
 import com.jiehuihui.common.utils.Page;
 import lombok.Data;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.*;
 import java.util.List;
 
 /**
