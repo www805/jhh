@@ -23,7 +23,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取安全数据
-        User user = (User) principalCollection.getPrimaryPrincipal();
+        Object user = principalCollection.getPrimaryPrincipal();
 
         //获取角色，权限
 
@@ -32,7 +32,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //添加资源的授权字符串
         simpleAuthorizationInfo.addStringPermission("user:getUser");
-        simpleAuthorizationInfo.addRole("user");
+        simpleAuthorizationInfo.addRole("aRoleName");
 
         return simpleAuthorizationInfo;
     }
@@ -45,35 +45,6 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-
-        //获取用户名和密码
-        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
-        //根据登录用户名查询用户
-        String username = usernamePasswordToken.getUsername();
-        String password = new String(usernamePasswordToken.getPassword());
-
-        //判断用户是否存在，用户密码是否和输入的一致
-//        if(!"root".equalsIgnoreCase(username) || !"90b79457e57f27851fed6b010288fdf7".equalsIgnoreCase(password)){
-//            return null;
-//        }
-        User user = new User();
-        user.setUserlogin(username);
-        user.setPassword(password);
-        user.setState(1);
-
-        //判断账号状态是否正常
-        if (user.getState() == 1) {
-            //返回构造安全数据构造方法
-            ByteSource credentialsSalt = ByteSource.Util.bytes(user.getUserlogin());
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
-                    user,
-                    user.getPassword(),
-                    credentialsSalt,
-                    getName()
-            );
-            return simpleAuthenticationInfo;
-        }
-
         return null;
     }
 }

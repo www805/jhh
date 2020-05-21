@@ -6,13 +6,14 @@ import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.LoginParam;
 import com.jiehuihui.web.service.LoginService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:9012","http://localhost:80"}, maxAge = 3600)
 public class LoginController {
 
     @Autowired
@@ -54,6 +55,7 @@ public class LoginController {
      * 获取当前在线人数
      * @return
      */
+    @RequiresRoles("aRoleName")
     @GetMapping("/getUserCount")
     public RResult getUserCount(){
         RResult result = new RResult<>();

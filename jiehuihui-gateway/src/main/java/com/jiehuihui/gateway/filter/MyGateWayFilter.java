@@ -27,28 +27,32 @@ public class MyGateWayFilter implements GlobalFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
         List<String> authorization = request.getHeaders().get("Authorization");
 
+        String path = request.getURI().getPath();
+
         //设置headers
         HttpHeaders httpHeaders = response.getHeaders();
+
+        if (null != authorization && authorization.size() > 0) {
+            String id = authorization.get(0);
+            httpHeaders.add("Authorization", id);
+        }
+        if(path.indexOf("/login") != -1){
+            return chain.filter(exchange);
+        }
+
         httpHeaders.add("Content-Type", "application/json; charset=UTF-8");
         httpHeaders.add("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-
-        if(null == authorization || authorization.size() <= 0){
-
-            RResult<String> result = new RResult<>();
-            result.setMessage("请登录再访问");
-            byte[] dataBytes=result.toString().getBytes();
-            DataBuffer bodyDataBuffer = response.bufferFactory().wrap(dataBytes);
-            return response.writeWith(Mono.just(bodyDataBuffer));
+        RResult<String> result = new RResult<>();
+        result.setMessage("请登录再访问");
+        byte[] dataBytes=result.toString().getBytes();
+        DataBuffer bodyDataBuffer = response.bufferFactory().wrap(dataBytes);
+        return response.writeWith(Mono.just(bodyDataBuffer));
 
             //如果没有携带，生成新的sessionId
 //            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
 //            return exchange.getResponse().setComplete();
-        }
 
-        String id = authorization.get(0);
-        httpHeaders.add("Authorization", id);
 
-        return chain.filter(exchange);
     }
 
     //优先级，0 最高

@@ -139,7 +139,7 @@ public class ShiroConfig {
      */
     @Bean(value = "myShiroRealm")
     public ShiroRealm myShiroRealm() {
-        ShiroRealm myShiroRealm = new ShiroRealm();
+        MyShiroRealm myShiroRealm = new MyShiroRealm();
         return myShiroRealm;
     }
 
@@ -207,7 +207,8 @@ public class ShiroConfig {
         //成功调到的页面
         shiroFilterFactoryBean.setSuccessUrl("/admin");
         //未授权界面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/home/getHomegg");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 

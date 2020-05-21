@@ -24,6 +24,7 @@ public class RResult<T> {
 		endtime= DateUtil.getDateAndMinute();
 		message="请求失败";
 		actioncode=Code.FAIL.toString();
+		version = "v1.0";
 	}
 
 	public void changeToTrue(){
