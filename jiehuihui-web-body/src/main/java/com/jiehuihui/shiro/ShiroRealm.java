@@ -23,7 +23,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取安全数据
-        Object user = principalCollection.getPrimaryPrincipal();
+        Object user =  principalCollection.getPrimaryPrincipal();
 
         //获取角色，权限
 

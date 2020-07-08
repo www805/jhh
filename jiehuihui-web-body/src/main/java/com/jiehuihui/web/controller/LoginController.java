@@ -5,15 +5,19 @@ import com.jiehuihui.shiro.ShiroSessionListener;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.LoginParam;
 import com.jiehuihui.web.service.LoginService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = {"http://localhost:9012","http://localhost:80"}, maxAge = 3600)
+//@CrossOrigin(origins = {"http://localhost:9012","http://localhost:8080"}, maxAge = 3600)
+@CrossOrigin
 public class LoginController {
 
     @Autowired
@@ -28,8 +32,13 @@ public class LoginController {
      * @return
      */
     @PostMapping("/getlogin")
-    public RResult getlogin(@RequestBody LoginParam param){
+    public RResult getlogin(HttpServletRequest request, @RequestBody LoginParam param){
         RResult<User> result = new RResult<>();
+        String authorization = request.getHeader("Authorization");
+        if(StringUtils.isNoneBlank(authorization)){
+            Subject subject = SecurityUtils.getSubject();
+            subject.logout();
+        }
         return loginService.getlogin(result,param);
     }
 
@@ -55,7 +64,7 @@ public class LoginController {
      * 获取当前在线人数
      * @return
      */
-    @RequiresRoles("aRoleName")
+    @RequiresRoles("aRoleName2")
     @GetMapping("/getUserCount")
     public RResult getUserCount(){
         RResult result = new RResult<>();

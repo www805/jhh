@@ -31,6 +31,15 @@
             ${ew.customSqlSegment}
     </select>
 
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT
+            u.*
+        FROM
+            jhh_user u
+
+            ${ew.customSqlSegment}
+    </select>
+
     <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
         SELECT
             z.id,

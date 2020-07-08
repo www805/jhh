@@ -43,7 +43,7 @@ public class MyShiroRealm extends ShiroRealm {
         UpdateWrapper<User> ew = new UpdateWrapper<>();
         ew.eq("userlogin", username);
         ew.eq("password", password);
-        List<User> users = userMapper.selectList(ew);
+        List<User> users = userMapper.getUserList(ew);
 
 //        User user = new User();
 //        user.setUserlogin(username);

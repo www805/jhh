@@ -8,24 +8,32 @@ spring:
   application:
     name: jiehuihui-web-body #指定服务名
   datasource:
-#    url: jdbc:mysql://192.168.1.103:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
-    url: jdbc:mysql://144.48.9.35:3377/jiehuihui?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://192.168.1.101:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
+#    url: jdbc:mysql://144.48.9.35:3377/jiehuihui?useUnicode=true&characterEncoding=utf8
     username: root
-#    password: root
-    password: jiehuihui520
+    password: root
+#    password: jiehuihui520
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    host: 144.48.9.35
+#    host: 144.48.9.35
+    host: 192.168.1.101
     port: 6379
-    password: jiehuihui520
+#    password: jiehuihui520
+    password: 123456
+#下面代码注册到nacos里面
+#  cloud:
+#    nacos:
+#      discovery:
+#        ###服务注册Nacos地址
+#        server-addr: 127.0.0.1:8848
 
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:6868/eureka  #注册中心服务地址
-  instance:
-    prefer-ip-address: true  #注册中心以ip地址形式注册
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:6868/eureka  #注册中心服务地址
+#  instance:
+#    prefer-ip-address: true  #注册中心以ip地址形式注册
 
 #配置mybatisplus
 mybatis-plus:

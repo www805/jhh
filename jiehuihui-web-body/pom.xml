@@ -20,11 +20,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!--将当前微服务 注册到eureka server中 提供给其它微服务进行调用-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        <!--将当前微服务 注册到nacos server中 提供给其它微服务进行调用-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--        </dependency>-->
 
         <!--单元测试-->
         <dependency>

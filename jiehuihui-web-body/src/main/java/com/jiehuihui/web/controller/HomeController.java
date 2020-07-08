@@ -52,5 +52,11 @@ public class HomeController {
         return homeService.getCityAllList(result);
     }
 
-
+    //403类
+    @GetMapping("/geterrorinfo")
+    public RResult geterrorinfo(){
+        RResult result = new RResult<>();
+        result.setMessage("你的权限不足");
+        return result;
+    }
 }

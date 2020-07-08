@@ -22,6 +22,8 @@
         <module>jiehuihui-media</module>
         <module>jiehuihui-eureka</module>
         <module>jiehuihui-gateway</module>
+        <module>jiehuihui-zuul</module>
+        <module>jiehuihui-zc</module>
     </modules>
 
     <properties>
@@ -29,6 +31,7 @@
         <springBoot.version>2.2.5.RELEASE</springBoot.version>
         <mybatisplus.version>3.3.1</mybatisplus.version>
         <shiro.version>1.4.0</shiro.version>
+        <nacosclient.version>0.2.2.RELEASE</nacosclient.version>
     </properties>
 
     <dependencyManagement>
@@ -56,6 +59,20 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatisplus.version}</version>
+            </dependency>
+            <!--阿里巴巴-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.1.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--Nacos客户端指定版本号-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacosclient.version}</version>
             </dependency>
             <!--swagger-API 依赖开始-->
             <dependency>

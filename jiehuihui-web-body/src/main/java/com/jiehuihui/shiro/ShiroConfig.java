@@ -194,9 +194,9 @@ public class ShiroConfig {
 
         //设置必须要登录才可以访问的页面
 //        filterMap.put("/**", "authc");
-        filterMap.put("/admin", "authc");
-        filterMap.put("/base/tobasegninfo", "authc");
-        filterMap.put("/base/tobasetype", "authc");
+//        filterMap.put("/admin/**", "authc");
+//        filterMap.put("/base/tobasegninfo", "authc");
+//        filterMap.put("/base/tobasetype", "authc");
 //        filterMap.put("/ac/**", "authc");
 
         //授权过滤器
@@ -208,7 +208,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/admin");
         //未授权界面
 //        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/home/getHomegg");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/home/geterrorinfo");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiehuihui.common.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * (User)表数据库访问层
  *
@@ -19,4 +21,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     int selectUserCount(@Param("ew") Wrapper wrapper);
 
+    List<User> getUserList(@Param("ew") Wrapper wrapper);
 }
