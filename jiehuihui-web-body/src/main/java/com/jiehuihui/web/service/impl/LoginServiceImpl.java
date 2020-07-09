@@ -50,6 +50,7 @@ public class LoginServiceImpl implements LoginService {
             result.setMessage("该用户已被禁用");
             LogUtil.intoLog("用户：" + userlogin + " 登录失败，该用户已被禁用");
         }catch (Exception e) {
+            e.printStackTrace();
             result.setMessage("用户名或密码错误");
             LogUtil.intoLog("用户：" + userlogin + " 登录失败，用户名或密码错误");
         }
