@@ -34,13 +34,14 @@ public class HomespecialController {
 
     /**
      * 通过主键查询单条数据
-     * @param id 主键
+     * @param param 主键
      * @return 单条数据
      */
     @ApiOperation(value = "获取一条特价", notes = "获取一条特价")
     @GetMapping("/getSpecialByssid")
-    public RResult getSpecialByssid(Long id) {
-        return homespecialService.getSpecialByssid(id);
+    public RResult getSpecialByssid(@ApiParam(name="分页获取朋友圈类型参数",value="传入json格式",required=true) @RequestBody DeleteSpecialParam param){
+        RResult<Homespecial> result = new RResult<>();
+        return homespecialService.getSpecialByssid(result, param);
     }
 
     //获取朋友圈类型，分页
