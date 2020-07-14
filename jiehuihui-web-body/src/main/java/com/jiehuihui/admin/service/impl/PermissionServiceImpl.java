@@ -1,5 +1,6 @@
 package com.jiehuihui.admin.service.impl;
 
+import com.jiehuihui.common.entity.Friends;
 import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.admin.mapper.PermissionMapper;
 import com.jiehuihui.admin.service.PermissionService;
@@ -48,8 +49,9 @@ public class PermissionServiceImpl implements PermissionService {
     public RResult getPermissionByssid(RResult result, DeletePermissionParam param) {
         UpdateWrapper<Permission> ew = new UpdateWrapper();
         ew.eq("id", param.getId());
-        Permission permission = permissionMapper.selectList(ew).get(0);
-        if (null != permission) {
+        List<Permission> permissions = permissionMapper.selectList(ew);
+        if (null != permissions && permissions.size() > 0) {
+            Permission permission = permissions.get(0);
             result.changeToTrue(permission);
         }else{
             result.setMessage("获取失败，该条数据不存在");

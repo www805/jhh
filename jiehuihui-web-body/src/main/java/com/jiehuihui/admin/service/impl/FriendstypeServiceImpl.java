@@ -10,6 +10,7 @@ import com.jiehuihui.admin.req.AddUpdateFriendstypeParam;
 import com.jiehuihui.admin.req.DeleteFriendstypeParam;
 import com.jiehuihui.admin.req.GetFriendstypePageParam;
 import com.jiehuihui.admin.vo.GetFriendstypeVO;
+import com.jiehuihui.common.entity.home.HomeType;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -43,8 +44,9 @@ public class FriendstypeServiceImpl implements FriendstypeService {
     public RResult getFriendstypeByssid(RResult result, DeleteFriendstypeParam param) {
         UpdateWrapper<Friendstype> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Friendstype friendstype = friendstypeMapper.selectList(ew).get(0);
-        if (null != friendstype) {
+        List<Friendstype> Friendstypes = friendstypeMapper.selectList(ew);
+        if (null != Friendstypes && Friendstypes.size() > 0) {
+            Friendstype friendstype = Friendstypes.get(0);
             result.changeToTrue(friendstype);
         }else{
             result.setMessage("获取失败，该条数据不存在");

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiehuihui.admin.vo.home.GetHomeTypePageVO;
+import com.jiehuihui.common.entity.Blinddateinfo;
 import com.jiehuihui.common.entity.home.HomeType;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
@@ -45,8 +46,9 @@ public class HomeTypeServiceImpl implements HomeTypeService {
     public RResult getHomeTypeByssid(RResult result, DeleteHomeTypeParam param) {
         UpdateWrapper<HomeType> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        HomeType hometype = hometypeMapper.selectList(ew).get(0);
-        if (null != hometype) {
+        List<HomeType> HomeTypes = hometypeMapper.selectList(ew);
+        if (null != HomeTypes && HomeTypes.size() > 0) {
+            HomeType hometype = HomeTypes.get(0);
             result.changeToTrue(hometype);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -91,7 +93,8 @@ public class HomeTypeServiceImpl implements HomeTypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeType> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != hometypeMapper.selectList(ew) && hometypeMapper.selectList(ew).size() > 0){
+            List<HomeType> homeTypes = hometypeMapper.selectList(ew);
+            if(null != homeTypes && homeTypes.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

@@ -1,5 +1,6 @@
 package com.jiehuihui.admin.service.impl.search;
 
+import com.jiehuihui.common.entity.home.HomeGg;
 import com.jiehuihui.common.entity.search.Soutype;
 import com.jiehuihui.admin.mapper.search.SoutypeMapper;
 import com.jiehuihui.admin.service.search.SoutypeService;
@@ -43,8 +44,9 @@ public class SoutypeServiceImpl implements SoutypeService {
     public RResult getSoutypeByssid(RResult result, DeleteSoutypeParam param) {
         UpdateWrapper<Soutype> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Soutype soutype = soutypeMapper.selectList(ew).get(0);
-        if (null != soutype) {
+        List<Soutype> soutypes = soutypeMapper.selectList(ew);
+        if (null != soutypes && soutypes.size() > 0) {
+            Soutype soutype = soutypes.get(0);
             result.changeToTrue(soutype);
         }else{
             result.setMessage("获取失败，该条数据不存在");

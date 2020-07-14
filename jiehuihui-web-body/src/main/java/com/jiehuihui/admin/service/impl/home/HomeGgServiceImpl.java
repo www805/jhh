@@ -10,6 +10,7 @@ import com.jiehuihui.admin.req.home.GetHomeggPageParam;
 import com.jiehuihui.admin.service.home.HomeGgService;
 import com.jiehuihui.admin.vo.home.GetHomeggPageVO;
 import com.jiehuihui.common.entity.home.HomeGg;
+import com.jiehuihui.common.entity.search.Hotsou;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -39,8 +40,9 @@ public class HomeGgServiceImpl implements HomeGgService {
     public RResult getHomeggByssid(RResult result, DeleteHomeGgParam param) {
         UpdateWrapper<HomeGg> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        HomeGg homeGg = homeggMapper.selectList(ew).get(0);
-        if (null != homeGg) {
+        List<HomeGg> homeGgs = homeggMapper.selectList(ew);
+        if (null != homeGgs && homeGgs.size() > 0) {
+            HomeGg homeGg = homeGgs.get(0);
             result.changeToTrue(homeGg);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -85,7 +87,8 @@ public class HomeGgServiceImpl implements HomeGgService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeGg> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != homeggMapper.selectList(ew) && homeggMapper.selectList(ew).size() > 0){
+            List<HomeGg> homeGgs = homeggMapper.selectList(ew);
+            if(null != homeGgs && homeGgs.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

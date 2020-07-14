@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jiehuihui.common.entity.shop.Shopinfo;
+import com.jiehuihui.common.entity.shop.Shoptype;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +40,10 @@ public class Homespecial implements Serializable {
      * 特价标题
      */
     private String specialtitle;
+    /**
+     * 关联店铺名
+     */
+    private String shopname;
     /**
      * 封面图片集合
      */
@@ -102,13 +109,18 @@ public class Homespecial implements Serializable {
      */
     private Integer hometopnum;
     /**
-     * 公告关键字
+     * 特价类型关联id
+     */
+    private String specialtypessid;
+    /**
+     * 店铺关联id
      */
     private String shopid;
     /**
      * 关联城市ssid
      */
-    private String cityid;
+    private String cityzhongid;
+
     /**
      * 排序
      */
@@ -124,11 +136,21 @@ public class Homespecial implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createtime;
     /**
      * 状态 0禁用 1正常 2删除
      */
     private Integer state;
 
+
+    @TableField(exist = false)
+    private Shopinfo shopinfo;//关联的发表用户
+
+    @TableField(exist = false)
+    private Shoptype shoptype;//店铺类型
+
+    @TableField(exist = false)
+    private ProvinceCityArea city;//关联的城市
 
 }

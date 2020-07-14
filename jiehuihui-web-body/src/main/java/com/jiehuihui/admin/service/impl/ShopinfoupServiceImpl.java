@@ -1,7 +1,7 @@
 package com.jiehuihui.admin.service.impl;
 
 import com.jiehuihui.common.entity.Shopinfoup;
-import com.jiehuihui.admin.mapper.ShopinfoupMapper;
+import com.jiehuihui.admin.mapper.shop.ShopinfoupMapper;
 import com.jiehuihui.admin.mapper.UserMapper;
 import com.jiehuihui.admin.mapper.city.CityzhongMapper;
 import com.jiehuihui.admin.service.ShopinfoupService;
@@ -14,6 +14,7 @@ import com.jiehuihui.admin.req.GetShopinfoupPageParam;
 import com.jiehuihui.admin.vo.GetShopinfoupVO;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
+import com.jiehuihui.common.entity.shop.Shoplabel;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -54,8 +55,9 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
     public RResult getShopinfoupByssid(RResult result, DeleteShopinfoupParam param) {
         UpdateWrapper<Shopinfoup> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Shopinfoup shopinfoup = shopinfoupMapper.selectList(ew).get(0);
-        if (null != shopinfoup) {
+        List<Shopinfoup> shopinfoups = shopinfoupMapper.selectList(ew);
+        if (null != shopinfoups && shopinfoups.size() > 0) {
+            Shopinfoup shopinfoup = shopinfoups.get(0);
             result.changeToTrue(shopinfoup);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -117,7 +119,8 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shopinfoup> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shopinfoupMapper.selectList(ew)){
+            List<Shopinfoup> shopinfoups = shopinfoupMapper.selectList(ew);
+            if (null != shopinfoups && shopinfoups.size() > 0) {
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }
@@ -142,6 +145,7 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
             result.setMessage("没找到关联用户，修改店铺申请失败");
             return result;
         }
+        shopinfoup.setUserid(musers.get(0).getSsid());
         shopinfoup.setUsername(param.getUsername().trim());
 
         List<String> cityList = param.getCityList();
@@ -206,6 +210,7 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
             result.setMessage("没找到关联用户，修改店铺申请失败");
             return result;
         }
+        shopinfoup.setUserid(musers.get(0).getSsid());
         shopinfoup.setUsername(param.getUsername().trim());
 
         List<String> cityList = param.getCityList();

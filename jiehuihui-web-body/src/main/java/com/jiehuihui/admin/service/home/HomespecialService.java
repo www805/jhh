@@ -1,4 +1,4 @@
-package com.jiehuihui.admin.service;
+package com.jiehuihui.admin.service.home;
 
 import com.jiehuihui.admin.req.AddUpdateSpecialParam;
 import com.jiehuihui.admin.req.DeleteSpecialParam;
@@ -9,7 +9,7 @@ import com.jiehuihui.common.utils.RResult;
 import java.util.List;
 
 /**
- * (JhhBaseHomespecial)表服务接口
+ * (JhhBaseHomespecial)特价表服务接口
  *
  * @author zhuang
  * @since 2020-07-09 18:29:16
@@ -22,14 +22,14 @@ public interface HomespecialService {
      * @param param 实例参数对象
      * @return 返回对象
      */
-    RResult getSpecialByssid(RResult<Homespecial> result, DeleteSpecialParam param);
+    RResult getSpecialByssid(RResult result, DeleteSpecialParam param);
 
     /**
      * 查询多条数据
      * @param param  实例参数对象
      * @return 返回对象
      */
-    RResult getSpecialPage(RResult<Homespecial> result, GetSpecialPageParam param);
+    RResult getSpecialPage(RResult result, GetSpecialPageParam param);
 
     /**
      * 新增数据
@@ -37,7 +37,7 @@ public interface HomespecialService {
      * @param param 实例参数对象
      * @return 返回对象
      */
-    RResult addSpecial(RResult<Homespecial> result, AddUpdateSpecialParam param);
+    RResult addSpecial(RResult result, AddUpdateSpecialParam param);
 
     /**
      * 修改数据
@@ -45,7 +45,7 @@ public interface HomespecialService {
      * @param param 实例参数对象
      * @return 返回对象
      */
-    RResult updateSpecial(RResult<Homespecial> result, AddUpdateSpecialParam param);
+    RResult updateSpecial(RResult result, AddUpdateSpecialParam param);
 
     /**
      * 通过主键删除数据
@@ -53,6 +53,6 @@ public interface HomespecialService {
      * @param param 实例参数对象
      * @return 是否成功返回对象
      */
-    RResult deleteSpecial(RResult<Homespecial> result, DeleteSpecialParam param);
+    RResult deleteSpecial(RResult result, DeleteSpecialParam param);
 
 }

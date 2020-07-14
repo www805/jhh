@@ -9,6 +9,7 @@ import com.jiehuihui.admin.req.city.DeleteCityRegionTypeParam;
 import com.jiehuihui.admin.req.city.GetCityRegionTypePageParam;
 import com.jiehuihui.admin.service.city.CityRegionTypeService;
 import com.jiehuihui.admin.vo.city.CityRegionTypeVO;
+import com.jiehuihui.common.entity.Permission;
 import com.jiehuihui.common.entity.city.CityRegionType;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
@@ -56,8 +57,9 @@ public class CityRegionTypeServiceImpl implements CityRegionTypeService {
     public RResult getCityRegionTypeByssid(RResult result, DeleteCityRegionTypeParam param) {
         UpdateWrapper<CityRegionType> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        CityRegionType cityRegionType = cityRegionTypeMapper.selectList(ew).get(0);
-        if (null != cityRegionType) {
+        List<CityRegionType> cityRegionTypes = cityRegionTypeMapper.selectList(ew);
+        if (null != cityRegionTypes && cityRegionTypes.size() > 0) {
+            CityRegionType cityRegionType = cityRegionTypes.get(0);
             result.changeToTrue(cityRegionType);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -72,7 +74,8 @@ public class CityRegionTypeServiceImpl implements CityRegionTypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<CityRegionType> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != cityRegionTypeMapper.selectList(ew) && cityRegionTypeMapper.selectList(ew).size() > 0){
+            List<CityRegionType> cityRegionTypes = cityRegionTypeMapper.selectList(ew);
+            if(null != cityRegionTypes && cityRegionTypes.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

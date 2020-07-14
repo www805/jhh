@@ -1,4 +1,4 @@
-package com.jiehuihui.admin.mapper;
+package com.jiehuihui.admin.mapper.shop;
 
 import com.jiehuihui.common.entity.Shopinfoup;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;

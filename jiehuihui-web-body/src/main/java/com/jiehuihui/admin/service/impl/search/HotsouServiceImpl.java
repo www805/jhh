@@ -10,6 +10,7 @@ import com.jiehuihui.admin.req.search.AddUpdateHotsouParam;
 import com.jiehuihui.admin.req.search.DeleteHotsouParam;
 import com.jiehuihui.admin.req.search.GetHotsouPageParam;
 import com.jiehuihui.admin.vo.search.GetHotsouVO;
+import com.jiehuihui.common.entity.shop.Shopinfo;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -44,9 +45,10 @@ public class HotsouServiceImpl implements HotsouService {
     public RResult getHotsouByssid(RResult result, DeleteHotsouParam param) {
         UpdateWrapper<Hotsou> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Hotsou hotsou = hotsouMapper.selectList(ew).get(0);
-        if (null != hotsou) {
-            result.changeToTrue(hotsou);
+        List<Hotsou> hotsous = hotsouMapper.selectList(ew);
+        if (null != hotsous && hotsous.size() > 0) {
+            Hotsou homespecial = hotsous.get(0);
+            result.changeToTrue(homespecial);
         }else{
             result.setMessage("获取失败，该条数据不存在");
         }
@@ -87,7 +89,8 @@ public class HotsouServiceImpl implements HotsouService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Hotsou> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != hotsouMapper.selectList(ew) && hotsouMapper.selectList(ew).size() > 0){
+            List<Hotsou> hotsous = hotsouMapper.selectList(ew);
+            if(null != hotsous && hotsous.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

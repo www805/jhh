@@ -14,6 +14,7 @@ import com.jiehuihui.admin.req.AddUpdateCardParam;
 import com.jiehuihui.admin.req.DeleteCardParam;
 import com.jiehuihui.admin.req.GetCardPageParam;
 import com.jiehuihui.admin.vo.GetCardVO;
+import com.jiehuihui.common.entity.Homespecial;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.Usertorole;
 import com.jiehuihui.common.utils.LogUtil;
@@ -209,8 +210,9 @@ public class CardServiceImpl implements CardService {
     public RResult getCardByssid(RResult result, DeleteCardParam param) {
         UpdateWrapper<Card> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Card card = cardMapper.selectList(ew).get(0);
-        if (null != card) {
+        List<Card> cards = cardMapper.selectList(ew);
+        if (null != cards && cards.size() > 0) {
+            Card card = cards.get(0);
             result.changeToTrue(card);
         }else{
             result.setMessage("获取失败，该条数据不存在");

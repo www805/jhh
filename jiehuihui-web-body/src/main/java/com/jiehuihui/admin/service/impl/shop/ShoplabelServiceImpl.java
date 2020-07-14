@@ -1,5 +1,6 @@
 package com.jiehuihui.admin.service.impl.shop;
 
+import com.jiehuihui.common.entity.Card;
 import com.jiehuihui.common.entity.shop.Shoplabel;
 import com.jiehuihui.admin.mapper.shop.ShoplabelMapper;
 import com.jiehuihui.admin.service.shop.ShoplabelService;
@@ -45,8 +46,9 @@ public class ShoplabelServiceImpl implements ShoplabelService {
     public RResult getShoplabelByssid(RResult result, DeleteShoplabelParam param) {
         UpdateWrapper<Shoplabel> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Shoplabel shoplabel = shoplabelMapper.selectList(ew).get(0);
-        if (null != shoplabel) {
+        List<Shoplabel> shoplabels = shoplabelMapper.selectList(ew);
+        if (null != shoplabels && shoplabels.size() > 0) {
+            Shoplabel shoplabel = shoplabels.get(0);
             result.changeToTrue(shoplabel);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -87,7 +89,8 @@ public class ShoplabelServiceImpl implements ShoplabelService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shoplabel> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shoplabelMapper.selectList(ew) && shoplabelMapper.selectList(ew).size() > 0){
+            List<Shoplabel> shoplabels = shoplabelMapper.selectList(ew);
+            if(null != shoplabels && shoplabels.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

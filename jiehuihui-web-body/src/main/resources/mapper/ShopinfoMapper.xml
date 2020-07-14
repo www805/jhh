@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiehuihui.admin.mapper.shop.ShopinfoupMapper">
+<mapper namespace="com.jiehuihui.admin.mapper.shop.ShopinfoMapper">
 
-    <resultMap type="com.jiehuihui.common.entity.Shopinfoup" id="BaseResultMap">
+    <resultMap type="com.jiehuihui.common.entity.shop.Shopinfo" id="ShopinfoMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="shopname" column="shopname" jdbcType="VARCHAR"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="dpdescribe" column="dpdescribe" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
-        <result property="sfzimg" column="sfzimg" jdbcType="VARCHAR"/>
-        <result property="yyzzimg" column="yyzzimg" jdbcType="VARCHAR"/>
-        <result property="userid" column="userid" jdbcType="VARCHAR"/>
+        <result property="wxnum" column="wxnum" jdbcType="VARCHAR"/>
+        <result property="fmimglist" column="fmimglist" jdbcType="VARCHAR"/>
+        <result property="jgimglist" column="jgimglist" jdbcType="VARCHAR"/>
+        <result property="sfzimglist" column="sfzimglist" jdbcType="VARCHAR"/>
+        <result property="yyzzimgs" column="yyzzimgs" jdbcType="VARCHAR"/>
+        <result property="qtimglist" column="qtimglist" jdbcType="VARCHAR"/>
+        <result property="yhtaglist" column="yhtaglist" jdbcType="VARCHAR"/>
         <result property="shoptypessid" column="shoptypessid" jdbcType="VARCHAR"/>
         <result property="cityzhongid" column="cityzhongid" jdbcType="VARCHAR"/>
+        <result property="gzcout" column="gzcout" jdbcType="INTEGER"/>
+        <result property="yytime" column="yytime" jdbcType="VARCHAR"/>
+        <result property="browsecout" column="browsecout" jdbcType="INTEGER"/>
+        <result property="zztop" column="zztop" jdbcType="INTEGER"/>
+        <result property="soutop" column="soutop" jdbcType="INTEGER"/>
+        <result property="hometop" column="hometop" jdbcType="INTEGER"/>
+        <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
+        <result property="hometopendtime" column="hometopendtime" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
-        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
         <association property="shoptype" javaType="com.jiehuihui.common.entity.shop.Shoptype">
             <result property="id" column="tid" jdbcType="INTEGER"/>
             <result property="typename" column="ttypename" jdbcType="VARCHAR"/>
@@ -42,7 +53,7 @@
         <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
     </resultMap>
 
-    <select id="getShopinfoupPage" resultMap="BaseResultMap">
+    <select id="getShopinfoPage" resultMap="ShopinfoMap">
         SELECT
             s.*,
             t.id AS tid,
@@ -67,7 +78,7 @@
             u.vipstatetime AS uvipstatetime,
             u.vipendtime AS uvipendtime
         FROM
-            jhh_shopinfoup s
+            jhh_shopinfo s
             left join jhh_base_shoptype t on s.shoptypessid = t.ssid
             left join jhh_base_cityzhong z on s.cityzhongid = z.id
             left join jhh_user u on s.userid = u.ssid
@@ -75,11 +86,11 @@
             ${ew.customSqlSegment}
     </select>
 
-    <select id="selectShopinfoupCount" resultType="int">
+    <select id="selectShopinfoCount" resultType="int">
         SELECT
             count(s.id)
         FROM
-            jhh_shopinfoup s
+            jhh_shopinfo s
             left join jhh_base_shoptype t on s.shoptypessid = t.ssid
             left join jhh_base_cityzhong z on s.cityzhongid = z.id
             left join jhh_user u on s.userid = u.ssid
@@ -104,5 +115,6 @@
         where
             z.id = #{cityzhongid}
     </select>
+
 
 </mapper>

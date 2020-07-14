@@ -15,6 +15,7 @@ import com.jiehuihui.common.entity.Role;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.Usertorole;
 import com.jiehuihui.common.entity.city.Cityzhong;
+import com.jiehuihui.common.entity.home.HomeSlideshow;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -58,8 +59,9 @@ public class UserServiceImpl implements UserService {
     public RResult getUserByssid(RResult result, DeleteUserParam param) {
         UpdateWrapper<User> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        User user = userMapper.selectList(ew).get(0);
-        if (null != user) {
+        List<User> users = userMapper.selectList(ew);
+        if (null != users && users.size() > 0) {
+            User user = users.get(0);
             result.changeToTrue(user);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -119,7 +121,8 @@ public class UserServiceImpl implements UserService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<User> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != userMapper.selectList(ew)){
+            List<User> users = userMapper.selectList(ew);
+            if (null != users && users.size() > 0) {
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

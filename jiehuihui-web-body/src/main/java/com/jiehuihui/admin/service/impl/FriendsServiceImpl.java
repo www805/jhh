@@ -56,9 +56,10 @@ public class FriendsServiceImpl implements FriendsService {
     public RResult getFriendsByssid(RResult result, DeleteFriendsParam param) {
         UpdateWrapper<Friends> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Friends friends = friendsMapper.selectList(ew).get(0);
-        if (null != friends) {
-            result.changeToTrue(friends);
+        List<Friends> friends = friendsMapper.selectList(ew);
+        if (null != friends && friends.size() > 0) {
+            Friends friend = friends.get(0);
+            result.changeToTrue(friend);
         }else{
             result.setMessage("获取失败，该条数据不存在");
         }
@@ -113,7 +114,8 @@ public class FriendsServiceImpl implements FriendsService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Friends> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != friendsMapper.selectList(ew) && friendsMapper.selectList(ew).size() > 0){
+            List<Friends> friends = friendsMapper.selectList(ew);
+            if(null != friends && friends.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

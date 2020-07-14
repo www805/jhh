@@ -1,5 +1,6 @@
 package com.jiehuihui.admin.service.impl.shop;
 
+import com.jiehuihui.common.entity.shop.Shopcolor;
 import com.jiehuihui.common.entity.shop.Shoptype;
 import com.jiehuihui.admin.mapper.shop.ShoptypeMapper;
 import com.jiehuihui.admin.service.shop.ShoptypeService;
@@ -43,8 +44,9 @@ public class ShoptypeServiceImpl implements ShoptypeService {
     public RResult getShoptypeByssid(RResult result, DeleteShoptypeParam param) {
         UpdateWrapper<Shoptype> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Shoptype shoptype = shoptypeMapper.selectList(ew).get(0);
-        if (null != shoptype) {
+        List<Shoptype> soutypes = shoptypeMapper.selectList(ew);
+        if (null != soutypes && soutypes.size() > 0) {
+            Shoptype shoptype = soutypes.get(0);
             result.changeToTrue(shoptype);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -85,7 +87,8 @@ public class ShoptypeServiceImpl implements ShoptypeService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Shoptype> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != shoptypeMapper.selectList(ew) && shoptypeMapper.selectList(ew).size() > 0){
+            List<Shoptype> shoptypes = shoptypeMapper.selectList(ew);
+            if(null != shoptypes && shoptypes.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

@@ -9,6 +9,7 @@ import com.jiehuihui.admin.req.home.DeleteHomeSlideshowParam;
 import com.jiehuihui.admin.req.home.GetHomeSlideshowPageParam;
 import com.jiehuihui.admin.service.home.HomeSlideshowService;
 import com.jiehuihui.admin.vo.home.GetHomeSlideshowPageVO;
+import com.jiehuihui.common.entity.Shopinfoup;
 import com.jiehuihui.common.entity.home.HomeSlideshow;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
@@ -38,8 +39,9 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
     public RResult getHomeSlideshowByssid(RResult result, DeleteHomeSlideshowParam param) {
         UpdateWrapper<HomeSlideshow> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        HomeSlideshow homeSlideshow = homeSlideshowMapper.selectList(ew).get(0);
-        if (null != homeSlideshow) {
+        List<HomeSlideshow> homeSlideshows = homeSlideshowMapper.selectList(ew);
+        if (null != homeSlideshows && homeSlideshows.size() > 0) {
+            HomeSlideshow homeSlideshow = homeSlideshows.get(0);
             result.changeToTrue(homeSlideshow);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -81,7 +83,8 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<HomeSlideshow> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != homeSlideshowMapper.selectList(ew) && homeSlideshowMapper.selectList(ew).size() > 0){
+            List<HomeSlideshow> homeSlideshows = homeSlideshowMapper.selectList(ew);
+            if(null != homeSlideshows && homeSlideshows.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

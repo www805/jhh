@@ -58,8 +58,9 @@ public class RoleServiceImpl implements RoleService {
     public RResult getRoleByssid(RResult result, DeleteRoleParam param) {
         UpdateWrapper<Role> ew = new UpdateWrapper();
         ew.eq("id", param.getId());
-        Role role = roleMapper.selectList(ew).get(0);
-        if (null != role) {
+        List<Role> roles = roleMapper.selectList(ew);
+        if (null != roles && roles.size() > 0) {
+            Role role = roles.get(0);
             result.changeToTrue(role);
         }else{
             result.setMessage("获取失败，该条数据不存在");

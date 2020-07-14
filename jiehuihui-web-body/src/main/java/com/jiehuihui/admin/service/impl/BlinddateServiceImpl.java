@@ -15,6 +15,7 @@ import com.jiehuihui.admin.req.DeleteBlinddateParam;
 import com.jiehuihui.admin.req.GetBlinddatePageParam;
 import com.jiehuihui.admin.vo.GetBlinddateVO;
 import com.jiehuihui.common.entity.Blinddateinfo;
+import com.jiehuihui.common.entity.Friendstype;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
 import com.jiehuihui.common.utils.LogUtil;
@@ -60,8 +61,9 @@ public class BlinddateServiceImpl implements BlinddateService {
     public RResult getBlinddateByssid(RResult result, DeleteBlinddateParam param) {
         UpdateWrapper<Blinddate> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());
-        Blinddate blinddate = blinddateMapper.selectList(ew).get(0);
-        if (null != blinddate) {
+        List<Blinddate> blinddates = blinddateMapper.selectList(ew);
+        if (null != blinddates && blinddates.size() > 0) {
+            Blinddate blinddate = blinddates.get(0);
             result.changeToTrue(blinddate);
         }else{
             result.setMessage("获取失败，该条数据不存在");
@@ -123,7 +125,8 @@ public class BlinddateServiceImpl implements BlinddateService {
         if(StringUtils.isNoneBlank(param.getSsid())){
             UpdateWrapper<Blinddate> ew = new UpdateWrapper<>();
             ew.eq("ssid", param.getSsid());
-            if(null != blinddateMapper.selectList(ew) && blinddateMapper.selectList(ew).size() > 0){
+            List<Blinddate> blinddates = blinddateMapper.selectList(ew);
+            if(null != blinddates && blinddates.size() > 0){
                 result.setMessage("该ssid已经存在，不能添加");
                 return result;
             }

@@ -8,7 +8,7 @@ spring:
   application:
     name: jiehuihui-web-body #指定服务名
   datasource:
-    url: jdbc:mysql://192.168.1.101:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://192.168.1.103:3306/jiehuihui?useUnicode=true&characterEncoding=utf8
 #    url: jdbc:mysql://144.48.9.35:3377/jiehuihui?useUnicode=true&characterEncoding=utf8
     username: root
     password: root
@@ -16,7 +16,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
 #    host: 144.48.9.35
-    host: 192.168.1.101
+    host: 192.168.1.103
     port: 6379
 #    password: jiehuihui520
     password: 123456

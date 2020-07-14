@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.home.HomespecialMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.Homespecial" id="HomespecialMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="specialtitle" column="specialtitle" jdbcType="VARCHAR"/>
+        <result property="shopname" column="shopname" jdbcType="VARCHAR"/>
+        <result property="fmimglist" column="fmimglist" jdbcType="VARCHAR"/>
+        <result property="imgtag" column="imgtag" jdbcType="VARCHAR"/>
+        <result property="titledescribe" column="titledescribe" jdbcType="VARCHAR"/>
+        <result property="oldprice" column="oldprice" jdbcType="NUMERIC"/>
+        <result property="nowprice" column="nowprice" jdbcType="NUMERIC"/>
+        <result property="ordertext" column="ordertext" jdbcType="VARCHAR"/>
+        <result property="hddescribe" column="hddescribe" jdbcType="VARCHAR"/>
+        <result property="hdimglist" column="hdimglist" jdbcType="VARCHAR"/>
+        <result property="tasktext" column="tasktext" jdbcType="VARCHAR"/>
+        <result property="taskdescribe" column="taskdescribe" jdbcType="VARCHAR"/>
+        <result property="taskimglist" column="taskimglist" jdbcType="VARCHAR"/>
+        <result property="specialtags" column="specialtags" jdbcType="VARCHAR"/>
+        <result property="gototag" column="gototag" jdbcType="VARCHAR"/>
+        <result property="likesize" column="likesize" jdbcType="INTEGER"/>
+        <result property="topnum" column="topnum" jdbcType="INTEGER"/>
+        <result property="hometopnum" column="hometopnum" jdbcType="INTEGER"/>
+        <result property="specialtypessid" column="specialtypessid" jdbcType="VARCHAR"/>
+        <result property="shopid" column="shopid" jdbcType="VARCHAR"/>
+        <result property="cityzhongid" column="cityzhongid" jdbcType="VARCHAR"/>
+        <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="settime" column="settime" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <association property="shoptype" javaType="com.jiehuihui.common.entity.shop.Shoptype">
+            <result property="id" column="tid" jdbcType="INTEGER"/>
+            <result property="typename" column="ttypename" jdbcType="VARCHAR"/>
+            <result property="sortnum" column="tsortnum" jdbcType="VARCHAR"/>
+            <result property="ssid" column="tssid" jdbcType="VARCHAR"/>
+        </association>
+        <association property="shopinfo" javaType="com.jiehuihui.common.entity.shop.Shopinfo">
+            <result property="id" column="sid" jdbcType="INTEGER"/>
+            <result property="shopname" column="sshopname" jdbcType="VARCHAR"/>
+            <result property="username" column="susername" jdbcType="VARCHAR"/>
+            <result property="address" column="saddress" jdbcType="VARCHAR"/>
+            <result property="dpdescribe" column="sdpdescribe" jdbcType="VARCHAR"/>
+            <result property="phone" column="sphone" jdbcType="VARCHAR"/>
+            <result property="wxnum" column="swxnum" jdbcType="VARCHAR"/>
+            <result property="fmimglist" column="sfmimglist" jdbcType="VARCHAR"/>
+            <result property="jgimglist" column="sjgimglist" jdbcType="VARCHAR"/>
+            <result property="sfzimglist" column="ssfzimglist" jdbcType="VARCHAR"/>
+            <result property="yyzzimgs" column="syyzzimgs" jdbcType="VARCHAR"/>
+            <result property="qtimglist" column="sqtimglist" jdbcType="VARCHAR"/>
+            <result property="yhtaglist" column="syhtaglist" jdbcType="VARCHAR"/>
+            <result property="shoptypessid" column="sshoptypessid" jdbcType="VARCHAR"/>
+            <result property="cityzhongid" column="scityzhongid" jdbcType="VARCHAR"/>
+            <result property="gzcout" column="sgzcout" jdbcType="INTEGER"/>
+            <result property="yytime" column="syytime" jdbcType="VARCHAR"/>
+            <result property="browsecout" column="sbrowsecout" jdbcType="INTEGER"/>
+            <result property="zztop" column="szztop" jdbcType="INTEGER"/>
+            <result property="soutop" column="ssoutop" jdbcType="INTEGER"/>
+            <result property="hometop" column="shometop" jdbcType="INTEGER"/>
+            <result property="sortnum" column="ssortnum" jdbcType="INTEGER"/>
+            <result property="hometopendtime" column="shometopendtime" jdbcType="TIMESTAMP"/>
+            <result property="state" column="sstate" jdbcType="INTEGER"/>
+            <result property="ssid" column="sssid" jdbcType="VARCHAR"/>
+        </association>
+        <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
+    </resultMap>
+
+    <select id="getHomespecialPage" resultMap="HomespecialMap">
+        SELECT
+            h.*,
+            t.id AS tid,
+            t.typename AS ttypename,
+            t.sortnum AS tsortnum,
+            t.ssid AS tssid,
+            s.id AS sid,
+            s.shopname AS sshopname,
+            s.username AS susername,
+            s.address AS saddress,
+            s.dpdescribe AS sdpdescribe,
+            s.phone AS sphone,
+            s.wxnum AS swxnum,
+            s.fmimglist AS sfmimglist,
+            s.jgimglist AS sjgimglist,
+            s.sfzimglist AS ssfzimglist,
+            s.yyzzimgs AS syyzzimgs,
+            s.yhtaglist AS syhtaglist,
+            s.shoptypessid AS sshoptypessid,
+            s.cityzhongid AS scityzhongid,
+            s.gzcout AS sgzcout,
+            s.yytime AS syytime,
+            s.browsecout AS sbrowsecout,
+            s.zztop AS szztop,
+            s.soutop AS ssoutop,
+            s.hometop AS shometop,
+            s.sortnum AS ssortnum,
+            s.hometopendtime AS shometopendtime,
+            s.state AS sstate,
+            s.ssid AS sssid
+        FROM
+            jhh_base_homespecial h
+            left join jhh_base_shoptype t on h.specialtypessid = t.ssid
+            left join jhh_base_cityzhong z on h.cityzhongid = z.id
+            left join jhh_shopinfo s on h.shopid = s.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectHomespecialCount" resultType="int">
+        SELECT
+            count(h.id)
+        FROM
+            jhh_base_homespecial h
+            left join jhh_base_shoptype t on h.specialtypessid = t.ssid
+            left join jhh_base_cityzhong z on h.cityzhongid = z.id
+            left join jhh_shopinfo s on h.shopid = s.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
+        SELECT
+            z.id,
+            p.id AS pid,
+            c.id AS cid,
+            a.id AS aid,
+            p.provincename,
+            c.cityname,
+            a.areaname
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        where
+            z.id = #{cityzhongid}
+    </select>
+
+</mapper>
