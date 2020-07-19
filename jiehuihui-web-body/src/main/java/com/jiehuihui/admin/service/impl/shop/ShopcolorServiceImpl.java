@@ -32,9 +32,12 @@ public class ShopcolorServiceImpl implements ShopcolorService {
     private ShopcolorMapper shopcolorMapper;
 
     @Override
-    public RResult getShopcolor(RResult result) {
+    public RResult getShopcolor(RResult result, GetShopcolorPageParam param) {
         UpdateWrapper<Shopcolor> ew = new UpdateWrapper<>();
         ew.eq("state", 1);
+        if(null != param.getColortype() && param.getColortype() >= 0){
+            ew.eq("colortype", param.getColortype());
+        }
         ew.orderByDesc("sortnum");
         List<Shopcolor> shopcolors = shopcolorMapper.selectList(ew);
         result.changeToTrue(shopcolors);
@@ -66,6 +69,9 @@ public class ShopcolorServiceImpl implements ShopcolorService {
         }
         if(StringUtils.isNotEmpty(param.getColorname())){
             ew.like("colorname", param.getColorname());
+        }
+        if(null != param.getColortype() && param.getColortype() >= 0){
+            ew.eq("colortype", param.getColortype());
         }
 
         ew.orderByDesc("sortnum");
@@ -105,6 +111,7 @@ public class ShopcolorServiceImpl implements ShopcolorService {
         if(StringUtils.isNoneBlank(param.getColorname())){
             ew.eq("colorname", param.getColorname());
         }
+
         List<Shopcolor> TypeList = shopcolorMapper.selectList(ew);
         if (null != TypeList && TypeList.size() > 0) {
             result.setMessage("该数据已经存在，不能添加");
@@ -116,7 +123,7 @@ public class ShopcolorServiceImpl implements ShopcolorService {
         shopcolor.setColorname(param.getColorname());
         shopcolor.setSortnum(param.getSortnum());
         shopcolor.setSsid(ssid);
-        shopcolor.setState(param.getState());
+        shopcolor.setColortype(param.getColortype());
         shopcolor.setState(param.getState());
         int insert = shopcolorMapper.insert(shopcolor);
         if (insert > 0) {
@@ -148,6 +155,7 @@ public class ShopcolorServiceImpl implements ShopcolorService {
         Shopcolor shopcolor = new Shopcolor();
         shopcolor.setColor(param.getColor());
         shopcolor.setColorname(param.getColorname());
+        shopcolor.setColortype(param.getColortype());
         shopcolor.setSortnum(param.getSortnum());
         shopcolor.setState(param.getState());
 

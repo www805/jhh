@@ -17,7 +17,7 @@
         <result property="tasktext" column="tasktext" jdbcType="VARCHAR"/>
         <result property="taskdescribe" column="taskdescribe" jdbcType="VARCHAR"/>
         <result property="taskimglist" column="taskimglist" jdbcType="VARCHAR"/>
-        <result property="specialtags" column="specialtags" jdbcType="VARCHAR"/>
+        <result property="dynamictags" column="dynamictags" jdbcType="VARCHAR"/>
         <result property="gototag" column="gototag" jdbcType="VARCHAR"/>
         <result property="likesize" column="likesize" jdbcType="INTEGER"/>
         <result property="topnum" column="topnum" jdbcType="INTEGER"/>

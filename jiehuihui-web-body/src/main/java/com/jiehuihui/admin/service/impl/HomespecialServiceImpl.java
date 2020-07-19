@@ -83,14 +83,13 @@ public class HomespecialServiceImpl implements HomespecialService {
         if(StringUtils.isNotEmpty(param.getShopname())){
             ew.like("h.shopname", param.getShopname());
         }
-        if(StringUtils.isNotEmpty(param.getPhone())){
-            ew.like("h.phone", param.getPhone());
+        if(StringUtils.isNotEmpty(param.getSpecialtitle())){
+            ew.like("h.specialtitle", param.getSpecialtitle());
         }
-        if(null != param.getState() && param.getState() >= 0 && param.getState() != 2){
-            ew.eq("h.state", param.getState());
-        }else{
-            ew.ne("h.state", 2);
+        if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
+            ew.eq("h.specialtypessid", param.getTypeid());
         }
+        ew.le("h.state", 1);
 
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){
@@ -180,12 +179,18 @@ public class HomespecialServiceImpl implements HomespecialService {
 
         if(param.getFmimglist().size() > 0){
             homespecial.setFmimglist(param.getFmimglist().toString().trim());
+        }else{
+            homespecial.setFmimglist("");
         }
         if(param.getHdimglist().size() > 0){
             homespecial.setHdimglist(param.getHdimglist().toString().trim());
+        }else{
+            homespecial.setHdimglist("");
         }
         if(param.getTaskimglist().size() > 0){
             homespecial.setTaskimglist(param.getTaskimglist().toString().trim());
+        }else{
+            homespecial.setTaskimglist("");
         }
 
         homespecial.setSpecialtitle(param.getSpecialtitle());
@@ -198,7 +203,7 @@ public class HomespecialServiceImpl implements HomespecialService {
         homespecial.setHddescribe(param.getHddescribe());
         homespecial.setTasktext(param.getTasktext());
         homespecial.setTaskdescribe(param.getTaskdescribe());
-        homespecial.setSpecialtags(param.getSpecialtags());
+        homespecial.setDynamictags(param.getDynamictags());
         homespecial.setGototag(param.getGototag());
         homespecial.setLikesize(param.getLikesize());
         homespecial.setTopnum(param.getTopnum());
@@ -206,7 +211,7 @@ public class HomespecialServiceImpl implements HomespecialService {
         homespecial.setSpecialtypessid(param.getSpecialtypessid());
         homespecial.setSettime(param.getSettime());
         homespecial.setSortnum(param.getSortnum());
-        homespecial.setSsid(param.getSsid());
+        homespecial.setSsid(ssid);
         homespecial.setState(param.getState());
         int insert = homespecialMapper.insert(homespecial);
         if (insert > 0) {
@@ -266,12 +271,23 @@ public class HomespecialServiceImpl implements HomespecialService {
 
         if(param.getFmimglist().size() > 0){
             homespecial.setFmimglist(param.getFmimglist().toString().trim());
+        }else{
+            homespecial.setFmimglist("");
         }
         if(param.getHdimglist().size() > 0){
             homespecial.setHdimglist(param.getHdimglist().toString().trim());
+        }else{
+            homespecial.setHdimglist("");
         }
         if(param.getTaskimglist().size() > 0){
             homespecial.setTaskimglist(param.getTaskimglist().toString().trim());
+        }else{
+            homespecial.setTaskimglist("");
+        }
+        if(param.getTaskimglist().size() > 0){
+            homespecial.setTaskimglist(param.getTaskimglist().toString().trim());
+        }else{
+            homespecial.setTaskimglist("");
         }
 
         homespecial.setSpecialtitle(param.getSpecialtitle());
@@ -284,7 +300,7 @@ public class HomespecialServiceImpl implements HomespecialService {
         homespecial.setHddescribe(param.getHddescribe());
         homespecial.setTasktext(param.getTasktext());
         homespecial.setTaskdescribe(param.getTaskdescribe());
-        homespecial.setSpecialtags(param.getSpecialtags());
+        homespecial.setDynamictags(param.getDynamictags());
         homespecial.setGototag(param.getGototag());
         homespecial.setLikesize(param.getLikesize());
         homespecial.setTopnum(param.getTopnum());

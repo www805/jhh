@@ -38,10 +38,10 @@ public class ShopcolorController {
 
     //获取店铺标签颜色
     @ApiOperation(value = "获取店铺标签颜色", notes = "获取所有店铺标签颜色,没分页")
-    @GetMapping("/getShopcolor")
-    public RResult getShopcolor(){
+    @PostMapping("/getShopcolor")
+    public RResult getShopcolor(@ApiParam(name="首页获取一条店铺标签颜色",value="传入json格式",required=true) @RequestBody GetShopcolorPageParam param){
         RResult<Shopcolor> result = new RResult<>();
-        return shopcolorService.getShopcolor (result);
+        return shopcolorService.getShopcolor (result, param);
     }
 
     //获取一条店铺标签颜色

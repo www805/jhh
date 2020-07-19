@@ -91,7 +91,7 @@ public class Homespecial implements Serializable {
     /**
      * 优惠标签集
      */
-    private String specialtags;
+    private String dynamictags;
     /**
      * 进店描述标签
      */

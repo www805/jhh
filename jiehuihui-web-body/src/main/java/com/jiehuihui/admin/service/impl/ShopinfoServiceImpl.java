@@ -3,6 +3,7 @@ package com.jiehuihui.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jiehuihui.admin.mapper.ShopyhmdMapper;
 import com.jiehuihui.admin.mapper.UserMapper;
 import com.jiehuihui.admin.mapper.city.CityzhongMapper;
 import com.jiehuihui.admin.mapper.shop.ShopinfoMapper;
@@ -13,6 +14,7 @@ import com.jiehuihui.admin.service.shop.ShopinfoService;
 import com.jiehuihui.admin.vo.GetShopinfoVO;
 import com.jiehuihui.admin.vo.GetShopinfoupVO;
 import com.jiehuihui.common.entity.Shopinfoup;
+import com.jiehuihui.common.entity.Shopyhmd;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
 import com.jiehuihui.common.entity.shop.Shopinfo;
@@ -22,6 +24,7 @@ import com.jiehuihui.common.utils.RResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,6 +46,9 @@ public class ShopinfoServiceImpl implements ShopinfoService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ShopyhmdMapper shopyhmdMapper;
 
     /**
      * 通过ID查询单条数据
@@ -79,14 +85,16 @@ public class ShopinfoServiceImpl implements ShopinfoService {
         if(StringUtils.isNotEmpty(param.getShopname())){
             ew.like("s.shopname", param.getShopname());
         }
+        if(StringUtils.isNotEmpty(param.getUsername())){
+            ew.like("s.username", param.getUsername());
+        }
         if(StringUtils.isNotEmpty(param.getPhone())){
             ew.like("s.phone", param.getPhone());
         }
-        if(null != param.getState() && param.getState() >= 0 && param.getState() != 2){
-            ew.eq("s.state", param.getState());
-        }else{
-            ew.ne("s.state", 2);
+        if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
+            ew.eq("s.shoptypessid", param.getTypeid());
         }
+        ew.le("s.state", 1);//小于等于
 
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){
@@ -123,6 +131,7 @@ public class ShopinfoServiceImpl implements ShopinfoService {
      * @param param
      * @return
      */
+    @Transactional
     @Override
     public RResult addShopinfo(RResult result, AddUpdateShopinfoParam param) {
         //先校验添加的ssid是否已经存在，在判断添加的参数是否已经存在
@@ -175,6 +184,19 @@ public class ShopinfoServiceImpl implements ShopinfoService {
             }
         }
 
+        if(null != param.getShopyhmd()){
+            Shopyhmd shopyhmd = param.getShopyhmd();
+            shopyhmd.setState(1);
+            shopyhmd.setShopid(ssid);
+            shopyhmdMapper.insert(shopyhmd);
+        }
+
+        if(param.getFmimglist().size() > 0){
+            shopinfo.setFmimglist(param.getFmimglist().toString().trim());
+        }
+        if(param.getJgimglist().size() > 0){
+            shopinfo.setJgimglist(param.getJgimglist().toString().trim());
+        }
         if(param.getSfzimglist().size() > 0){
             shopinfo.setSfzimglist(param.getSfzimglist().toString().trim());
         }
@@ -184,18 +206,14 @@ public class ShopinfoServiceImpl implements ShopinfoService {
         if(param.getQtimglist().size() > 0){
             shopinfo.setQtimglist(param.getQtimglist().toString().trim());
         }
-        if(param.getYhtaglist().size() > 0){
-            shopinfo.setYhtaglist(param.getYhtaglist().toString().trim());
-        }
 
+        shopinfo.setYhtaglist(param.getYhtaglist());
         shopinfo.setShoptypessid(param.getShoptypessid());
         shopinfo.setShopname(param.getShopname());
         shopinfo.setAddress(param.getAddress());
         shopinfo.setPhone(param.getPhone());
         shopinfo.setWxnum(param.getWxnum());
         shopinfo.setDpdescribe(param.getDpdescribe());
-        shopinfo.setFmimglist(param.getFmimglist());
-        shopinfo.setJgimglist(param.getJgimglist());
         shopinfo.setGzcout(param.getGzcout());
         shopinfo.setYytime(param.getYytime());
         shopinfo.setBrowsecout(param.getBrowsecout());
@@ -204,7 +222,7 @@ public class ShopinfoServiceImpl implements ShopinfoService {
         shopinfo.setHometop(param.getHometop());
         shopinfo.setSortnum(param.getSortnum());
         shopinfo.setHometopendtime(param.getHometopendtime());
-        shopinfo.setSsid(param.getSsid());
+        shopinfo.setSsid(ssid);
         shopinfo.setState(param.getState());
         int insert = shopinfoMapper.insert(shopinfo);
         if (insert > 0) {
@@ -219,6 +237,7 @@ public class ShopinfoServiceImpl implements ShopinfoService {
      * @param param
      * @return
      */
+    @Transactional
     @Override
     public RResult updateShopinfo(RResult result, AddUpdateShopinfoParam param) {
         //先校验是否已经存在
@@ -263,19 +282,46 @@ public class ShopinfoServiceImpl implements ShopinfoService {
             }
         }
 
-        if(param.getSfzimglist().size() > 0){
-            shopinfo.setSfzimglist(param.getSfzimglist().toString().trim());
-        }
-        if(param.getYyzzimgs().size() > 0){
-            shopinfo.setYyzzimgs(param.getYyzzimgs().toString().trim());
-        }
-        if(param.getQtimglist().size() > 0){
-            shopinfo.setQtimglist(param.getQtimglist().toString().trim());
-        }
-        if(param.getYhtaglist().size() > 0){
-            shopinfo.setYhtaglist(param.getYhtaglist().toString().trim());
+        if(null != param.getShopyhmd()){
+            Shopyhmd shopyhmd = param.getShopyhmd();
+            if(null == shopyhmd.getId() || shopyhmd.getId() == 0){
+                result.setMessage("免单参数有误，无法提交");
+                return result;
+            }
+            UpdateWrapper<Shopyhmd> sew = new UpdateWrapper<Shopyhmd>();
+            sew.eq("id", shopyhmd.getId());
+            Shopyhmd shopmd = new Shopyhmd();
+            shopmd.setMdtitle(shopyhmd.getMdtitle());
+            shopmd.setMdtag(shopyhmd.getMdtag());
+            shopmd.setMddescribe(shopyhmd.getMddescribe());
+            shopmd.setContent(shopyhmd.getContent());
+            shopmd.setMdcontent(shopyhmd.getMdcontent());
+            shopmd.setTopnum(shopyhmd.getTopnum());
+            shopmd.setStarttime(shopyhmd.getStarttime());
+            shopmd.setEndtime(shopyhmd.getEndtime());
+            if(StringUtils.isNoneBlank(shopyhmd.getFmimglist())){
+                shopmd.setFmimglist(shopyhmd.getFmimglist().trim());
+            }
+            shopyhmdMapper.update(shopmd, sew);
         }
 
+        if(null != param.getFmimglist() && param.getFmimglist().size() > 0){
+            shopinfo.setFmimglist(param.getFmimglist().toString().trim());
+        }
+        if(null != param.getJgimglist() && param.getJgimglist().size() > 0){
+            shopinfo.setJgimglist(param.getJgimglist().toString().trim());
+        }
+        if(null != param.getSfzimglist() && param.getSfzimglist().size() > 0){
+            shopinfo.setSfzimglist(param.getSfzimglist().toString().trim());
+        }
+        if(null != param.getYyzzimgs() && param.getYyzzimgs().size() > 0){
+            shopinfo.setYyzzimgs(param.getYyzzimgs().toString().trim());
+        }
+        if(null != param.getQtimglist() && param.getQtimglist().size() > 0){
+            shopinfo.setQtimglist(param.getQtimglist().toString().trim());
+        }
+
+        shopinfo.setYhtaglist(param.getYhtaglist());
         shopinfo.setShoptypessid(param.getShoptypessid());
         shopinfo.setShopname(param.getShopname());
         shopinfo.setAddress(param.getAddress());
@@ -283,8 +329,6 @@ public class ShopinfoServiceImpl implements ShopinfoService {
         shopinfo.setDpdescribe(param.getDpdescribe());
         shopinfo.setState(param.getState());
         shopinfo.setWxnum(param.getWxnum());
-        shopinfo.setFmimglist(param.getFmimglist());
-        shopinfo.setJgimglist(param.getJgimglist());
         shopinfo.setGzcout(param.getGzcout());
         shopinfo.setYytime(param.getYytime());
         shopinfo.setBrowsecout(param.getBrowsecout());

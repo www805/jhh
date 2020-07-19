@@ -9,9 +9,9 @@ import java.util.List;
 public class GetShopinfoPageParam extends Page {
 
     private String shopname; //店铺名字
+    private String username; //用户名
     private String phone; //手机号码
-    private String wxnum; //微信号码
-    private Integer state; //状态
+    private String typeid; //类型
 
     private List<String> cityList;//城市地区id
 

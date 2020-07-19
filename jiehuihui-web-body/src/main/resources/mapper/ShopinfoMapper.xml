@@ -26,6 +26,7 @@
         <result property="hometop" column="hometop" jdbcType="INTEGER"/>
         <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
         <result property="hometopendtime" column="hometopendtime" jdbcType="TIMESTAMP"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
         <association property="shoptype" javaType="com.jiehuihui.common.entity.shop.Shoptype">
@@ -51,6 +52,8 @@
             <result property="vipendtime" column="uvipendtime" jdbcType="TIMESTAMP"/>
         </association>
         <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
+        <association property="zhiding" column="{ssid=ssid}" select="getZhiding" javaType="com.jiehuihui.common.entity.Zhiding" />
+        <association property="shopyhmd" column="{ssid=ssid}" select="getShopyhmd" javaType="com.jiehuihui.common.entity.Shopyhmd" />
     </resultMap>
 
     <select id="getShopinfoPage" resultMap="ShopinfoMap">
@@ -116,5 +119,22 @@
             z.id = #{cityzhongid}
     </select>
 
+    <select id="getZhiding" resultType="com.jiehuihui.common.entity.Zhiding">
+        SELECT
+            *
+        FROM
+            jhh_base_zhiding z
+        where
+            z.shopssid = #{ssid}
+    </select>
+
+    <select id="getShopyhmd" resultType="com.jiehuihui.common.entity.Shopyhmd">
+        SELECT
+            *
+        FROM
+            jhh_shopyhmd s
+        where
+            s.shopid = #{ssid}
+    </select>
 
 </mapper>

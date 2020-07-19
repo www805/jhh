@@ -44,6 +44,8 @@ public class Shopcolor extends Model<Shopcolor> implements Serializable {
         
     private String colorname;
 
+    private Integer colortype;//文字颜色类型
+
     /**
     * 排序
     */

@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jiehuihui.common.entity.ProvinceCityArea;
-import com.jiehuihui.common.entity.Shopinfoup;
-import com.jiehuihui.common.entity.User;
+import com.jiehuihui.common.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -150,4 +148,10 @@ public class Shopinfo extends Model<Shopinfo> implements Serializable {
 
     @TableField(exist = false)
     private ProvinceCityArea city;//关联的城市
+
+    @TableField(exist = false)
+    private Zhiding zhiding;//关联的置顶
+
+    @TableField(exist = false)
+    private Shopyhmd shopyhmd;//关联的免单
 }

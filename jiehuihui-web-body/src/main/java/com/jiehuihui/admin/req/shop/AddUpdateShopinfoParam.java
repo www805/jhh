@@ -3,6 +3,8 @@ package com.jiehuihui.admin.req.shop;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
+import com.jiehuihui.common.entity.Shopyhmd;
+import com.jiehuihui.common.entity.Zhiding;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,10 +27,10 @@ public class AddUpdateShopinfoParam {
     private String phone;//联系电话
 
     private String wxnum;//微信号码
+    @NotNull(message = "店铺封面不能为空", groups = {Create.class, Update.class})
+    private List<String> fmimglist;//店铺封面集合
 
-    private String fmimglist;//店铺封面集合
-
-    private String jgimglist;//价格指南图片集合
+    private List<String> jgimglist;//价格指南图片集合
 
     @NotNull(message = "身份证图片不能为空", groups = {Create.class, Update.class})
     private List<String> sfzimglist;//身份证图片集合
@@ -37,7 +39,7 @@ public class AddUpdateShopinfoParam {
 
     private List<String> qtimglist;//其他图片集合
 
-    private List<String> yhtaglist;//优惠标签
+    private String yhtaglist;//优惠标签
 
     @NotBlank(message = "店铺类型不能为空", groups = {Create.class, Update.class})
     private String shoptypessid;//店铺类型关联id
@@ -70,5 +72,6 @@ public class AddUpdateShopinfoParam {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createtime;//创建时间
 
+    private Shopyhmd shopyhmd;//关联的免单
 
 }

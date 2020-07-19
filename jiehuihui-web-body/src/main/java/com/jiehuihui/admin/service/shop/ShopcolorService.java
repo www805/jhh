@@ -14,7 +14,7 @@ import com.jiehuihui.common.utils.RResult;
 public interface ShopcolorService {
 
     //获取店铺标签颜色
-    RResult getShopcolor(RResult result);
+    RResult getShopcolor(RResult result, GetShopcolorPageParam param);
 
     //获取一条店铺标签颜色
     RResult getShopcolorByssid(RResult result, DeleteShopcolorParam param);

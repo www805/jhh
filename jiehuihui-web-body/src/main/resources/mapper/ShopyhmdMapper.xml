@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.ShopyhmdMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.Shopyhmd" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="shopid" column="shopid" jdbcType="VARCHAR"/>
+        <result property="mdtitle" column="mdtitle" jdbcType="VARCHAR"/>
+        <result property="mdtag" column="mdtag" jdbcType="VARCHAR"/>
+        <result property="mddescribe" column="mddescribe" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="fmimglist" column="fmimglist" jdbcType="VARCHAR"/>
+        <result property="mdcontent" column="mdcontent" jdbcType="VARCHAR"/>
+        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
+        <result property="topnum" column="topnum" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+        <result property="starttime" column="starttime" jdbcType="TIMESTAMP"/>
+        <result property="endtime" column="endtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+</mapper>

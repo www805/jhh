@@ -8,10 +8,9 @@ import java.util.List;
 @Data
 public class GetSpecialPageParam extends Page {
 
+    private String specialtitle; //特价标题
     private String shopname; //店铺名字
-    private String phone; //手机号码
-    private String wxnum; //微信号码
-    private Integer state; //状态
+    private String typeid; //类型
 
     private List<String> cityList;//城市地区id
 
