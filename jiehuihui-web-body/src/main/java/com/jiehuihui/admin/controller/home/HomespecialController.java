@@ -21,7 +21,8 @@ import javax.annotation.Resource;
  * @since 2020-07-09 18:29:16
  */
 @Api(value = "特价模块", description = "特价的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/homespecial")
 public class HomespecialController {

@@ -25,7 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-04-19 09:54:34
  */
 @Api(value = "用户信息模块", description = "用户信息的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/user")
 public class UserController {

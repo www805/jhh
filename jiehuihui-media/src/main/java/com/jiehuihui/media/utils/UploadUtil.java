@@ -1,6 +1,7 @@
 package com.jiehuihui.media.utils;
 
 import com.jiehuihui.common.utils.FileUtils;
+import com.jiehuihui.common.utils.LogUtil;
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.StorageClient;
 import org.csource.fastdfs.TrackerClient;
@@ -98,8 +99,13 @@ public class UploadUtil {
         //获取类路径
         String classPath = UploadUtil.class.getResource("/").getPath();
 
+        LogUtil.intoLog(1, UploadUtil.class, "当前路径："+classPath);
+
         //将classpath:换成类路径
         path = path.replace("classpath:",classPath);
+        path = path.replace("!", "");
+
+        LogUtil.intoLog(1, UploadUtil.class, "替换路径："+path);
         return path;
     }
 

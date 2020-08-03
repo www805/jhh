@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-04-11 19:41:22
  */
 @Api(value = "热门搜素模块", description = "热门搜素的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/hotsou")
 public class HotsouController {

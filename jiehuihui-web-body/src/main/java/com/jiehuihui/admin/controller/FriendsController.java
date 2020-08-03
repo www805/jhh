@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-05-02 14:39:37
  */
 @Api(value = "朋友圈模块", description = "朋友圈的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/friends")
 public class FriendsController {

@@ -1,0 +1,21 @@
+#生产环境
+#端口
+server:
+  port: 5002
+
+#mysq;
+spring:
+  datasource:
+    url: jdbc:mysql://144.48.9.35:3377/jiehuihui?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: jiehuihui520
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#fastDfs上传参数
+TRACKER_SERVER: classpath:config/tracker.conf
+
+#UPLOAD_IMAGE_DOMAIN: http://192.168.0.101/
+#图片服务器IP
+#UPLOAD_IMAGE_DOMAIN: http://192.168.136.129/
+UPLOAD_IMAGE_DOMAIN: http://129.204.228.207/

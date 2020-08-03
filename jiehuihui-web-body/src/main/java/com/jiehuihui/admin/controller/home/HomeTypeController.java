@@ -8,6 +8,7 @@ import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
 import com.jiehuihui.common.entity.home.HomeType;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Api(value = "首页分类模块", description = "首页分类的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/homeType")
 public class HomeTypeController {
@@ -28,10 +30,10 @@ public class HomeTypeController {
     //获取首页分类
 //    @RequiresAuthentication
     @ApiOperation(value = "获取首页分类", notes = "获取所有首页分类,没分页")
-    @GetMapping("/getHomeType")
-    public RResult getHomeType(){
+    @PostMapping("/getHomeType")
+    public RResult getHomeType(@RequestBody GetHomeWebParam param){
         RResult<HomeType> result = new RResult<>();
-        return homeTypeService.getHomeType(result);
+        return homeTypeService.getHomeType(result, param);
     }
 
     //获取一条首页分类

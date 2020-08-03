@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-04-12 20:58:38
  */
 @Api(value = "权限模块", description = "权限的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/permission")
 public class PermissionController {

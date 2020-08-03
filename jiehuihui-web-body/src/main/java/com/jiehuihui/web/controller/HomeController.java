@@ -3,17 +3,17 @@ package com.jiehuihui.web.controller;
 import com.jiehuihui.common.entity.home.HomeGg;
 import com.jiehuihui.common.entity.city.ProvinceVO;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 import com.jiehuihui.web.service.HomeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @Api(value = "首页公告模块", description = "首页公告的接口信息(前台)")
 @RestController
+@CrossOrigin
 @RequestMapping("/home")
 public class HomeController {
 
@@ -21,26 +21,26 @@ public class HomeController {
     private HomeService homeService;
 
     //获取首页公告
-    @GetMapping("/getHomegg")
-    public RResult getHomegg(){
+    @PostMapping("/getHomegg")
+    public RResult getHomegg(@RequestBody GetHomeWebParam param){
         RResult<HomeGg> result = new RResult<>();
-        return homeService.getHomegg(result);
+        return homeService.getHomegg(result, param);
     }
 
 
     //获取首页类型
-    @GetMapping("/getHometype")
-    public RResult getHometype(){
+    @PostMapping("/getHometype")
+    public RResult getHometype(@RequestBody GetHomeWebParam param){
         RResult<HomeGg> result = new RResult<>();
-        return homeService.getHometype(result);
+        return homeService.getHometype(result, param);
     }
 
 
     //获取首页轮播图
-    @GetMapping("/getHomelb")
-    public RResult getHomelb(){
+    @PostMapping("/getHomelb")
+    public RResult getHomelb(@RequestBody GetHomeWebParam param){
         RResult<HomeGg> result = new RResult<>();
-        return homeService.getHomelb(result);
+        return homeService.getHomelb(result, param);
     }
 
 

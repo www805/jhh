@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-07-12 16:40:14
  */
 @Api(value = "店铺模块", description = "店铺的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/shopinfo")
 public class ShopinfoController {

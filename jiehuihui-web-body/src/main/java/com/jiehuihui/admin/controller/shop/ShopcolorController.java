@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-04-11 17:27:28
  */
 @Api(value = "店铺标签颜色模块", description = "店铺标签颜色的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/shopcolor")
 public class ShopcolorController {

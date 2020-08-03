@@ -4,6 +4,7 @@ import com.jiehuihui.admin.req.home.AddUpdateHomeTypeParam;
 import com.jiehuihui.admin.req.home.DeleteHomeTypeParam;
 import com.jiehuihui.admin.req.home.GetHomeTypePageParam;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 
 /**
  * (HomeType)表服务接口
@@ -14,7 +15,7 @@ import com.jiehuihui.common.utils.RResult;
 public interface HomeTypeService {
 
     //获取首页分类
-    RResult getHomeType(RResult result);
+    RResult getHomeType(RResult result, GetHomeWebParam param);
 
     //获取一条首页分类
     RResult getHomeTypeByssid(RResult result, DeleteHomeTypeParam param);

@@ -10,10 +10,10 @@ import com.jiehuihui.admin.req.home.GetHomeggPageParam;
 import com.jiehuihui.admin.service.home.HomeGgService;
 import com.jiehuihui.admin.vo.home.GetHomeggPageVO;
 import com.jiehuihui.common.entity.home.HomeGg;
-import com.jiehuihui.common.entity.search.Hotsou;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +28,11 @@ public class HomeGgServiceImpl implements HomeGgService {
     private HomeGgMapper homeggMapper;
 
     @Override
-    public RResult getHomegg(RResult result) {
+    public RResult getHomegg(RResult result, GetHomeWebParam param) {
         UpdateWrapper<HomeGg> ew = new UpdateWrapper<>();
+        if(StringUtils.isNotEmpty(param.getCityid())){
+            ew.eq("cityssid", param.getCityid());
+        }
         ew.orderByDesc("sortnum");
         List<HomeGg> homeGgs = homeggMapper.selectList(ew);
         result.changeToTrue(homeGgs);

@@ -10,10 +10,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiehuihui.admin.vo.home.GetHomeTypePageVO;
 import com.jiehuihui.common.entity.Blinddateinfo;
+import com.jiehuihui.common.entity.home.HomeGg;
 import com.jiehuihui.common.entity.home.HomeType;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,11 @@ public class HomeTypeServiceImpl implements HomeTypeService {
     private HomeTypeMapper hometypeMapper;
 
     @Override
-    public RResult getHomeType(RResult result) {
+    public RResult getHomeType(RResult result, GetHomeWebParam param) {
         UpdateWrapper<HomeType> ew = new UpdateWrapper<>();
+        if(StringUtils.isNotEmpty(param.getCityid())){
+            ew.eq("cityid", param.getCityid());
+        }
         ew.eq("state", 1);
         ew.orderByDesc("num");
         List<HomeType> hometypes = hometypeMapper.selectList(ew);

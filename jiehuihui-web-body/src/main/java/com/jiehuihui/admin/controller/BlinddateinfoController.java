@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-05-03 22:48:58
  */
 @Api(value = "相亲模块", description = "相亲的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/blinddateinfo")
 public class BlinddateinfoController {

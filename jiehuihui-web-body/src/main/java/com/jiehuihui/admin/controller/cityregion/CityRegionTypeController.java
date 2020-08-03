@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Api(value = "城市类型模块", description = "城市类型的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/cityRegionType")
 public class CityRegionTypeController {

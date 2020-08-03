@@ -25,7 +25,8 @@ import javax.annotation.Resource;
  * @since 2020-04-23 23:34:41
  */
 @Api(value = "充值卡模块", description = "充值卡的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/card")
 public class CardController {

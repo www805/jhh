@@ -14,6 +14,7 @@ import com.jiehuihui.common.entity.home.HomeSlideshow;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,11 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
     private HomeSlideshowMapper homeSlideshowMapper;
 
     @Override
-    public RResult getHomeSlideshow(RResult result) {
+    public RResult getHomeSlideshow(RResult result, GetHomeWebParam param) {
         UpdateWrapper<HomeSlideshow> ew = new UpdateWrapper<>();
+        if(StringUtils.isNotEmpty(param.getCityid())){
+            ew.eq("cityid", param.getCityid());
+        }
         ew.orderByDesc("num");
         List<HomeSlideshow> homeSlideshows = homeSlideshowMapper.selectList(ew);
         result.changeToTrue(homeSlideshows);

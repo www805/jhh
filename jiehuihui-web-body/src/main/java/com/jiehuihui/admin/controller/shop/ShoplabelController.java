@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-04-11 12:41:26
  */
 @Api(value = "店铺标签文字模块", description = "店铺标签文字的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/shoplabel")
 public class ShoplabelController {

@@ -25,7 +25,8 @@ import javax.annotation.Resource;
  * @since 2020-04-16 21:56:13
  */
 @Api(value = "角色模块", description = "角色的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/role")
 public class RoleController {

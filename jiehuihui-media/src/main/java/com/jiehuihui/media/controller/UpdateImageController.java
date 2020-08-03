@@ -24,7 +24,8 @@ import java.util.List;
  * @date: 2019/3/6 17:55
  *  文件上传,上传到FastDFS
  ****/
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 public class UpdateImageController {
 

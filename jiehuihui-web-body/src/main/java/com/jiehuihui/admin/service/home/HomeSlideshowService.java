@@ -4,11 +4,12 @@ import com.jiehuihui.admin.req.home.AddUpdateHomeSlideshowParam;
 import com.jiehuihui.admin.req.home.DeleteHomeSlideshowParam;
 import com.jiehuihui.admin.req.home.GetHomeSlideshowPageParam;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetHomeWebParam;
 
 public interface HomeSlideshowService {
 
     //获取首页分类
-    RResult getHomeSlideshow(RResult result);
+    RResult getHomeSlideshow(RResult result, GetHomeWebParam param);
 
     //获取一条首页分类
     RResult getHomeSlideshowByssid(RResult result, DeleteHomeSlideshowParam param);

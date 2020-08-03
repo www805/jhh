@@ -24,7 +24,8 @@ import javax.annotation.Resource;
  * @since 2020-04-11 21:16:54
  */
 @Api(value = "首页店铺类型模块", description = "店铺类型的接口信息(后台)")
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/shoptype")
 public class ShoptypeController {
