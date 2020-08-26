@@ -20,6 +20,11 @@ public class GetBlinddateinfoPageParam extends Page {
     private String username; //发表用户名
     private String myname; //相亲名字
     private String phone; //择偶条件描述
+    private Integer sex = 0; //男或女
+
+    private String provinceid; //省
+    private String cityid; //市
+    private String areaid; //区
 
     private List<String> cityList;//城市地区id
 

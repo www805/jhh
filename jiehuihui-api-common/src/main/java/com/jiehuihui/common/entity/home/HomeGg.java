@@ -30,7 +30,7 @@ public class HomeGg implements Serializable{
     private String keyword; //公告关键字
     private Integer sortnum; //排序
     private String ssid; //唯一id
-    private String cityssid; //城市关联id
+    private String cityid; //城市关联id
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createtime; //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

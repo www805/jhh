@@ -107,7 +107,7 @@ public class HomeTypeServiceImpl implements HomeTypeService {
         }
         UpdateWrapper<HomeType> ew = new UpdateWrapper<>();
         ew.eq("keyword", param.getKeyword());
-        ew.eq("cityid", param.getCityssid());
+        ew.eq("cityid", param.getCityid());
         List<HomeType> TypeList = hometypeMapper.selectList(ew);
         if (null != TypeList && TypeList.size() > 0) {
             result.setMessage("该数据已经存在，不能添加");
@@ -119,7 +119,7 @@ public class HomeTypeServiceImpl implements HomeTypeService {
         hometype.setIco(param.getIco());
         hometype.setNum(param.getNum());
         hometype.setSsid(ssid);
-        hometype.setCityid(param.getCityssid());
+        hometype.setCityid(param.getCityid());
         hometype.setGotourl(param.getGotourl());
         hometype.setState(param.getState());
         int insert = hometypeMapper.insert(hometype);
@@ -147,7 +147,7 @@ public class HomeTypeServiceImpl implements HomeTypeService {
         HomeType hometype = new HomeType();
         hometype.setKeyword(param.getKeyword());
         hometype.setNum(param.getNum());
-        hometype.setCityid(param.getCityssid());
+        hometype.setCityid(param.getCityid());
         hometype.setIco(param.getIco());
         hometype.setGotourl(param.getGotourl());
         hometype.setState(param.getState());

@@ -134,6 +134,16 @@ public class Homespecial implements Serializable {
      */
     private String settime;
     /**
+     * 优惠开始时间
+     */
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    private String setstarttime;
+    /**
+     * 优惠结束时间
+     */
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    private String setendtime;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")

@@ -31,7 +31,7 @@ public class HomeGgServiceImpl implements HomeGgService {
     public RResult getHomegg(RResult result, GetHomeWebParam param) {
         UpdateWrapper<HomeGg> ew = new UpdateWrapper<>();
         if(StringUtils.isNotEmpty(param.getCityid())){
-            ew.eq("cityssid", param.getCityid());
+            ew.eq("cityid", param.getCityid());
         }
         ew.orderByDesc("sortnum");
         List<HomeGg> homeGgs = homeggMapper.selectList(ew);
@@ -62,8 +62,8 @@ public class HomeGgServiceImpl implements HomeGgService {
         if(StringUtils.isNotEmpty(param.getKeyword())){
             ew.like("h.keyword", param.getKeyword());
         }
-        if(StringUtils.isNotEmpty(param.getCityssid())){
-            ew.eq("h.cityssid", param.getCityssid());
+        if(StringUtils.isNotEmpty(param.getCityid())){
+            ew.eq("h.cityid", param.getCityid());
         }
 
         ew.orderByDesc("h.sortnum");
@@ -99,7 +99,7 @@ public class HomeGgServiceImpl implements HomeGgService {
         }
         UpdateWrapper<HomeGg> ew = new UpdateWrapper<>();
         ew.eq("keyword", param.getKeyword());
-        ew.eq("cityid", param.getCityssid());
+        ew.eq("cityid", param.getCityid());
 //        ew.eq("sortnum", param.getSortnum());
         List<HomeGg> ggList = homeggMapper.selectList(ew);
         if (null != ggList && ggList.size() > 0) {
@@ -112,7 +112,7 @@ public class HomeGgServiceImpl implements HomeGgService {
         homeGg.setSortnum(param.getSortnum());
         homeGg.setUpdatetime(new Date());
         homeGg.setSsid(ssid);
-        homeGg.setCityssid(param.getCityssid());
+        homeGg.setCityid(param.getCityid());
         int insert = homeggMapper.insert(homeGg);
         if (insert > 0) {
             result.changeToTrue(insert);
@@ -144,8 +144,8 @@ public class HomeGgServiceImpl implements HomeGgService {
         if (null != param.getSortnum() && param.getSortnum() > 0) {
             homeGg.setSortnum(param.getSortnum());
         }
-        if (StringUtils.isNotBlank(param.getCityssid())) {
-            homeGg.setCityssid(param.getCityssid());
+        if (StringUtils.isNotBlank(param.getCityid())) {
+            homeGg.setCityid(param.getCityid());
         }
 
         homeGg.setUpdatetime(new Date());

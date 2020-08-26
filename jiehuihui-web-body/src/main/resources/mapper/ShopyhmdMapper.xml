@@ -11,7 +11,6 @@
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="fmimglist" column="fmimglist" jdbcType="VARCHAR"/>
         <result property="mdcontent" column="mdcontent" jdbcType="VARCHAR"/>
-        <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
         <result property="topnum" column="topnum" jdbcType="INTEGER"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
@@ -19,5 +18,27 @@
         <result property="endtime" column="endtime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+
+    <select id="selectShopyhmdPage" resultMap="BaseResultMap">
+        SELECT
+            md.*
+        FROM
+            jhh_shopyhmd md
+            LEFT JOIN jhh_shopinfo s ON md.shopid = s.ssid
+            LEFT JOIN jhh_base_cityzhong z ON z.id = s.cityzhongid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectShopyhmdCount" resultType="int">
+        SELECT
+            count(md.id)
+        FROM
+            jhh_shopyhmd md
+            LEFT JOIN jhh_shopinfo s ON md.shopid = s.ssid
+            LEFT JOIN jhh_base_cityzhong z ON z.id = s.cityzhongid
+
+            ${ew.customSqlSegment}
+    </select>
 
 </mapper>

@@ -135,7 +135,11 @@ public class BlinddateServiceImpl implements BlinddateService {
 
         //查询红娘信息
         UpdateWrapper<User> muew = new UpdateWrapper<User>();
-        muew.eq("username", param.getMatchmake());
+        if(StringUtils.isNoneBlank(param.getMatchmakeruserid())){
+            muew.eq("id", param.getMatchmakeruserid());
+        }else{
+            muew.eq("username", param.getMatchmake());
+        }
         List<User> musers = userMapper.selectList(muew);
         if(musers.size() == 0){
             result.setMessage("没找到红娘用户，修改申请相亲申请失败");
@@ -155,9 +159,13 @@ public class BlinddateServiceImpl implements BlinddateService {
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){
             UpdateWrapper<Cityzhong> zew = new UpdateWrapper<>();
-            zew.eq("provinceid", cityList.get(0));
+            if(StringUtils.isNoneBlank(cityList.get(0))){
+                zew.eq("provinceid", cityList.get(0));
+            }
             zew.eq("cityid", cityList.get(1));
-            zew.eq("areaid", cityList.get(2));
+            if(StringUtils.isNoneBlank(cityList.get(2))){
+                zew.eq("areaid", cityList.get(2));
+            }
             List<Cityzhong> cityzhongs = cityzhongMapper.selectList(zew);
             if(cityzhongs.size() > 0){
                 Cityzhong cityzhong = cityzhongs.get(0);
@@ -166,6 +174,9 @@ public class BlinddateServiceImpl implements BlinddateService {
                 result.setMessage("城市没找到，无法处理");
                 return result;
             }
+        }else{
+            result.setMessage("请添加申请城市！");
+            return result;
         }
 
         blinddate.setUsername(param.getUsername());

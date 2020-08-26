@@ -79,6 +79,19 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
         if(StringUtils.isNotEmpty(param.getPhone())){
             ew.like("b.phone", param.getPhone());
         }
+        if(param.getSex() > 0){
+            ew.eq("b.sex", param.getSex());
+        }
+
+        if (StringUtils.isNoneBlank(param.getProvinceid())) {
+            ew.eq("z.provinceid", param.getProvinceid());
+        }
+        if (StringUtils.isNoneBlank(param.getCityid())) {
+            ew.eq("z.cityid", param.getCityid());
+        }
+        if (StringUtils.isNoneBlank(param.getAreaid())) {
+            ew.eq("z.areaid", param.getAreaid());
+        }
 
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){

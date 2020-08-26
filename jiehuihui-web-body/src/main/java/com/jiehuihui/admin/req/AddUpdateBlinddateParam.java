@@ -25,9 +25,10 @@ public class AddUpdateBlinddateParam {
     private String wxnum; //微信号码
 
     @NotBlank(message = "红娘名字不能为空", groups = {Create.class, Update.class})
-    private String matchmake; //红娘关联id
+    private String matchmake; //关联红娘名字
     @NotBlank(message = "相亲帖id不能为空", groups = {Create.class, Update.class})
     private String blinddateid; //相亲帖关联id
+    private String matchmakeruserid;//红娘id
 
     @NotBlank(message = "备注不能为空", groups = {Create.class, Update.class})
     private String xqdescribe; //备注

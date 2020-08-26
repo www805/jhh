@@ -14,6 +14,7 @@ import com.jiehuihui.admin.req.GetFriendsPageParam;
 import com.jiehuihui.admin.vo.GetFriendsVO;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
+import com.jiehuihui.common.utils.DateUtil;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,6 +74,22 @@ public class FriendsServiceImpl implements FriendsService {
         GetFriendsVO friendsVO = new GetFriendsVO();
 
         UpdateWrapper<Friends> ew = new UpdateWrapper<>();
+        if(null != param.getTopnum()){
+            if (StringUtils.isNoneBlank(param.getTypeid())) {
+                ew.eq("f.typeid", param.getTypeid());
+            }
+            if (StringUtils.isNoneBlank(param.getProvinceid())) {
+                ew.eq("z.provinceid", param.getProvinceid());
+            }
+            if (StringUtils.isNoneBlank(param.getCityid())) {
+                ew.eq("z.cityid", param.getCityid());
+            }
+            if (StringUtils.isNoneBlank(param.getAreaid())) {
+                ew.eq("z.areaid", param.getAreaid());
+            }
+            ew.eq("f.topnum",1);
+            ew.ge("f.topendtime",DateUtil.getDateAndMinute()).or();
+        }
         if(StringUtils.isNotEmpty(param.getUsername())){
             ew.like("u.username", param.getUsername());
         }
@@ -89,7 +107,28 @@ public class FriendsServiceImpl implements FriendsService {
             }
         }
 
-        ew.ne("f.state", 2);
+        if (StringUtils.isNoneBlank(param.getProvinceid())) {
+            ew.eq("z.provinceid", param.getProvinceid());
+        }
+        if (StringUtils.isNoneBlank(param.getCityid())) {
+            ew.eq("z.cityid", param.getCityid());
+        }
+        if (StringUtils.isNoneBlank(param.getAreaid())) {
+            ew.eq("z.areaid", param.getAreaid());
+        }
+
+        if (null != param.getState()) {
+            ew.eq("f.state", param.getState());
+        }else{
+            ew.ne("f.state", 2);
+        }
+        if (StringUtils.isNoneBlank(param.getTypeid())) {
+            ew.eq("f.typeid", param.getTypeid());
+        }
+
+//        ew.orderByDesc("f.topnum");
+        //先排置顶到期时间，再按照创建时间排序
+        ew.orderByDesc("f.topendtime");//一定要定时把时间去掉设置成同一时间
         ew.orderByDesc("f.sortnum");
         ew.orderByDesc("f.createtime");
 
@@ -120,6 +159,11 @@ public class FriendsServiceImpl implements FriendsService {
                 return result;
             }
             ssid = param.getSsid();
+        }
+
+        if(param.getTopnum() == 0 && null != param.getTopendtime()){
+            result.setMessage("不置顶的时候，不能修改置顶时间！");
+            return result;
         }
 
         UpdateWrapper<User> uew = new UpdateWrapper<User>();
@@ -170,6 +214,11 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public RResult updateFriends(RResult result, AddUpdateFriendsParam param) {
+
+        if(param.getTopnum() == 0 && null != param.getTopendtime()){
+            result.setMessage("不置顶的时候，不能修改置顶时间！");
+            return result;
+        }
 
         UpdateWrapper<Friends> ew = new UpdateWrapper();
         ew.eq("ssid", param.getSsid());

@@ -36,7 +36,7 @@
             c.state AS cstate
         FROM
             jhh_base_hometype h
-            LEFT JOIN jhh_base_city c ON h.cityid = c.ssid
+            LEFT JOIN jhh_base_city c ON h.cityid = c.id
 
             ${ew.customSqlSegment}
     </select>

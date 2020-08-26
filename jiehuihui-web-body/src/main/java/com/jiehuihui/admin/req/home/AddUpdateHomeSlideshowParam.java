@@ -21,5 +21,5 @@ public class AddUpdateHomeSlideshowParam {
     private String ssid; //唯一id
 
     @NotBlank(message = "请选择关联的城市", groups = {Update.class})
-    private String cityssid;
+    private String cityid;
 }

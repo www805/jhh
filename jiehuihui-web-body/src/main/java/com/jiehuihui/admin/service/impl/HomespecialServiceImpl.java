@@ -9,6 +9,7 @@ import com.jiehuihui.admin.mapper.home.HomespecialMapper;
 import com.jiehuihui.admin.mapper.shop.ShopinfoMapper;
 import com.jiehuihui.admin.req.AddUpdateSpecialParam;
 import com.jiehuihui.admin.req.DeleteSpecialParam;
+import com.jiehuihui.admin.req.GetSpecialListParam;
 import com.jiehuihui.admin.req.GetSpecialPageParam;
 import com.jiehuihui.admin.vo.GetShopinfoVO;
 import com.jiehuihui.admin.vo.home.GetSpecialPageVO;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +81,7 @@ public class HomespecialServiceImpl implements HomespecialService {
 
         GetSpecialPageVO getSpecialPageVO = new GetSpecialPageVO();
 
-        UpdateWrapper<Shopinfoup> ew = new UpdateWrapper<>();
+        UpdateWrapper<Homespecial> ew = new UpdateWrapper<>();
         if(StringUtils.isNotEmpty(param.getShopname())){
             ew.like("h.shopname", param.getShopname());
         }
@@ -89,7 +91,14 @@ public class HomespecialServiceImpl implements HomespecialService {
         if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
             ew.eq("h.specialtypessid", param.getTypeid());
         }
-        ew.le("h.state", 1);
+
+        if(null != param.getState()){
+            ew.eq("h.state", 1);
+            ew.le("h.setstarttime", param.getWeek());
+            ew.ge("h.setendtime", param.getWeek());
+        }else{
+            ew.le("h.state", 1);
+        }
 
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){
@@ -104,12 +113,22 @@ public class HomespecialServiceImpl implements HomespecialService {
             }
         }
 
+        if (StringUtils.isNoneBlank(param.getProvinceid())) {
+            ew.eq("z.provinceid", param.getProvinceid());
+        }
+        if (StringUtils.isNoneBlank(param.getCityid())) {
+            ew.eq("z.cityid", param.getCityid());
+        }
+        if (StringUtils.isNoneBlank(param.getAreaid())) {
+            ew.eq("z.areaid", param.getAreaid());
+        }
+
         ew.orderByDesc("h.createtime");
 
         Integer count = homespecialMapper.selectHomespecialCount(ew);
         param.setRecordCount(count);
 
-        Page<Shopinfoup> page = new Page<>(param.getCurrPage(), param.getPageSize());
+        Page<Homespecial> page = new Page<>(param.getCurrPage(), param.getPageSize());
         page.setTotal(count);
         IPage<Homespecial> homespecialPage = homespecialMapper.getHomespecialPage(page, ew);
 
@@ -117,6 +136,27 @@ public class HomespecialServiceImpl implements HomespecialService {
         getSpecialPageVO.setPageparam(param);
 
         result.changeToTrue(getSpecialPageVO);
+        return result;
+    }
+
+    /**
+     * 查询多条数据list
+     * @param result
+     * @param param  实例参数对象
+     * @return
+     */
+    @Override
+    public RResult getSpecialList(RResult result, GetSpecialListParam param) {
+        //根据星期去找到优惠
+        String week = param.getWeek();
+        //还要获取当前城市作为查询条件
+
+        UpdateWrapper<Homespecial> ew = new UpdateWrapper<>();
+        ew.eq("", week);
+        List<Homespecial> list = homespecialMapper.selectList(ew);
+        result.changeToTrue(list);
+
+
         return result;
     }
 
@@ -191,6 +231,16 @@ public class HomespecialServiceImpl implements HomespecialService {
             homespecial.setTaskimglist(param.getTaskimglist().toString().trim());
         }else{
             homespecial.setTaskimglist("");
+        }
+        if(StringUtils.isNoneBlank(param.getSettime())){
+            String[] split = param.getSettime().trim().split(",");
+            if(split.length > 1){
+                homespecial.setSetstarttime(split[0]);
+                homespecial.setSetendtime(split[1]);
+            }else{
+                result.setMessage("特价时间错误！");
+                return result;
+            }
         }
 
         homespecial.setSpecialtitle(param.getSpecialtitle());
@@ -288,6 +338,16 @@ public class HomespecialServiceImpl implements HomespecialService {
             homespecial.setTaskimglist(param.getTaskimglist().toString().trim());
         }else{
             homespecial.setTaskimglist("");
+        }
+        if(StringUtils.isNoneBlank(param.getSettime())){
+            String[] split = param.getSettime().trim().split(",");
+            if(split.length > 1){
+                homespecial.setSetstarttime(split[0]);
+                homespecial.setSetendtime(split[1]);
+            }else{
+                result.setMessage("特价时间错误！");
+                return result;
+            }
         }
 
         homespecial.setSpecialtitle(param.getSpecialtitle());

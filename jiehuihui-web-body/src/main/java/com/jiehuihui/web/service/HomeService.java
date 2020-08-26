@@ -1,7 +1,10 @@
 package com.jiehuihui.web.service;
 
 
+import com.jiehuihui.admin.req.GetFriendsPageParam;
+import com.jiehuihui.admin.req.GetSpecialPageParam;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.web.req.GetFriendstypeParam;
 import com.jiehuihui.web.req.GetHomeWebParam;
 
 public interface HomeService {
@@ -17,4 +20,10 @@ public interface HomeService {
 
     //获取全部城市输出接口
     RResult getCityAllList(RResult result);
+
+    RResult getHomespecial(RResult result, GetSpecialPageParam param);
+
+    RResult getFriendstype(RResult result, GetFriendstypeParam param);
+
+    RResult getFriends(RResult result, GetFriendsPageParam param);
 }

@@ -2,6 +2,7 @@ package com.jiehuihui.admin.service.home;
 
 import com.jiehuihui.admin.req.AddUpdateSpecialParam;
 import com.jiehuihui.admin.req.DeleteSpecialParam;
+import com.jiehuihui.admin.req.GetSpecialListParam;
 import com.jiehuihui.admin.req.GetSpecialPageParam;
 import com.jiehuihui.common.entity.Homespecial;
 import com.jiehuihui.common.utils.RResult;
@@ -30,6 +31,13 @@ public interface HomespecialService {
      * @return 返回对象
      */
     RResult getSpecialPage(RResult result, GetSpecialPageParam param);
+
+    /**
+     * 查询多条数据list
+     * @param param  实例参数对象
+     * @return 返回对象
+     */
+    RResult getSpecialList(RResult result, GetSpecialListParam param);
 
     /**
      * 新增数据

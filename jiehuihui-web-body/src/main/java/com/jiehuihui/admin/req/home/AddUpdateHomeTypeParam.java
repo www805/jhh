@@ -25,5 +25,5 @@ public class AddUpdateHomeTypeParam {
     private Integer state; //状态
 
     @NotBlank(message = "请选择关联的城市", groups = {Update.class})
-    private String cityssid;
+    private String cityid;
 }

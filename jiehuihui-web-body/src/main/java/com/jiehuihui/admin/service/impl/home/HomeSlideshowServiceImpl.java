@@ -95,7 +95,7 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
             ssid = param.getSsid();
         }
         UpdateWrapper<HomeSlideshow> ew = new UpdateWrapper<>();
-        ew.eq("cityid", param.getCityssid());
+        ew.eq("cityid", param.getCityid());
         ew.eq("img", param.getImg());
         List<HomeSlideshow> slideshowList = homeSlideshowMapper.selectList(ew);
         if (null != slideshowList && slideshowList.size() > 0) {
@@ -107,7 +107,7 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
         homeSlideshow.setImg(param.getImg());
         homeSlideshow.setNum(param.getNum());
         homeSlideshow.setSsid(ssid);
-        homeSlideshow.setCityid(param.getCityssid());
+        homeSlideshow.setCityid(param.getCityid());
         homeSlideshow.setGotourl(param.getGotourl());
         int insert = homeSlideshowMapper.insert(homeSlideshow);
         if (insert > 0) {
@@ -122,7 +122,7 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
         UpdateWrapper<HomeSlideshow> ewcheck = new UpdateWrapper<>();
         ewcheck.ne("ssid", param.getSsid());
         ewcheck.eq("img", param.getImg());
-        ewcheck.eq("cityid", param.getCityssid());
+        ewcheck.eq("cityid", param.getCityid());
         List<HomeSlideshow> homeSlideshows = homeSlideshowMapper.selectList(ewcheck);
         if (null != homeSlideshows && homeSlideshows.size() > 0) {
             result.setMessage("修改的轮播图已经存在，不能修改");
@@ -134,7 +134,7 @@ public class HomeSlideshowServiceImpl implements HomeSlideshowService {
 
         HomeSlideshow homeSlideshow = new HomeSlideshow();
         homeSlideshow.setNum(param.getNum());
-        homeSlideshow.setCityid(param.getCityssid());
+        homeSlideshow.setCityid(param.getCityid());
         homeSlideshow.setImg(param.getImg());
         homeSlideshow.setGotourl(param.getGotourl());
 

@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="keyword" property="keyword" />
         <result column="sortnum" property="sortnum" />
-        <result column="cityssid" property="cityssid" />
+        <result column="cityid" property="cityid" />
         <result column="ssid" property="ssid" />
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />
@@ -34,7 +34,7 @@
             c.state AS cstate
         FROM
             jhh_base_homegg h
-            LEFT JOIN jhh_base_city c ON h.cityssid = c.ssid
+            LEFT JOIN jhh_base_city c ON h.cityid = c.id
 
             ${ew.customSqlSegment}
     </select>
