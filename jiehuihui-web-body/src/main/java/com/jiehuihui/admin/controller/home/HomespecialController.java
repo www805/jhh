@@ -39,7 +39,7 @@ public class HomespecialController {
      */
     @ApiOperation(value = "获取一条特价", notes = "获取一条特价")
     @PostMapping("/getSpecialByssid")
-    public RResult getSpecialByssid(@ApiParam(name="分页获取特价参数",value="传入json格式",required=true) @RequestBody DeleteSpecialParam param){
+    public RResult getSpecialByssid(@ApiParam(name="分页获取特价参数",value="传入json格式",required=true) @RequestBody @Validated DeleteSpecialParam param){
         RResult<Homespecial> result = new RResult<>();
         return homespecialService.getSpecialByssid(result, param);
     }
@@ -47,7 +47,7 @@ public class HomespecialController {
     //获取特价，分页
     @ApiOperation(value = "获取特价", notes = "分页获取所有特价")
     @PostMapping("/getSpecialPage")
-    public RResult getSpecialPage(@ApiParam(name="分页获取特价参数",value="传入json格式",required=true) @RequestBody GetSpecialPageParam param){
+    public RResult getSpecialPage(@ApiParam(name="分页获取特价参数",value="传入json格式",required=true) @RequestBody @Validated GetSpecialPageParam param){
         RResult<Homespecial> result = new RResult<>();
         return homespecialService.getSpecialPage (result, param);
     }
@@ -71,7 +71,7 @@ public class HomespecialController {
     //删除一条特价
     @ApiOperation(value = "删除特价", notes = "删除一条特价")
     @PostMapping("/deleteSpecial")
-    public RResult deleteSpecial(@ApiParam(name="特价删除参数",value="传入json格式",required=true) @RequestBody DeleteSpecialParam param){
+    public RResult deleteSpecial(@ApiParam(name="特价删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteSpecialParam param){
         RResult<Homespecial> result = new RResult<>();
         return homespecialService.deleteSpecial (result, param);
     }

@@ -48,7 +48,7 @@ public class ShopcolorController {
     //获取一条店铺标签颜色
     @ApiOperation(value = "获取一条店铺标签颜色", notes = "获取一条店铺标签颜色")
     @PostMapping("/getShopcolorByssid")
-    public RResult getShopcolorByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteShopcolorParam param){
+    public RResult getShopcolorByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopcolorParam param){
         RResult<Shopcolor> result = new RResult<>();
         return shopcolorService.getShopcolorByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class ShopcolorController {
     //删除一条店铺标签颜色
     @ApiOperation(value = "删除店铺标签颜色", notes = "删除一条店铺标签颜色")
     @PostMapping("/deleteShopcolor")
-    public RResult deleteShopcolor(@ApiParam(name="店铺标签颜色删除参数",value="传入json格式",required=true) @RequestBody DeleteShopcolorParam param){
+    public RResult deleteShopcolor(@ApiParam(name="店铺标签颜色删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopcolorParam param){
         RResult<Shopcolor> result = new RResult<>();
         return shopcolorService.deleteShopcolor (result, param);
     }

@@ -11,10 +11,13 @@ import com.jiehuihui.admin.req.search.AddUpdateSoutypeParam;
 import com.jiehuihui.admin.req.search.DeleteSoutypeParam;
 import com.jiehuihui.admin.req.search.GetSoutypePageParam;
 import com.jiehuihui.admin.vo.search.GetSoutypeVO;
+import com.jiehuihui.common.entity.shop.Shopinfo;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.config.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,15 +31,34 @@ import java.util.List;
  */
 @Service("soutypeService")
 public class SoutypeServiceImpl implements SoutypeService {
-    @Resource
+    @Autowired
     private SoutypeMapper soutypeMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public RResult getSoutype(RResult result) {
-        UpdateWrapper<Soutype> ew = new UpdateWrapper<>();
-        ew.orderByDesc("sortnum");
-        List<Soutype> soutypes = soutypeMapper.selectList(ew);
+
+        List<Soutype> soutypes = (List<Soutype>) redisUtil.get(this.getClass().toString());
+        if (null == soutypes) {
+            synchronized (this) {
+                if(null == soutypes){
+                    UpdateWrapper<Soutype> ew = new UpdateWrapper<>();
+                    ew.eq("state", 1);
+                    ew.orderByDesc("sortnum");
+                    soutypes = soutypeMapper.selectList(ew);
+                    if (null != soutypes && soutypes.size() > 0) {
+                        redisUtil.set(this.getClass().toString(), soutypes, (int) ((Math.random() * 14) + 6) * 3600);//随机6-24小时过期
+                    }
+                }
+            }
+        }
+
         result.changeToTrue(soutypes);
+        if(null == soutypes){
+            result.setMessage("没找到搜索类型");
+        }
         return result;
     }
 
@@ -108,6 +130,7 @@ public class SoutypeServiceImpl implements SoutypeService {
         soutype.setState(param.getState());
         int insert = soutypeMapper.insert(soutype);
         if (insert > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(insert);
         }
         return result;
@@ -136,6 +159,7 @@ public class SoutypeServiceImpl implements SoutypeService {
 
         int update = soutypeMapper.update(soutype, ew);
         if (update > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(update);
             result.setMessage("修改成功！");
         }
@@ -158,6 +182,7 @@ public class SoutypeServiceImpl implements SoutypeService {
 
         int delete = soutypeMapper.delete(ew);
         if (delete > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(delete);
             result.setMessage("删除成功！");
         }

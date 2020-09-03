@@ -1,6 +1,6 @@
 package com.jiehuihui.web.service;
 
-
+import com.jiehuihui.admin.req.DeleteSpecialParam;
 import com.jiehuihui.admin.req.GetFriendsPageParam;
 import com.jiehuihui.admin.req.GetSpecialPageParam;
 import com.jiehuihui.common.utils.RResult;
@@ -26,4 +26,10 @@ public interface HomeService {
     RResult getFriendstype(RResult result, GetFriendstypeParam param);
 
     RResult getFriends(RResult result, GetFriendsPageParam param);
+
+    //获取特价类型
+    RResult getShoptype(RResult result);
+
+    //获取单个特价
+    RResult getSpecialByid(RResult result, DeleteSpecialParam param);
 }

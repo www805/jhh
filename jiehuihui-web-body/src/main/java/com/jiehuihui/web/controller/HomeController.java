@@ -1,8 +1,8 @@
 package com.jiehuihui.web.controller;
 
+import com.jiehuihui.admin.req.DeleteSpecialParam;
 import com.jiehuihui.admin.req.GetFriendsPageParam;
 import com.jiehuihui.admin.req.GetSpecialPageParam;
-import com.jiehuihui.common.entity.home.HomeGg;
 import com.jiehuihui.common.entity.city.ProvinceVO;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.GetFriendstypeParam;
@@ -10,6 +10,7 @@ import com.jiehuihui.web.req.GetHomeWebParam;
 import com.jiehuihui.web.service.HomeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,24 +26,24 @@ public class HomeController {
 
     //获取首页公告
     @PostMapping("/getHomegg")
-    public RResult getHomegg(@RequestBody GetHomeWebParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getHomegg(@RequestBody @Validated GetHomeWebParam param){
+        RResult result = new RResult<>();
         return homeService.getHomegg(result, param);
     }
 
 
     //获取首页类型
     @PostMapping("/getHometype")
-    public RResult getHometype(@RequestBody GetHomeWebParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getHometype(@RequestBody @Validated GetHomeWebParam param){
+        RResult result = new RResult<>();
         return homeService.getHometype(result, param);
     }
 
 
     //获取首页轮播图
     @PostMapping("/getHomelb")
-    public RResult getHomelb(@RequestBody GetHomeWebParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getHomelb(@RequestBody @Validated GetHomeWebParam param){
+        RResult result = new RResult<>();
         return homeService.getHomelb(result, param);
     }
 
@@ -57,23 +58,30 @@ public class HomeController {
 
     //获取天天特价（首页）
     @PostMapping("/getHomespecial")
-    public RResult getHomespecial(@RequestBody GetSpecialPageParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getHomespecial(@RequestBody @Validated GetSpecialPageParam param){
+        RResult result = new RResult<>();
         return homeService.getHomespecial(result, param);
     }
 
     //获取朋友圈类型（首页）
     @PostMapping("/getFriendstype")
-    public RResult getFriendstype(@RequestBody GetFriendstypeParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getFriendstype(@RequestBody @Validated GetFriendstypeParam param){
+        RResult result = new RResult<>();
         return homeService.getFriendstype(result, param);
     }
 
     //获取朋友圈信息（首页）
     @PostMapping("/getFriends")
-    public RResult getFriends(@RequestBody GetFriendsPageParam param){
-        RResult<HomeGg> result = new RResult<>();
+    public RResult getFriends(@RequestBody @Validated GetFriendsPageParam param){
+        RResult result = new RResult<>();
         return homeService.getFriends(result, param);
+    }
+
+    //获取特价类型
+    @PostMapping("/getShoptype")
+    public RResult getShoptype(){
+        RResult result = new RResult<>();
+        return homeService.getShoptype(result);
     }
 
     //403类

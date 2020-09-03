@@ -36,8 +36,9 @@ public class AddUpdateUserParam {
     private String tximg; //头像图片地址 
     @NotBlank(message = "手机号码不能为空", groups = {Create.class, Update.class}) 
     private String phone; //手机号码
+    private Integer sex; //性别1男 2女
     private Long sign; //积分
-    @Min(value = 0,message = "状态0禁用 1正常 2删除不能为空", groups = {Create.class, Update.class}) 
+    @Min(value = 0,message = "状态0禁用 1正常 2删除不能为空", groups = {Create.class, Update.class})
     private Integer state; //状态0禁用 1正常 2删除 
     @NotBlank(message = "唯一id不能为空", groups = { Update.class}) 
     private String ssid; //唯一id
@@ -47,7 +48,7 @@ public class AddUpdateUserParam {
     private Date vipendtime; //使用时间
 
     @NotNull(message = "角色不能为空", groups = {Create.class, Update.class})
-    @Size(min = 1,message = "城市地区长度错误", groups = {Create.class, Update.class})
+    @Size(min = 1,message = "角色长度不能为空", groups = {Create.class, Update.class})
     private List<Role> roleList;//角色数组
     @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
     @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})

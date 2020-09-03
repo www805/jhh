@@ -23,6 +23,7 @@ public class GetFriendsPageParam extends Page {
 
     private String username; //用户名字
     private String typeid; //类型关联id
+    private String userssid; //用户关联id
     private String content; //朋友圈文字内容
 
     private List<String> cityList;//城市地区id
@@ -32,8 +33,8 @@ public class GetFriendsPageParam extends Page {
     private String areaid; //区
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Integer topnum; //置顶1
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Integer topnum = 0; //置顶1
     private Date topendtime; //置顶到期时间
     private Integer state; //状态0禁用 1正常2删除
 

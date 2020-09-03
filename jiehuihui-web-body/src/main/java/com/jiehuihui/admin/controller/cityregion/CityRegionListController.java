@@ -29,7 +29,7 @@ public class CityRegionListController {
 
     @ApiOperation(value = "获取所有城市区域", notes = "获取所有城市区域,带分页")
     @PostMapping("/getCityList")
-    public RResult getCityList(@RequestBody GetCityListParam param){
+    public RResult getCityList(@RequestBody @Validated GetCityListParam param){
         RResult<ProvinceVO> result = new RResult<>();
         return cityRegionListService.getCityList(result, param);
     }
@@ -39,7 +39,7 @@ public class CityRegionListController {
 //    @RequiresAuthentication
     @ApiOperation(value = "获取所有城市区域", notes = "获取所有城市区域,带分页")
     @PostMapping("/getCityListPage")
-    public RResult getCityListPage(@RequestBody GetCityListParam param){
+    public RResult getCityListPage(@RequestBody @Validated GetCityListParam param){
         RResult<ProvinceVO> result = new RResult<>();
         return cityRegionListService.getCityListPage(result, param);
     }

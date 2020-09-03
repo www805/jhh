@@ -33,6 +33,8 @@ public class Shopyhmd implements Serializable {
     private String mdcontent; //任务描述
     private Integer topnum; // 0正常 1置顶
     private Integer state; //状态0禁用 1正常 2删除
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date topendtime; //置顶到期时间
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createtime;//创建时间

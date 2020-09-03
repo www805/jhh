@@ -48,7 +48,7 @@ public class SoutypeController {
     //获取一条搜索类型
     @ApiOperation(value = "获取一条搜索类型", notes = "获取一条搜索类型")
     @PostMapping("/getSoutypeByssid")
-    public RResult getSoutypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteSoutypeParam param){
+    public RResult getSoutypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteSoutypeParam param){
         RResult<Soutype> result = new RResult<>();
         return soutypeService.getSoutypeByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class SoutypeController {
     //删除一条搜索类型
     @ApiOperation(value = "删除搜索类型", notes = "删除一条搜索类型")
     @PostMapping("/deleteSoutype")
-    public RResult deleteSoutype(@ApiParam(name="搜索类型删除参数",value="传入json格式",required=true) @RequestBody DeleteSoutypeParam param){
+    public RResult deleteSoutype(@ApiParam(name="搜索类型删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteSoutypeParam param){
         RResult<Soutype> result = new RResult<>();
         return soutypeService.deleteSoutype (result, param);
     }

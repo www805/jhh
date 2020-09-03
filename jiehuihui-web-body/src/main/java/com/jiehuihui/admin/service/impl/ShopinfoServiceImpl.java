@@ -12,8 +12,6 @@ import com.jiehuihui.admin.req.shop.DeleteShopinfoParam;
 import com.jiehuihui.admin.req.shop.GetShopinfoPageParam;
 import com.jiehuihui.admin.service.shop.ShopinfoService;
 import com.jiehuihui.admin.vo.GetShopinfoVO;
-import com.jiehuihui.admin.vo.GetShopinfoupVO;
-import com.jiehuihui.common.entity.Shopinfoup;
 import com.jiehuihui.common.entity.Shopyhmd;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
@@ -21,12 +19,14 @@ import com.jiehuihui.common.entity.shop.Shopinfo;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.config.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,23 +50,40 @@ public class ShopinfoServiceImpl implements ShopinfoService {
     @Autowired
     private ShopyhmdMapper shopyhmdMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     /**
      * 通过ID查询单条数据
      * @param param 主键
      * @return 实例对象
      */
-
+    @Transactional
     @Override
     public RResult getShopinfoByssid(RResult<Shopinfo> result, DeleteShopinfoParam param) {
-        UpdateWrapper<Shopinfo> ew = new UpdateWrapper();
-        ew.eq("ssid", param.getSsid());
-        List<Shopinfo> shopinfos = shopinfoMapper.selectList(ew);
-        if (null != shopinfos && shopinfos.size() > 0) {
-            Shopinfo homespecial = shopinfos.get(0);
-            result.changeToTrue(homespecial);
-        }else{
+
+        Shopinfo shopinfo = (Shopinfo) redisUtil.get(param.getSsid());
+        if (null == shopinfo) {
+            synchronized (this) {
+                if(null == shopinfo){
+                    UpdateWrapper<Shopinfo> ew = new UpdateWrapper();
+                    ew.eq("s.ssid", param.getSsid());
+                    List<Shopinfo> shopinfos = shopinfoMapper.getShopinfoList(ew);
+                    if (null != shopinfos && shopinfos.size() > 0) {
+                        shopinfo = shopinfos.get(0);
+                        shopinfoMapper.addCount(param.getSsid());//自增浏览量
+                        redisUtil.set(param.getSsid(), shopinfo, (int) ((Math.random() * 14) + 6) * 3600);//随机6-24小时过期
+                    }
+
+                }
+            }
+        }
+
+        result.changeToTrue(shopinfo);
+        if(null == shopinfo){
             result.setMessage("没找到该店铺");
         }
+
         return result;
     }
 
@@ -81,7 +98,32 @@ public class ShopinfoServiceImpl implements ShopinfoService {
 
         GetShopinfoVO shopinfoVO = new GetShopinfoVO();
 
-        UpdateWrapper<Shopinfoup> ew = new UpdateWrapper<>();
+        SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+        String week = simple.format((new Date()).getTime());
+        UpdateWrapper<Shopinfo> ew = new UpdateWrapper<>();
+        if (null != param.getTopnum() && param.getTopnum() > 0) {
+            if (StringUtils.isNoneBlank(param.getProvinceid())) {
+                ew.eq("z.provinceid", param.getProvinceid());
+            }
+            if (StringUtils.isNoneBlank(param.getCityid())) {
+                ew.eq("z.cityid", param.getCityid());
+            }
+            if (StringUtils.isNoneBlank(param.getAreaid())) {
+                ew.eq("z.areaid", param.getAreaid());
+            }
+            if(StringUtils.isNoneBlank(param.getShoptype())){
+                ew.eq("s.shoptypessid", param.getShoptype());
+            }
+            ew.eq("s.soutop", 1);
+            ew.ge("s.hometopendtime", week).or();
+            ew.eq("s.state", 1);
+        }else{
+            ew.le("s.state", 1);//小于等于
+        }
+
+        if(StringUtils.isNoneBlank(param.getUserid())){
+            ew.eq("s.userid", param.getUserid());
+        }
         if(StringUtils.isNotEmpty(param.getShopname())){
             ew.like("s.shopname", param.getShopname());
         }
@@ -94,7 +136,10 @@ public class ShopinfoServiceImpl implements ShopinfoService {
         if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
             ew.eq("s.shoptypessid", param.getTypeid());
         }
-        ew.le("s.state", 1);//小于等于
+        if(StringUtils.isNoneBlank(param.getShoptype())){
+            ew.eq("s.shoptypessid", param.getShoptype());
+        }
+
 
         List<String> cityList = param.getCityList();
         if(null != cityList && cityList.size() == 3){
@@ -109,12 +154,26 @@ public class ShopinfoServiceImpl implements ShopinfoService {
             }
         }
 
+        if (StringUtils.isNoneBlank(param.getProvinceid())) {
+            ew.eq("z.provinceid", param.getProvinceid());
+        }
+        if (StringUtils.isNoneBlank(param.getCityid())) {
+            ew.eq("z.cityid", param.getCityid());
+        }
+        if (StringUtils.isNoneBlank(param.getAreaid())) {
+            ew.eq("z.areaid", param.getAreaid());
+        }
+
+        if(null != param.getTopnum() && param.getTopnum() > 0){
+            ew.orderByDesc("s.soutop");
+            ew.orderByDesc("s.hometopendtime");
+        }
         ew.orderByDesc("s.createtime");
 
         Integer count = shopinfoMapper.selectShopinfoCount(ew);
         param.setRecordCount(count);
 
-        Page<Shopinfoup> page = new Page<>(param.getCurrPage(), param.getPageSize());
+        Page<Shopinfo> page = new Page<>(param.getCurrPage(), param.getPageSize());
         page.setTotal(count);
         IPage<Shopinfo> shopinfoPage = shopinfoMapper.getShopinfoPage(page, ew);
 
@@ -297,6 +356,7 @@ public class ShopinfoServiceImpl implements ShopinfoService {
             shopmd.setContent(shopyhmd.getContent());
             shopmd.setMdcontent(shopyhmd.getMdcontent());
             shopmd.setTopnum(shopyhmd.getTopnum());
+            shopmd.setTopendtime(shopyhmd.getTopendtime());
             shopmd.setStarttime(shopyhmd.getStarttime());
             shopmd.setEndtime(shopyhmd.getEndtime());
             if(StringUtils.isNoneBlank(shopyhmd.getFmimglist())){
@@ -340,6 +400,7 @@ public class ShopinfoServiceImpl implements ShopinfoService {
 
         int update = shopinfoMapper.update(shopinfo, ew);
         if (update > 0) {
+            redisUtil.del(param.getSsid());//清除缓存
             result.changeToTrue(update);
             result.setMessage("修改成功！");
         }

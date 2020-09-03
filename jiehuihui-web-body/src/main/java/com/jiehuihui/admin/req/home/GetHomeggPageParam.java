@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class GetHomeggPageParam extends Page {
 
-    @NotBlank(message = "公告关键字不能为空")
+//    @NotBlank(message = "公告关键字不能为空")
     private String keyword; //公告关键字
     @NotBlank(message = "城市ssid不能为空")
     private String cityid; //城市ssid

@@ -106,6 +106,10 @@ public class Shopinfo extends Model<Shopinfo> implements Serializable {
     */
     private Long browsecout;
     /**
+     * 分享数量
+     */
+    private Long sharecout;
+    /**
     * 街惠惠认证
     */
     private Integer zztop;

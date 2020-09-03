@@ -21,5 +21,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     int selectUserCount(@Param("ew") Wrapper wrapper);
 
+    void addjifen(@Param("userid") String userid, @Param("num") int num);
+
+    Long getjifen(@Param("userid") String userid);
+
     List<User> getUserList(@Param("ew") Wrapper wrapper);
 }

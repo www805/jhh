@@ -45,6 +45,28 @@
         </collection>
     </resultMap>
 
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="cityResultMap" type="com.jiehuihui.common.entity.city.CitySearchVO">
+        <result column="cid" property="id" />
+        <result column="cityname" property="cityname" />
+        <result column="ccityfirst" property="cityfirst" />
+        <result column="ctypeid" property="typeid" />
+        <result column="cssid" property="ssid" />
+        <result column="csortnum" property="sortnum" />
+        <result column="cstate" property="state" />
+        <collection property="children" ofType="com.jiehuihui.common.entity.city.AreaVO">
+            <result column="aid" property="id" />
+            <result column="cityname" property="cityregionsuper" />
+            <result column="areaname" property="cityregionname" />
+            <result column="atypeid" property="cityregiontype" />
+            <result column="asortnum" property="sortnum" />
+            <result column="astate" property="state" />
+        </collection>
+    </resultMap>
+
+
+
     <select id="getCityListCount" resultType="int">
         SELECT
             COUNT(p.id)
@@ -57,6 +79,36 @@
     </select>
 
     <select id="getCityListPage" resultMap="BaseResultMap">
+        SELECT
+            p.id AS pid,
+            p.provincename,
+            p.typeid AS ptypeid,
+            p.sortnum AS psortnum,
+            p.ssid AS pssid,
+            p.state AS pstate,
+            c.id AS cid,
+            c.cityname,
+            c.typeid AS ctypeid,
+            c.cityfirst AS ccityfirst,
+            c.sortnum AS csortnum,
+            c.ssid AS cssid,
+            c.state AS cstate,
+            a.id AS aid,
+            a.areaname,
+            a.typeid AS atypeid,
+            a.sortnum AS asortnum,
+            a.ssid AS assid,
+            a.state AS astate
+        FROM
+            jhh_base_province p
+            LEFT JOIN jhh_base_cityzhong z ON p.id = z.provinceid
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+        ${ew.customSqlSegment}
+
+    </select>
+
+    <select id="getCityAll" resultMap="BaseResultMap">
         SELECT
             p.id AS pid,
             p.provincename,
@@ -138,5 +190,30 @@
             LEFT JOIN jhh_base_city c ON c.id = z.cityid
 
     </select>
+
+
+    <select id="getCityByAreaAll" resultMap="cityResultMap">
+        SELECT
+            c.id AS cid,
+            c.cityname,
+            c.typeid AS ctypeid,
+            c.cityfirst AS ccityfirst,
+            c.sortnum AS csortnum,
+            c.ssid AS cssid,
+            c.state AS cstate,
+            a.id AS aid,
+            a.areaname,
+            a.typeid AS atypeid,
+            a.sortnum AS asortnum,
+            a.ssid AS assid,
+            a.state AS astate
+        FROM
+            jhh_base_cityzhong z
+            LEFT JOIN jhh_base_city c ON c.id = z.cityid
+            LEFT JOIN jhh_base_area a ON a.id = z.areaid
+
+        ${ew.customSqlSegment}
+    </select>
+
 
 </mapper>

@@ -20,12 +20,15 @@ import com.jiehuihui.common.entity.Shopinfoup;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
 import com.jiehuihui.common.entity.shop.Shopinfo;
+import com.jiehuihui.common.utils.DateUtil;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.config.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -49,6 +52,9 @@ public class HomespecialServiceImpl implements HomespecialService {
     @Autowired
     private ShopinfoMapper shopinfoMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     /**
      * 通过ID查询单条数据
      *
@@ -56,17 +62,32 @@ public class HomespecialServiceImpl implements HomespecialService {
      * @return 实例对象
      */
 
+    @Transactional
     @Override
     public RResult getSpecialByssid(RResult result, DeleteSpecialParam param) {
-        UpdateWrapper<Homespecial> ew = new UpdateWrapper();
-        ew.eq("ssid", param.getSsid());
-        List<Homespecial> homespecials = homespecialMapper.selectList(ew);
-        if (null != homespecials && homespecials.size() > 0) {
-            Homespecial homespecial = homespecials.get(0);
-            result.changeToTrue(homespecial);
-        }else{
+
+        Homespecial homespecial = (Homespecial) redisUtil.get(param.getSsid());
+        if (null == homespecial) {
+            synchronized (this) {
+                if(null == homespecial){
+                    UpdateWrapper<Homespecial> ew = new UpdateWrapper();
+                    ew.eq("h.ssid", param.getSsid());
+                    List<Homespecial> homespecials = homespecialMapper.getHomespecialList(ew);
+                    if (null != homespecials && homespecials.size() > 0) {
+                        homespecial = homespecials.get(0);
+                        homespecialMapper.addCount(param.getSsid());//自增浏览量
+                        redisUtil.set(param.getSsid(), homespecial, (int) ((Math.random() * 14) + 6) * 3600);//随机6-24小时过期
+                    }
+
+                }
+            }
+        }
+
+        result.changeToTrue(homespecial);
+        if(null == homespecial){
             result.setMessage("获取失败，该条数据不存在");
         }
+
         return result;
     }
 
@@ -92,10 +113,12 @@ public class HomespecialServiceImpl implements HomespecialService {
             ew.eq("h.specialtypessid", param.getTypeid());
         }
 
+
         if(null != param.getState()){
             ew.eq("h.state", 1);
-            ew.le("h.setstarttime", param.getWeek());
-            ew.ge("h.setendtime", param.getWeek());
+            if (StringUtils.isNoneBlank(param.getWeek())) {
+                ew.like("h.settime", param.getWeek());
+            }
         }else{
             ew.le("h.state", 1);
         }
@@ -232,19 +255,9 @@ public class HomespecialServiceImpl implements HomespecialService {
         }else{
             homespecial.setTaskimglist("");
         }
-        if(StringUtils.isNoneBlank(param.getSettime())){
-            String[] split = param.getSettime().trim().split(",");
-            if(split.length > 1){
-                homespecial.setSetstarttime(split[0]);
-                homespecial.setSetendtime(split[1]);
-            }else{
-                result.setMessage("特价时间错误！");
-                return result;
-            }
-        }
 
         homespecial.setSpecialtitle(param.getSpecialtitle());
-        homespecial.setShopname(param.getShopname());
+        homespecial.setShopname(param.getShopname().trim());
         homespecial.setImgtag(param.getImgtag());
         homespecial.setTitledescribe(param.getTitledescribe());
         homespecial.setOldprice(param.getOldprice());
@@ -261,6 +274,8 @@ public class HomespecialServiceImpl implements HomespecialService {
         homespecial.setSpecialtypessid(param.getSpecialtypessid());
         homespecial.setSettime(param.getSettime());
         homespecial.setSortnum(param.getSortnum());
+        homespecial.setTopendtime(param.getTopendtime());
+        homespecial.setHometoptime(param.getHometoptime());
         homespecial.setSsid(ssid);
         homespecial.setState(param.getState());
         int insert = homespecialMapper.insert(homespecial);
@@ -339,16 +354,8 @@ public class HomespecialServiceImpl implements HomespecialService {
         }else{
             homespecial.setTaskimglist("");
         }
-        if(StringUtils.isNoneBlank(param.getSettime())){
-            String[] split = param.getSettime().trim().split(",");
-            if(split.length > 1){
-                homespecial.setSetstarttime(split[0]);
-                homespecial.setSetendtime(split[1]);
-            }else{
-                result.setMessage("特价时间错误！");
-                return result;
-            }
-        }
+
+
 
         homespecial.setSpecialtitle(param.getSpecialtitle());
         homespecial.setShopname(param.getShopname());
@@ -368,10 +375,13 @@ public class HomespecialServiceImpl implements HomespecialService {
         homespecial.setSpecialtypessid(param.getSpecialtypessid());
         homespecial.setSettime(param.getSettime());
         homespecial.setSortnum(param.getSortnum());
+        homespecial.setTopendtime(param.getTopendtime());
+        homespecial.setHometoptime(param.getHometoptime());
         homespecial.setState(param.getState());
 
         int update = homespecialMapper.update(homespecial, ew);
         if (update > 0) {
+            redisUtil.del(param.getSsid());//清除缓存
             result.changeToTrue(update);
             result.setMessage("修改成功！");
         }

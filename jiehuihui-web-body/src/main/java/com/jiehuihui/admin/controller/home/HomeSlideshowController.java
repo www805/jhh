@@ -40,7 +40,7 @@ public class HomeSlideshowController {
 //    @RequiresAuthentication
     @ApiOperation(value = "获取一条首页轮播图", notes = "获取一条首页轮播图")
     @PostMapping("/getHomeSlideshowByssid")
-    public RResult getHomeSlideshowByssid(@ApiParam(name="首页获取一条轮播图参数",value="传入json格式",required=true) @RequestBody DeleteHomeSlideshowParam param){
+    public RResult getHomeSlideshowByssid(@ApiParam(name="首页获取一条轮播图参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeSlideshowParam param){
         RResult<HomeSlideshow> result = new RResult<>();
         return homeSlideshowService.getHomeSlideshowByssid(result, param);
     }
@@ -73,7 +73,7 @@ public class HomeSlideshowController {
     //删除一条首页轮播图
     @ApiOperation(value = "删除首页轮播图", notes = "删除一条首页轮播图")
     @PostMapping("/deleteHomeSlideshow")
-    public RResult deleteHomeSlideshow(@ApiParam(name="首页轮播图删除参数",value="传入json格式",required=true) @RequestBody DeleteHomeSlideshowParam param){
+    public RResult deleteHomeSlideshow(@ApiParam(name="首页轮播图删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeSlideshowParam param){
         RResult<HomeSlideshow> result = new RResult<>();
         return homeSlideshowService.deleteHomeSlideshow(result, param);
     }

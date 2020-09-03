@@ -3,12 +3,12 @@ package com.jiehuihui.admin.req;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.base.check.Update;
-import com.jiehuihui.common.entity.ProvinceCityArea;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -89,6 +89,18 @@ public class AddUpdateSpecialParam {
      * 首页置顶
      */
     private Integer hometopnum=0;
+    /**
+     * 置顶时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    private Date topendtime;
+    /**
+     * 首页置顶时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    private Date hometoptime;
     /**
      * 类型关联Id
      */

@@ -74,8 +74,8 @@ public class FriendsServiceImpl implements FriendsService {
         GetFriendsVO friendsVO = new GetFriendsVO();
 
         UpdateWrapper<Friends> ew = new UpdateWrapper<>();
-        if(null != param.getTopnum()){
-            if (StringUtils.isNoneBlank(param.getTypeid())) {
+        if(null != param.getTopnum() && param.getTopnum() > 0) {
+            if (StringUtils.isNoneBlank(param.getTypeid()) && !"0".equalsIgnoreCase(param.getTypeid())) {
                 ew.eq("f.typeid", param.getTypeid());
             }
             if (StringUtils.isNoneBlank(param.getProvinceid())) {
@@ -87,11 +87,23 @@ public class FriendsServiceImpl implements FriendsService {
             if (StringUtils.isNoneBlank(param.getAreaid())) {
                 ew.eq("z.areaid", param.getAreaid());
             }
+            if (StringUtils.isNoneBlank(param.getContent()) && !"0".equals(param.getContent())) {
+                ew.like("f.content", param.getContent());
+            }
             ew.eq("f.topnum",1);
             ew.ge("f.topendtime",DateUtil.getDateAndMinute()).or();
         }
         if(StringUtils.isNotEmpty(param.getUsername())){
             ew.like("u.username", param.getUsername());
+        }
+        if(StringUtils.isNotEmpty(param.getUserssid())){
+            ew.eq("u.ssid", param.getUserssid());
+        }
+        if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
+            ew.eq("t.ssid", param.getTypeid());
+        }
+        if (StringUtils.isNoneBlank(param.getContent()) && !"0".equals(param.getContent())) {
+            ew.like("f.content", param.getContent());
         }
 
         List<String> cityList = param.getCityList();
@@ -122,7 +134,7 @@ public class FriendsServiceImpl implements FriendsService {
         }else{
             ew.ne("f.state", 2);
         }
-        if (StringUtils.isNoneBlank(param.getTypeid())) {
+        if (StringUtils.isNoneBlank(param.getTypeid()) && !"0".equalsIgnoreCase(param.getTypeid())) {
             ew.eq("f.typeid", param.getTypeid());
         }
 

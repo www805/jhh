@@ -10,11 +10,14 @@ import com.jiehuihui.admin.req.search.AddUpdateHotsouParam;
 import com.jiehuihui.admin.req.search.DeleteHotsouParam;
 import com.jiehuihui.admin.req.search.GetHotsouPageParam;
 import com.jiehuihui.admin.vo.search.GetHotsouVO;
+import com.jiehuihui.common.entity.search.Soutype;
 import com.jiehuihui.common.entity.shop.Shopinfo;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
+import com.jiehuihui.config.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,13 +34,31 @@ public class HotsouServiceImpl implements HotsouService {
     @Resource
     private HotsouMapper hotsouMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public RResult getHotsou(RResult result) {
-        UpdateWrapper<Hotsou> ew = new UpdateWrapper<>();
-        ew.eq("state", 1);
-        ew.orderByDesc("sortnum");
-        List<Hotsou> hotsous = hotsouMapper.selectList(ew);
+
+        List<Hotsou> hotsous = (List<Hotsou>) redisUtil.get(this.getClass().toString());
+        if (null == hotsous) {
+            synchronized (this) {
+                if(null == hotsous){
+                    UpdateWrapper<Hotsou> ew = new UpdateWrapper<>();
+                    ew.eq("state", 1);
+                    ew.orderByDesc("sortnum");
+                    hotsous = hotsouMapper.selectList(ew);
+                    if (null != hotsous && hotsous.size() > 0) {
+                        redisUtil.set(this.getClass().toString(), hotsous, (int) ((Math.random() * 14) + 6) * 3600);//随机6-24小时过期
+                    }
+                }
+            }
+        }
+
         result.changeToTrue(hotsous);
+        if(null == hotsous){
+            result.setMessage("没找到热门搜索");
+        }
         return result;
     }
 
@@ -111,6 +132,7 @@ public class HotsouServiceImpl implements HotsouService {
         hotsou.setState(param.getState());
         int insert = hotsouMapper.insert(hotsou);
         if (insert > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(insert);
         }
         return result;
@@ -138,6 +160,7 @@ public class HotsouServiceImpl implements HotsouService {
 
         int update = hotsouMapper.update(hotsou, ew);
         if (update > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(update);
             result.setMessage("修改成功！");
         }
@@ -160,6 +183,7 @@ public class HotsouServiceImpl implements HotsouService {
 
         int delete = hotsouMapper.delete(ew);
         if (delete > 0) {
+            redisUtil.del(this.getClass().toString());
             result.changeToTrue(delete);
             result.setMessage("删除成功！");
         }

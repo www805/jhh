@@ -6,6 +6,7 @@ import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.PutXiangqinParam;
 import com.jiehuihui.web.service.XiangqinService;
 import io.swagger.annotations.Api;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,7 +37,7 @@ public class XiangqinController {
      * @return
      */
     @PostMapping("/putXiangqin")
-    public RResult putXiangqin(@RequestBody PutXiangqinParam param){
+    public RResult putXiangqin(@RequestBody @Validated PutXiangqinParam param){
         RResult result = new RResult<>();
         return xiangqinService.putXiangqin(result, param);
     }

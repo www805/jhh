@@ -40,7 +40,7 @@ public class ShopinfoController {
      */
     @ApiOperation(value = "获取一条店铺信息", notes = "获取一条店铺信息")
     @PostMapping("/getShopinfoByssid")
-    public RResult getShopinfoByssid(@ApiParam(name="分页获取店铺信息参数",value="传入json格式",required=true) @RequestBody DeleteShopinfoParam param){
+    public RResult getShopinfoByssid(@ApiParam(name="分页获取店铺信息参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopinfoParam param){
         RResult<Shopinfo> result = new RResult<>();
         return shopinfoService.getShopinfoByssid(result, param);
     }
@@ -48,7 +48,7 @@ public class ShopinfoController {
     //获取店铺信息，分页
     @ApiOperation(value = "获取店铺信息", notes = "分页获取所有店铺信息")
     @PostMapping("/getShopinfoPage")
-    public RResult getShopinfoPage(@ApiParam(name="分页获取店铺信息参数",value="传入json格式",required=true) @RequestBody GetShopinfoPageParam param){
+    public RResult getShopinfoPage(@ApiParam(name="分页获取店铺信息参数",value="传入json格式",required=true) @RequestBody @Validated GetShopinfoPageParam param){
         RResult<Shopinfo> result = new RResult<>();
         return shopinfoService.getShopinfoPage (result, param);
     }
@@ -72,7 +72,7 @@ public class ShopinfoController {
     //删除一条店铺
     @ApiOperation(value = "删除店铺", notes = "删除一条店铺")
     @PostMapping("/deleteShopinfo")
-    public RResult deleteShopinfo(@ApiParam(name="店铺删除参数",value="传入json格式",required=true) @RequestBody DeleteShopinfoParam param){
+    public RResult deleteShopinfo(@ApiParam(name="店铺删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopinfoParam param){
         RResult<Shopinfo> result = new RResult<>();
         return shopinfoService.deleteShopinfo (result, param);
     }

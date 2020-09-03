@@ -21,6 +21,7 @@ public class XiangqinServiceImpl implements XiangqinService {
 
     @Override
     public RResult getXiangqininfo(RResult result, GetBlinddateinfoPageParam param) {
+        param.setTopnum(1);
         RResult blinddateinfoPage = blinddateinfoService.getBlinddateinfoPage(result, param);
         return blinddateinfoPage;
     }

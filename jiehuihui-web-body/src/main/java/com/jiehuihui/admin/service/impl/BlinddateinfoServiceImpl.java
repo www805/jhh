@@ -15,6 +15,7 @@ import com.jiehuihui.admin.vo.GetBlinddateinfoVO;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.entity.city.Cityzhong;
 import com.jiehuihui.common.entity.shop.Shoptype;
+import com.jiehuihui.common.utils.DateUtil;
 import com.jiehuihui.common.utils.LogUtil;
 import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
@@ -73,6 +74,26 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
         GetBlinddateinfoVO blinddateinfoVO = new GetBlinddateinfoVO();
 
         UpdateWrapper<Blinddateinfo> ew = new UpdateWrapper<>();
+        if (null != param.getTopnum() && param.getTopnum() > 0) {
+            if (param.getSex() > 0) {
+                ew.eq("b.sex", param.getSex());
+            }
+            if (StringUtils.isNoneBlank(param.getProvinceid())) {
+                ew.eq("z.provinceid", param.getProvinceid());
+            }
+            if (StringUtils.isNoneBlank(param.getCityid())) {
+                ew.eq("z.cityid", param.getCityid());
+            }
+            if (StringUtils.isNoneBlank(param.getAreaid())) {
+                ew.eq("z.areaid", param.getAreaid());
+            }
+            if (StringUtils.isNoneBlank(param.getKeyword())) {
+                ew.like("b.myname", param.getKeyword());
+            }
+            ew.eq("b.topnum", 1);
+            ew.ge("b.topendtime", DateUtil.getDateAndMinute()).or();
+        }
+
         if(StringUtils.isNotEmpty(param.getUsername())){
             ew.like("b.myname", param.getUsername());
         }
@@ -106,6 +127,11 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
             }
         }
 
+        if (StringUtils.isNoneBlank(param.getKeyword())) {
+            ew.like("b.myname", param.getKeyword());
+        }
+        //先排置顶到期时间，再按照创建时间排序
+        ew.orderByDesc("b.topendtime");//一定要定时把时间去掉设置成同一时间
         ew.orderByDesc("b.sortnum");
         ew.orderByDesc("b.createtime");
 

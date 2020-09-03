@@ -37,9 +37,9 @@ public class AddUpdateShopinfoupParam {
     @NotBlank(message = "唯一id不能为空", groups = { Update.class}) 
     private String ssid; //唯一id 
 
-    @NotNull(message = "身份证图片地址不能为空", groups = {Create.class, Update.class})
+    @NotNull(message = "必须上传身份证", groups = {Create.class, Update.class})
     private List<String> sfzimg; //身份证图片地址集合
-    @NotNull(message = "营业执照图片地址不能为空", groups = {Create.class, Update.class})
+    @NotNull(message = "必须上传营业执照", groups = {Create.class, Update.class})
     private List<String> yyzzimg; //营业执照图片地址集合
 
     @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})

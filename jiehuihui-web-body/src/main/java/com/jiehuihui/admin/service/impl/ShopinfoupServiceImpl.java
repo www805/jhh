@@ -142,7 +142,7 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
         muew.eq("username", param.getUsername().trim());
         List<User> musers = userMapper.selectList(muew);
         if(musers.size() == 0){
-            result.setMessage("没找到关联用户，修改店铺申请失败");
+            result.setMessage("没找到关联用户，申请店铺失败");
             return result;
         }
         shopinfoup.setUserid(musers.get(0).getSsid());
@@ -176,7 +176,7 @@ public class ShopinfoupServiceImpl implements ShopinfoupService {
         shopinfoup.setAddress(param.getAddress());
         shopinfoup.setPhone(param.getPhone());
         shopinfoup.setDpdescribe(param.getDpdescribe());
-        shopinfoup.setSsid(param.getSsid());
+        shopinfoup.setSsid(ssid);
         shopinfoup.setState(param.getState());
         int insert = shopinfoupMapper.insert(shopinfoup);
         if (insert > 0) {

@@ -1,6 +1,7 @@
 package com.jiehuihui.web.service.impl;
 
 import com.jiehuihui.admin.mapper.city.CityMapper;
+import com.jiehuihui.admin.req.DeleteSpecialParam;
 import com.jiehuihui.admin.req.GetFriendsPageParam;
 import com.jiehuihui.admin.req.GetSpecialPageParam;
 import com.jiehuihui.admin.service.FriendsService;
@@ -9,10 +10,12 @@ import com.jiehuihui.admin.service.home.HomeGgService;
 import com.jiehuihui.admin.service.home.HomeSlideshowService;
 import com.jiehuihui.admin.service.home.HomeTypeService;
 import com.jiehuihui.admin.service.home.HomespecialService;
+import com.jiehuihui.admin.service.shop.ShoptypeService;
 import com.jiehuihui.common.entity.city.City;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.GetFriendstypeParam;
 import com.jiehuihui.web.req.GetHomeWebParam;
+import com.jiehuihui.web.req.GetSpecialByidParam;
 import com.jiehuihui.web.service.HomeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +49,9 @@ public class HomeServiceImpl implements HomeService {
 
     @Autowired
     private HomespecialService homespecialService;//从admin那边获取数据
+
+    @Autowired
+    private ShoptypeService shoptypeService;
 
     @Override
     public RResult getHomegg(RResult result, GetHomeWebParam param) {
@@ -97,6 +103,16 @@ public class HomeServiceImpl implements HomeService {
         param.setState(1);
         RResult friendsPageResult = friendsService.getFriendsPage(result, param);
         return friendsPageResult;
+    }
+
+    @Override
+    public RResult getShoptype(RResult result) {
+        return shoptypeService.getShoptype(result);
+    }
+
+    @Override
+    public RResult getSpecialByid(RResult result, DeleteSpecialParam param) {
+        return homespecialService.getSpecialByssid(result, param);
     }
 
 

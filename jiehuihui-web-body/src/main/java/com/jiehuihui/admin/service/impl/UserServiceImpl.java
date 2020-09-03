@@ -147,6 +147,9 @@ public class UserServiceImpl implements UserService {
             List<Cityzhong> cityzhongList = cityzhongMapper.selectList(wrapper);
             if (cityzhongList.size() > 0) {
                 cityzhong = cityzhongList.get(0);
+            }else{
+                result.setMessage("没找到相关城市，不能添加");
+                return result;
             }
         }
 
@@ -159,6 +162,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(param.getPhone());
         user.setTximg(param.getTximg());
         user.setVipendtime(param.getVipendtime());
+        user.setSex(param.getSex());
         user.setSsid(ssid);
         user.setState(param.getState());
         if(null != cityzhong){
@@ -268,6 +272,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(param.getPhone());
         user.setTximg(param.getTximg());
         user.setSign(param.getSign());
+        user.setSex(param.getSex());
         user.setVipendtime(param.getVipendtime());
         user.setState(param.getState());
         user.setRolelistid(addrolelist.toString());

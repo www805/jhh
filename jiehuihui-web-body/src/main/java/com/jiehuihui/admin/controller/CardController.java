@@ -41,7 +41,7 @@ public class CardController {
     //使用一张充值卡
     @ApiOperation(value = "使用一张充值卡", notes = "使用一张充值卡")
     @PostMapping("/useCard")
-    public RResult useCard(@ApiParam(name="使用一张充值卡参数",value="传入json格式",required=true) @RequestBody UseCardParam param){
+    public RResult useCard(@ApiParam(name="使用一张充值卡参数",value="传入json格式",required=true) @RequestBody @Validated UseCardParam param){
         RResult<Card> result = new RResult<>();
         return cardService.useCard (result, param);
     }
@@ -57,7 +57,7 @@ public class CardController {
     //获取一条充值卡
     @ApiOperation(value = "获取一条充值卡", notes = "获取一条充值卡")
     @PostMapping("/getCardByssid")
-    public RResult getCardByssid(@ApiParam(name="获取一条充值卡参数",value="传入json格式",required=true) @RequestBody DeleteCardParam param){
+    public RResult getCardByssid(@ApiParam(name="获取一条充值卡参数",value="传入json格式",required=true) @RequestBody @Validated DeleteCardParam param){
         RResult<Card> result = new RResult<>();
         return cardService.getCardByssid (result,param);
     }
@@ -89,7 +89,7 @@ public class CardController {
     //删除一条充值卡
     @ApiOperation(value = "删除充值卡", notes = "删除一条充值卡")
     @PostMapping("/deleteCard")
-    public RResult deleteCard(@ApiParam(name="充值卡删除参数",value="传入json格式",required=true) @RequestBody DeleteCardParam param){
+    public RResult deleteCard(@ApiParam(name="充值卡删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteCardParam param){
         RResult<Card> result = new RResult<>();
         return cardService.deleteCard (result, param);
     }

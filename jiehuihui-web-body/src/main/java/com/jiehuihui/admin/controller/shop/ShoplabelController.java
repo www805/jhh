@@ -48,7 +48,7 @@ public class ShoplabelController {
     //获取一条店铺标签文字
     @ApiOperation(value = "获取一条店铺标签文字", notes = "获取一条店铺标签文字")
     @PostMapping("/getShoplabelByssid")
-    public RResult getShoplabelByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteShoplabelParam param){
+    public RResult getShoplabelByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShoplabelParam param){
         RResult<Shoplabel> result = new RResult<>();
         return shoplabelService.getShoplabelByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class ShoplabelController {
     //删除一条店铺标签文字
     @ApiOperation(value = "删除店铺标签文字", notes = "删除一条店铺标签文字")
     @PostMapping("/deleteShoplabel")
-    public RResult deleteShoplabel(@ApiParam(name="店铺标签文字删除参数",value="传入json格式",required=true) @RequestBody DeleteShoplabelParam param){
+    public RResult deleteShoplabel(@ApiParam(name="店铺标签文字删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShoplabelParam param){
         RResult<Shoplabel> result = new RResult<>();
         return shoplabelService.deleteShoplabel (result, param);
     }

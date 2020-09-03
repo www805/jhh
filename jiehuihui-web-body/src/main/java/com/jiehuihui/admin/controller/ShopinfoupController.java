@@ -48,7 +48,7 @@ public class ShopinfoupController {
     //获取一条店铺申请
     @ApiOperation(value = "获取一条店铺申请", notes = "获取一条店铺申请")
     @PostMapping("/getShopinfoupByssid")
-    public RResult getShopinfoupByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteShopinfoupParam param){
+    public RResult getShopinfoupByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopinfoupParam param){
         RResult<Shopinfoup> result = new RResult<>();
         return shopinfoupService.getShopinfoupByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class ShopinfoupController {
     //删除一条店铺申请
     @ApiOperation(value = "删除店铺申请", notes = "删除一条店铺申请")
     @PostMapping("/deleteShopinfoup")
-    public RResult deleteShopinfoup(@ApiParam(name="店铺申请删除参数",value="传入json格式",required=true) @RequestBody DeleteShopinfoupParam param){
+    public RResult deleteShopinfoup(@ApiParam(name="店铺申请删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteShopinfoupParam param){
         RResult<Shopinfoup> result = new RResult<>();
         return shopinfoupService.deleteShopinfoup (result, param);
     }

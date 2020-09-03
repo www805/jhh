@@ -40,7 +40,7 @@ public class HomeTypeController {
 //    @RequiresAuthentication
     @ApiOperation(value = "获取一条首页分类", notes = "获取一条首页分类")
     @PostMapping("/getHomeTypeByssid")
-    public RResult getHomeTypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteHomeTypeParam param){
+    public RResult getHomeTypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeTypeParam param){
         RResult<HomeType> result = new RResult<>();
         return homeTypeService.getHomeTypeByssid(result, param);
     }
@@ -73,7 +73,7 @@ public class HomeTypeController {
     //删除一条首页分类
     @ApiOperation(value = "删除首页分类", notes = "删除一条首页分类")
     @PostMapping("/deleteHomeType")
-    public RResult deleteHomeType(@ApiParam(name="首页分类删除参数",value="传入json格式",required=true) @RequestBody DeleteHomeTypeParam param){
+    public RResult deleteHomeType(@ApiParam(name="首页分类删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeTypeParam param){
         RResult<HomeType> result = new RResult<>();
         return homeTypeService.deleteHomeType(result, param);
     }

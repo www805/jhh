@@ -46,7 +46,7 @@ public class CityRegionTypeController {
 //    @RequiresAuthentication
     @ApiOperation(value = "获取一条城市类型", notes = "获取一条城市类型")
     @PostMapping("/getCityRegionTypeByssid")
-    public RResult getCityRegionTypeByssid(@ApiParam(name="首页获取一条公告参数",value="传入json格式",required=true) @RequestBody DeleteCityRegionTypeParam param){
+    public RResult getCityRegionTypeByssid(@ApiParam(name="首页获取一条公告参数",value="传入json格式",required=true) @RequestBody @Validated DeleteCityRegionTypeParam param){
         RResult<CityRegionType> result = new RResult<>();
         return cityRegionTypeService.getCityRegionTypeByssid(result, param);
     }
@@ -70,7 +70,7 @@ public class CityRegionTypeController {
     //删除一条城市类型
     @ApiOperation(value = "删除城市类型", notes = "删除一条城市类型")
     @PostMapping("/deleteCityRegionType")
-    public RResult deleteCityRegionType(@ApiParam(name="城市类型删除参数",value="传入json格式",required=true) @RequestBody DeleteCityRegionTypeParam param){
+    public RResult deleteCityRegionType(@ApiParam(name="城市类型删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteCityRegionTypeParam param){
         RResult<CityRegionType> result = new RResult<>();
         return cityRegionTypeService.deleteCityRegionType(result, param);
     }

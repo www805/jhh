@@ -19,6 +19,10 @@ public interface HomespecialMapper extends BaseMapper<Homespecial> {
 
     IPage<Homespecial> getHomespecialPage(Page<?> page, @Param("ew") Wrapper wrapper);
 
+    List<Homespecial> getHomespecialList(@Param("ew") Wrapper wrapper);
+
     int selectHomespecialCount(@Param("ew") Wrapper wrapper);
+
+    void addCount(@Param("ssid")String ssid);
 
 }

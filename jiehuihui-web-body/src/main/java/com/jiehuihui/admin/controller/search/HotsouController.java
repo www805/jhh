@@ -48,7 +48,7 @@ public class HotsouController {
     //获取一条热门搜素
     @ApiOperation(value = "获取一条热门搜素", notes = "获取一条热门搜素")
     @PostMapping("/getHotsouByssid")
-    public RResult getHotsouByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteHotsouParam param){
+    public RResult getHotsouByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHotsouParam param){
         RResult<Hotsou> result = new RResult<>();
         return hotsouService.getHotsouByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class HotsouController {
     //删除一条热门搜素
     @ApiOperation(value = "删除热门搜素", notes = "删除一条热门搜素")
     @PostMapping("/deleteHotsou")
-    public RResult deleteHotsou(@ApiParam(name="热门搜素删除参数",value="传入json格式",required=true) @RequestBody DeleteHotsouParam param){
+    public RResult deleteHotsou(@ApiParam(name="热门搜素删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHotsouParam param){
         RResult<Hotsou> result = new RResult<>();
         return hotsouService.deleteHotsou (result, param);
     }

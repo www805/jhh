@@ -17,7 +17,7 @@ public class MiandanController {
     @Autowired
     private MiandanService miandanService;
 
-    //获取相亲信息
+    //获取免单信息
     @PostMapping("/getMiandanAll")
     public RResult getMiandanAll(@RequestBody GetMiandanPageParam param){
         RResult result = new RResult<>();

@@ -48,7 +48,7 @@ public class FriendsController {
     //获取一条朋友圈
     @ApiOperation(value = "获取一条朋友圈", notes = "获取一条朋友圈")
     @PostMapping("/getFriendsByssid")
-    public RResult getFriendsByssid(@ApiParam(name="朋友圈获取一条参数",value="传入json格式",required=true) @RequestBody DeleteFriendsParam param){
+    public RResult getFriendsByssid(@ApiParam(name="朋友圈获取一条参数",value="传入json格式",required=true) @RequestBody @Validated DeleteFriendsParam param){
         RResult<Friends> result = new RResult<>();
         return friendsService.getFriendsByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class FriendsController {
     //删除一条朋友圈
     @ApiOperation(value = "删除朋友圈", notes = "删除一条朋友圈")
     @PostMapping("/deleteFriends")
-    public RResult deleteFriends(@ApiParam(name="朋友圈删除参数",value="传入json格式",required=true) @RequestBody DeleteFriendsParam param){
+    public RResult deleteFriends(@ApiParam(name="朋友圈删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteFriendsParam param){
         RResult<Friends> result = new RResult<>();
         return friendsService.deleteFriends (result, param);
     }
@@ -88,7 +88,7 @@ public class FriendsController {
     //置顶朋友圈
     @ApiOperation(value = "置顶一条朋友圈", notes = "置顶一条朋友圈")
     @PostMapping("/gettopfriend")
-    public RResult gettopfriend(@ApiParam(name="置顶一条朋友圈参数",value="传入json格式",required=true) @RequestBody DeleteFriendsParam param){
+    public RResult gettopfriend(@ApiParam(name="置顶一条朋友圈参数",value="传入json格式",required=true) @RequestBody @Validated DeleteFriendsParam param){
         RResult<Friends> result = new RResult<>();
         return friendsService.gettopfriend (result,param);
     }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiehuihui.common.entity.shop.Shopinfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * (JhhShopinfo)店铺表数据库访问层
  *
@@ -17,6 +19,12 @@ public interface ShopinfoMapper extends BaseMapper<Shopinfo> {
 
     IPage<Shopinfo> getShopinfoPage(Page<?> page, @Param("ew") Wrapper wrapper);
 
+    List<Shopinfo> getShopinfoList(@Param("ew") Wrapper wrapper);
+
     int selectShopinfoCount(@Param("ew") Wrapper wrapper);
+
+    void addCount(@Param("ssid")String ssid);
+
+    void upGZcount(@Param("ssid")String ssid,@Param("state")Integer state);
 
 }

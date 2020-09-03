@@ -10,6 +10,7 @@
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="tximg" column="tximg" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="sign" column="sign" jdbcType="INTEGER"/>
         <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
@@ -75,6 +76,14 @@
             jhh_user u
 
             ${ew.customSqlSegment}
+    </select>
+
+    <select id="addjifen" >
+        update jhh_user set sign=sign+#{num} where ssid = #{userid}
+    </select>
+
+    <select id="getjifen" resultType="long">
+        select sign from jhh_user where ssid = #{userid}
     </select>
 
 </mapper>

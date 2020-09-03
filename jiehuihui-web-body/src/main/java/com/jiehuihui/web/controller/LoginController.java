@@ -1,5 +1,6 @@
 package com.jiehuihui.web.controller;
 
+import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.shiro.ShiroSessionListener;
 import com.jiehuihui.common.utils.RResult;
@@ -10,6 +11,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/getlogin")
-    public RResult getlogin(HttpServletRequest request, @RequestBody LoginParam param){
+    public RResult getlogin(HttpServletRequest request, @RequestBody @Validated LoginParam param){
         RResult<User> result = new RResult<>();
         String authorization = request.getHeader("Authorization");
         if(StringUtils.isNoneBlank(authorization)){
@@ -42,6 +44,17 @@ public class LoginController {
         return loginService.getlogin(result,param);
     }
 
+    /**
+     * 注册
+     * @param request
+     * @param param
+     * @return
+     */
+    @PostMapping("/getregister")
+    public RResult getregister(HttpServletRequest request, @RequestBody @Validated(Create.class) LoginParam param){
+        RResult<User> result = new RResult<>();
+        return loginService.getregister(result,param);
+    }
 
     /**
      * 用户退出
@@ -50,11 +63,7 @@ public class LoginController {
     @PostMapping("/getlogout")
     public RResult getlogout(){
         RResult<User> result = new RResult<>();
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-
-        result.changeToTrue();
-        return result;
+        return loginService.getlogout(result);
     }
 
 

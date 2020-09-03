@@ -49,7 +49,7 @@ public class RoleController {
     //获取一条角色
     @ApiOperation(value = "获取一条角色", notes = "获取一条角色")
     @PostMapping("/getRoleByssid")
-    public RResult getRoleByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteRoleParam param){
+    public RResult getRoleByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteRoleParam param){
         RResult<Role> result = new RResult<>();
         return roleService.getRoleByssid (result,param);
     }
@@ -81,7 +81,7 @@ public class RoleController {
     //删除一条角色
     @ApiOperation(value = "删除角色", notes = "删除一条角色")
     @PostMapping("/deleteRole")
-    public RResult deleteRole(@ApiParam(name="角色删除参数",value="传入json格式",required=true) @RequestBody DeleteRoleParam param){
+    public RResult deleteRole(@ApiParam(name="角色删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteRoleParam param){
         RResult<Role> result = new RResult<>();
         return roleService.deleteRole (result, param);
     }

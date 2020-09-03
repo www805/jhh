@@ -48,7 +48,7 @@ public class PermissionController {
     //获取一条权限
     @ApiOperation(value = "获取一条权限", notes = "获取一条权限")
     @PostMapping("/getPermissionByssid")
-    public RResult getPermissionByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeletePermissionParam param){
+    public RResult getPermissionByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeletePermissionParam param){
         RResult<Permission> result = new RResult<>();
         return permissionService.getPermissionByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class PermissionController {
     //删除一条权限
     @ApiOperation(value = "删除权限", notes = "删除一条权限")
     @PostMapping("/deletePermission")
-    public RResult deletePermission(@ApiParam(name="权限删除参数",value="传入json格式",required=true) @RequestBody DeletePermissionParam param){
+    public RResult deletePermission(@ApiParam(name="权限删除参数",value="传入json格式",required=true) @RequestBody @Validated DeletePermissionParam param){
         RResult<Permission> result = new RResult<>();
         return permissionService.deletePermission (result, param);
     }

@@ -28,6 +28,8 @@
         <result property="sortnum" column="sortnum" jdbcType="INTEGER"/>
         <result property="ssid" column="ssid" jdbcType="VARCHAR"/>
         <result property="settime" column="settime" jdbcType="VARCHAR"/>
+        <result property="topendtime" column="topendtime" jdbcType="VARCHAR"/>
+        <result property="hometoptime" column="hometoptime" jdbcType="VARCHAR"/>
         <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <association property="shoptype" javaType="com.jiehuihui.common.entity.shop.Shoptype">
@@ -65,6 +67,48 @@
         </association>
         <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
     </resultMap>
+
+
+
+    <select id="getHomespecialList" resultMap="HomespecialMap">
+        SELECT
+            h.*,
+            t.id AS tid,
+            t.typename AS ttypename,
+            t.sortnum AS tsortnum,
+            t.ssid AS tssid,
+            s.id AS sid,
+            s.shopname AS sshopname,
+            s.username AS susername,
+            s.address AS saddress,
+            s.dpdescribe AS sdpdescribe,
+            s.phone AS sphone,
+            s.wxnum AS swxnum,
+            s.fmimglist AS sfmimglist,
+            s.jgimglist AS sjgimglist,
+            s.sfzimglist AS ssfzimglist,
+            s.yyzzimgs AS syyzzimgs,
+            s.yhtaglist AS syhtaglist,
+            s.shoptypessid AS sshoptypessid,
+            s.cityzhongid AS scityzhongid,
+            s.gzcout AS sgzcout,
+            s.yytime AS syytime,
+            s.browsecout AS sbrowsecout,
+            s.zztop AS szztop,
+            s.soutop AS ssoutop,
+            s.hometop AS shometop,
+            s.sortnum AS ssortnum,
+            s.hometopendtime AS shometopendtime,
+            s.state AS sstate,
+            s.ssid AS sssid
+        FROM
+            jhh_base_homespecial h
+            left join jhh_base_shoptype t on h.specialtypessid = t.ssid
+            left join jhh_base_cityzhong z on h.cityzhongid = z.id
+            left join jhh_shopinfo s on h.shopid = s.ssid
+
+            ${ew.customSqlSegment}
+    </select>
 
     <select id="getHomespecialPage" resultMap="HomespecialMap">
         SELECT
@@ -135,5 +179,9 @@
         where
             z.id = #{cityzhongid}
     </select>
+
+    <update id="addCount">
+        update jhh_base_homespecial set likesize=likesize+1 where ssid=#{ssid}
+    </update>
 
 </mapper>

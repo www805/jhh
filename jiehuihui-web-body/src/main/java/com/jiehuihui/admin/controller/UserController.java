@@ -50,7 +50,7 @@ public class UserController {
     //获取一条用户信息
     @ApiOperation(value = "获取一条用户信息", notes = "获取一条用户信息")
     @PostMapping("/getUserByssid")
-    public RResult getUserByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteUserParam param){
+    public RResult getUserByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteUserParam param){
         RResult<User> result = new RResult<>();
         return userService.getUserByssid (result,param);
     }
@@ -82,7 +82,7 @@ public class UserController {
     //删除一条用户信息
     @ApiOperation(value = "删除用户信息", notes = "删除一条用户信息")
     @PostMapping("/deleteUser")
-    public RResult deleteUser(@ApiParam(name="用户信息删除参数",value="传入json格式",required=true) @RequestBody DeleteUserParam param){
+    public RResult deleteUser(@ApiParam(name="用户信息删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteUserParam param){
         RResult<User> result = new RResult<>();
         return userService.deleteUser (result, param);
     }

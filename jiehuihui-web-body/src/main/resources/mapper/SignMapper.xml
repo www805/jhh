@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiehuihui.admin.mapper.SignMapper">
+
+    <resultMap type="com.jiehuihui.common.entity.Sign" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="userid" column="userid" jdbcType="VARCHAR"/>
+        <result property="sdescribe" column="describe" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getSignNowCount" resultType="int">
+        SELECT
+            count(id)
+        FROM
+            jhh_base_sign
+
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

@@ -48,7 +48,7 @@ public class FriendstypeController {
     //获取一条朋友圈类型
     @ApiOperation(value = "获取一条朋友圈类型", notes = "获取一条朋友圈类型")
     @PostMapping("/getFriendstypeByssid")
-    public RResult getFriendstypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteFriendstypeParam param){
+    public RResult getFriendstypeByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteFriendstypeParam param){
         RResult<Friendstype> result = new RResult<>();
         return friendstypeService.getFriendstypeByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class FriendstypeController {
     //删除一条朋友圈类型
     @ApiOperation(value = "删除朋友圈类型", notes = "删除一条朋友圈类型")
     @PostMapping("/deleteFriendstype")
-    public RResult deleteFriendstype(@ApiParam(name="朋友圈类型删除参数",value="传入json格式",required=true) @RequestBody DeleteFriendstypeParam param){
+    public RResult deleteFriendstype(@ApiParam(name="朋友圈类型删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteFriendstypeParam param){
         RResult<Friendstype> result = new RResult<>();
         return friendstypeService.deleteFriendstype (result, param);
     }

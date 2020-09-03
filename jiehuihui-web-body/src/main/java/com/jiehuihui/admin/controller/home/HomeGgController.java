@@ -40,7 +40,7 @@ public class HomeGgController {
 //    @RequiresAuthentication
     @ApiOperation(value = "获取一条首页公告", notes = "获取一条首页公告")
     @PostMapping("/getHomeggByssid")
-    public RResult getHomeggByssid(@ApiParam(name="首页获取一条公告参数",value="传入json格式",required=true) @RequestBody DeleteHomeGgParam param){
+    public RResult getHomeggByssid(@ApiParam(name="首页获取一条公告参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeGgParam param){
         RResult<HomeGg> result = new RResult<>();
         return homeGgService.getHomeggByssid(result, param);
     }
@@ -73,7 +73,7 @@ public class HomeGgController {
     //删除一条首页公告
     @ApiOperation(value = "删除首页公告", notes = "删除一条首页公告")
     @PostMapping("/deleteHomegg")
-    public RResult deleteHomegg(@ApiParam(name="首页公告删除参数",value="传入json格式",required=true) @RequestBody DeleteHomeGgParam param){
+    public RResult deleteHomegg(@ApiParam(name="首页公告删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteHomeGgParam param){
         RResult<HomeGg> result = new RResult<>();
         return homeGgService.deleteHomegg(result, param);
     }

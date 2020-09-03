@@ -60,6 +60,20 @@ public class CityRegionListServiceImpl implements CityRegionListService {
     }
 
     @Override
+    public RResult getCityAll(RResult result, GetCityListParam param) {
+
+        UpdateWrapper<ProvinceVO> ew = new UpdateWrapper<>();
+
+        ew.orderByDesc("psortnum");
+        ew.orderByDesc("csortnum");
+        ew.orderByDesc("asortnum");
+        List<ProvinceVO> sqCacheList = cityRegionListMapper.getCityAll(ew);
+
+        result.changeToTrue(sqCacheList);
+        return result;
+    }
+
+    @Override
     public RResult getCityListPage(RResult result, GetCityListParam param) {
 
         GetCityListVO getCityListVO = new GetCityListVO();

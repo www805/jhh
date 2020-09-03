@@ -39,6 +39,7 @@ public class User implements Serializable,AuthCachePrincipal {
     private List<Role> roleList; //角色集合
     private String rolelistid; //角色集合
     private Long sign; //积分
+    private Integer sex; //性别
     private Integer state; //状态
     private String ssid; //唯一id
     private String yhjid; //优惠关联id

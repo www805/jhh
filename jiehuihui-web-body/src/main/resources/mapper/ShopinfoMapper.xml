@@ -21,6 +21,7 @@
         <result property="gzcout" column="gzcout" jdbcType="INTEGER"/>
         <result property="yytime" column="yytime" jdbcType="VARCHAR"/>
         <result property="browsecout" column="browsecout" jdbcType="INTEGER"/>
+        <result property="sharecout" column="sharecout" jdbcType="INTEGER"/>
         <result property="zztop" column="zztop" jdbcType="INTEGER"/>
         <result property="soutop" column="soutop" jdbcType="INTEGER"/>
         <result property="hometop" column="hometop" jdbcType="INTEGER"/>
@@ -100,6 +101,54 @@
 
             ${ew.customSqlSegment}
     </select>
+
+    <select id="getShopinfoList" resultMap="ShopinfoMap">
+        SELECT
+            s.*,
+            t.id AS tid,
+            t.typename AS ttypename,
+            t.sortnum AS tsortnum,
+            t.ssid AS tssid,
+            u.id AS uid,
+            u.userlogin AS uuserlogin,
+            u.username AS uusername,
+            u.myname AS umyname,
+            u.password AS upassword,
+            u.tximg AS utximg,
+            u.phone AS uphone,
+            u.sign AS usign,
+            u.state AS ustate,
+            u.ssid AS ussid,
+            u.yhjid AS uyhjid,
+            u.cityzhongid AS ucityzhongid,
+            u.rolelistid AS urolelistid,
+            u.createtime AS ucreatetime,
+            u.lastlogintime AS ulastlogintime,
+            u.vipstatetime AS uvipstatetime,
+            u.vipendtime AS uvipendtime
+        FROM
+            jhh_shopinfo s
+            left join jhh_base_shoptype t on s.shoptypessid = t.ssid
+            left join jhh_base_cityzhong z on s.cityzhongid = z.id
+            left join jhh_user u on s.userid = u.ssid
+
+            ${ew.customSqlSegment}
+    </select>
+
+    <update id="addCount">
+        update jhh_shopinfo set browsecout=browsecout+1 where ssid=#{ssid}
+    </update>
+
+    <update id="upGZcount">
+
+        <if test="state==1">
+            update jhh_shopinfo set gzcout=gzcout+1 where ssid=#{ssid}
+        </if>
+        <if test="state!=1">
+            update jhh_shopinfo set gzcout=gzcout-1 where ssid=#{ssid}
+        </if>
+
+    </update>
 
     <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
         SELECT

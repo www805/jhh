@@ -48,7 +48,7 @@ public class BlinddateinfoController {
     //获取一条相亲
     @ApiOperation(value = "获取一条相亲", notes = "获取一条相亲")
     @PostMapping("/getBlinddateinfoByssid")
-    public RResult getBlinddateinfoByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody DeleteBlinddateinfoParam param){
+    public RResult getBlinddateinfoByssid(@ApiParam(name="首页获取一条分类参数",value="传入json格式",required=true) @RequestBody @Validated DeleteBlinddateinfoParam param){
         RResult<Blinddateinfo> result = new RResult<>();
         return blinddateinfoService.getBlinddateinfoByssid (result,param);
     }
@@ -80,7 +80,7 @@ public class BlinddateinfoController {
     //删除一条相亲
     @ApiOperation(value = "删除相亲", notes = "删除一条相亲")
     @PostMapping("/deleteBlinddateinfo")
-    public RResult deleteBlinddateinfo(@ApiParam(name="相亲删除参数",value="传入json格式",required=true) @RequestBody DeleteBlinddateinfoParam param){
+    public RResult deleteBlinddateinfo(@ApiParam(name="相亲删除参数",value="传入json格式",required=true) @RequestBody @Validated DeleteBlinddateinfoParam param){
         RResult<Blinddateinfo> result = new RResult<>();
         return blinddateinfoService.deleteBlinddateinfo (result, param);
     }
@@ -89,7 +89,7 @@ public class BlinddateinfoController {
     //置顶相亲
     @ApiOperation(value = "置顶一条相亲", notes = "置顶一条相亲")
     @PostMapping("/gettopBlinddate")
-    public RResult gettopBlinddate(@ApiParam(name="置顶一条相亲参数",value="传入json格式",required=true) @RequestBody DeleteBlinddateinfoParam param){
+    public RResult gettopBlinddate(@ApiParam(name="置顶一条相亲参数",value="传入json格式",required=true) @RequestBody @Validated DeleteBlinddateinfoParam param){
         RResult<Blinddateinfo> result = new RResult<>();
         return blinddateinfoService.gettopBlinddate (result,param);
     }
