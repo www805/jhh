@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * (Blinddateinfo)表数据库访问层
  *
@@ -16,6 +18,8 @@ import org.apache.ibatis.annotations.Param;
 public interface BlinddateinfoMapper extends BaseMapper<Blinddateinfo> {
 
     IPage<Blinddateinfo> getBlinddateinfoPage(Page<?> page, @Param("ew") Wrapper wrapper);
+
+    List<Blinddateinfo> selectBlinddateinfoList(@Param("ew") Wrapper wrapper);
 
     int selectBlinddateinfoCount(@Param("ew") Wrapper wrapper);
 

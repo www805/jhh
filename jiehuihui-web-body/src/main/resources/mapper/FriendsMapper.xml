@@ -72,6 +72,35 @@
             ${ew.customSqlSegment}
     </select>
 
+    <select id="getFriendsList" resultMap="BaseResultMap">
+        SELECT
+            f.*,
+            u.id AS uid,
+            u.userlogin AS uuserlogin,
+            u.username AS uusername,
+            u.myname AS umyname,
+            u.password AS upassword,
+            u.tximg AS utximg,
+            u.phone AS uphone,
+            u.sign AS usign,
+            u.state AS ustate,
+            u.createtime AS ucreatetime,
+            u.lastlogintime AS ulastlogintime,
+            u.vipstatetime AS uvipstatetime,
+            u.vipendtime AS uvipendtime,
+            t.id AS tid,
+            t.typename AS ttypename,
+            t.sortnum AS tsortnum,
+            t.ssid AS tssid
+      FROM
+            jhh_friends f
+            LEFT JOIN jhh_friendstype t ON f.typeid = t.ssid
+            LEFT JOIN jhh_user u ON f.userid = u.ssid
+            LEFT JOIN jhh_base_cityzhong z ON f.cityzhongid = z.id
+
+            ${ew.customSqlSegment}
+    </select>
+
     <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
         SELECT
             z.id,

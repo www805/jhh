@@ -30,7 +30,7 @@ public class AddUpdateFriendsParam {
     private Double price; //价钱
     private String address; //发表地址
 
-    private Integer topnum; //置顶 
+        private Integer topnum; //置顶
     @Min(value = 0,message = "排序不能为空", groups = {Create.class, Update.class}) 
     private Integer sortnum; //排序 
 
@@ -53,5 +53,5 @@ public class AddUpdateFriendsParam {
     @NotNull(message = "城市地区不能为空", groups = {Create.class, Update.class})
     @Size(min = 3,max = 3,message = "城市地区长度错误", groups = {Create.class, Update.class})
     private List<String> cityList;//城市地区
-    private List<String> fmimglist;//角色数组
+    private List<String> fmimglist;//图片数组
 }

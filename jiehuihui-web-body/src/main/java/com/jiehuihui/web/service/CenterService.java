@@ -1,6 +1,10 @@
 package com.jiehuihui.web.service;
 
+import com.jiehuihui.admin.req.AddUpdateFriendsParam;
 import com.jiehuihui.admin.req.AddUpdateShopinfoupParam;
+import com.jiehuihui.admin.req.DeleteFriendsParam;
+import com.jiehuihui.admin.req.shop.AddUpdateShopinfoParam;
+import com.jiehuihui.admin.req.shop.DeleteShopinfoParam;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.GetSignParam;
 import com.jiehuihui.web.req.GetUserInfoParam;
@@ -64,6 +68,14 @@ public interface CenterService {
     RResult addShopinfoup(RResult result, AddUpdateShopinfoupParam param);
 
     /**
+     * 新增、发布/修改店铺
+     * @param result
+     * @param param
+     * @return
+     */
+    RResult addOrUpdateShopinfo(RResult result, AddUpdateShopinfoParam param);
+
+    /**
      * 获取店铺类型
      * @param result
      * @return
@@ -83,4 +95,36 @@ public interface CenterService {
      * @return
      */
     RResult getShoplabel(RResult result);
+
+    /**
+     * 删除店铺
+     * @param result
+     * @param param
+     * @return
+     */
+    RResult delShopinfo(RResult result, DeleteShopinfoParam param);
+
+    /**
+     * 获取一条朋友圈
+     * @param result
+     * @param param
+     * @return
+     */
+    RResult getFriendsByssid(RResult result, DeleteFriendsParam param);
+
+    /**
+     * 新增、修改朋友圈
+     * @param result
+     * @param param
+     * @return
+     */
+    RResult addOrUpdateFriends(RResult result, AddUpdateFriendsParam param);
+
+    /**
+     * 删除一条朋友圈
+     * @param result
+     * @param param
+     * @return
+     */
+    RResult delFriends(RResult result, DeleteFriendsParam param);
 }

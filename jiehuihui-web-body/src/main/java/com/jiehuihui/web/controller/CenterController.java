@@ -1,8 +1,13 @@
 package com.jiehuihui.web.controller;
 
 
+import com.jiehuihui.admin.req.AddUpdateFriendsParam;
 import com.jiehuihui.admin.req.AddUpdateShopinfoupParam;
+import com.jiehuihui.admin.req.DeleteFriendsParam;
+import com.jiehuihui.admin.req.shop.AddUpdateShopinfoParam;
+import com.jiehuihui.admin.req.shop.DeleteShopinfoParam;
 import com.jiehuihui.common.base.check.Create;
+import com.jiehuihui.common.base.check.Update;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.GetSignParam;
 import com.jiehuihui.web.req.GetUserInfoParam;
@@ -95,6 +100,61 @@ public class CenterController {
     public RResult addShopinfoup(@RequestBody @Validated(Create.class) AddUpdateShopinfoupParam param){
         RResult result = new RResult<>();
         return centerService.addShopinfoup(result, param);
+    }
+
+    /**
+     * 新增、发布/修改店铺
+     * @param param
+     * @return
+     */
+    @PostMapping("/addOrUpdateShopinfo")
+    public RResult addOrUpdateShopinfo(@RequestBody @Validated({Create.class, Update.class}) AddUpdateShopinfoParam param){
+        RResult result = new RResult<>();
+        return centerService.addOrUpdateShopinfo(result, param);
+    }
+
+    /**
+     * 删除店铺
+     * @param param
+     * @return
+     */
+    @PostMapping("/delShopinfo")
+    public RResult delShopinfo(@RequestBody @Validated DeleteShopinfoParam param){
+        RResult result = new RResult<>();
+        return centerService.delShopinfo(result, param);
+    }
+
+    /**
+     * 获取一条朋友圈
+     * @param param
+     * @return
+     */
+    @PostMapping("/getFriendsByssid")
+    public RResult getFriendsByssid(@RequestBody @Validated DeleteFriendsParam param){
+        RResult result = new RResult<>();
+        return centerService.getFriendsByssid(result, param);
+    }
+
+    /**
+     * 新增、修改朋友圈
+     * @param param
+     * @return
+     */
+    @PostMapping("/addOrUpdateFriends")
+    public RResult addOrUpdateFriends(@RequestBody @Validated({Create.class, Update.class}) AddUpdateFriendsParam param){
+        RResult result = new RResult<>();
+        return centerService.addOrUpdateFriends(result, param);
+    }
+
+    /***
+     * 删除一条朋友圈
+     * @param param
+     * @return
+     */
+    @PostMapping("/delFriends")
+    public RResult delFriends(@RequestBody @Validated DeleteFriendsParam param){
+        RResult result = new RResult<>();
+        return centerService.delFriends(result, param);
     }
 
     /**

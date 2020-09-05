@@ -5,12 +5,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiehuihui.admin.mapper.SignMapper;
 import com.jiehuihui.admin.mapper.UserMapper;
 import com.jiehuihui.admin.mapper.city.CityzhongMapper;
+import com.jiehuihui.admin.req.AddUpdateFriendsParam;
 import com.jiehuihui.admin.req.AddUpdateShopinfoupParam;
+import com.jiehuihui.admin.req.DeleteFriendsParam;
 import com.jiehuihui.admin.req.city.GetCityListParam;
+import com.jiehuihui.admin.req.shop.AddUpdateShopinfoParam;
+import com.jiehuihui.admin.req.shop.DeleteShopinfoParam;
 import com.jiehuihui.admin.req.shop.GetShopcolorPageParam;
+import com.jiehuihui.admin.service.FriendsService;
 import com.jiehuihui.admin.service.ShopinfoupService;
 import com.jiehuihui.admin.service.city.CityRegionListService;
 import com.jiehuihui.admin.service.shop.ShopcolorService;
+import com.jiehuihui.admin.service.shop.ShopinfoService;
 import com.jiehuihui.admin.service.shop.ShoplabelService;
 import com.jiehuihui.admin.service.shop.ShoptypeService;
 import com.jiehuihui.common.entity.Sign;
@@ -23,6 +29,7 @@ import com.jiehuihui.web.req.UpdateUserInfoParam;
 import com.jiehuihui.web.req.UpdateUserPasswordParam;
 import com.jiehuihui.web.service.CenterService;
 import com.jiehuihui.web.vo.GetSignVO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +55,9 @@ public class CenterServiceImpl implements CenterService {
     private CityRegionListService cityRegionListService;
 
     @Autowired
+    private ShopinfoService shopinfoService;
+
+    @Autowired
     private ShopinfoupService shopinfoupService;
 
     @Autowired
@@ -58,6 +68,9 @@ public class CenterServiceImpl implements CenterService {
 
     @Autowired
     private ShopcolorService shopcolorService;
+
+    @Autowired
+    private FriendsService friendsService;
 
     @Override
     public RResult getUserInfo(RResult result, GetUserInfoParam param) {
@@ -221,6 +234,15 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
+    public RResult addOrUpdateShopinfo(RResult result, AddUpdateShopinfoParam param) {
+        //如果存在ssid代表是修改，不存在是新增
+        if(StringUtils.isNoneBlank(param.getSsid())){
+            return shopinfoService.updateShopinfo(result, param);
+        }
+        return shopinfoService.addShopinfo(result, param);
+    }
+
+    @Override
     public RResult getShopType(RResult result) {
         return shoptypeService.getShoptype(result);
     }
@@ -235,5 +257,28 @@ public class CenterServiceImpl implements CenterService {
     @Override
     public RResult getShoplabel(RResult result) {
         return shoplabelService.getShoplabel(result);
+    }
+
+    @Override
+    public RResult delShopinfo(RResult result, DeleteShopinfoParam param) {
+        return shopinfoService.deleteShopinfo(result, param);
+    }
+
+    @Override
+    public RResult getFriendsByssid(RResult result, DeleteFriendsParam param) {
+        return friendsService.getFriendsByssid(result, param);
+    }
+
+    @Override
+    public RResult addOrUpdateFriends(RResult result, AddUpdateFriendsParam param) {
+        if (StringUtils.isNoneBlank(param.getSsid())) {
+            return friendsService.updateFriends(result, param);
+        }
+        return friendsService.addFriends(result, param);
+    }
+
+    @Override
+    public RResult delFriends(RResult result, DeleteFriendsParam param) {
+        return friendsService.deleteFriends(result, param);
     }
 }

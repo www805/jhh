@@ -158,4 +158,7 @@ public class Shopinfo extends Model<Shopinfo> implements Serializable {
 
     @TableField(exist = false)
     private Shopyhmd shopyhmd;//关联的免单
+
+    @TableField(exist = false)
+    private Card card; //充值卡实体类
 }

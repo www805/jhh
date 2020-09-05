@@ -1,7 +1,10 @@
 package com.jiehuihui.web.controller;
 
+import com.jiehuihui.admin.req.AddUpdateBlinddateinfoParam;
+import com.jiehuihui.admin.req.DeleteBlinddateinfoParam;
 import com.jiehuihui.admin.req.GetBlinddateinfoPageParam;
-import com.jiehuihui.common.entity.home.HomeGg;
+import com.jiehuihui.admin.req.shop.DeleteShopinfoParam;
+import com.jiehuihui.common.base.check.Create;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.PutXiangqinParam;
 import com.jiehuihui.web.service.XiangqinService;
@@ -41,5 +44,39 @@ public class XiangqinController {
         RResult result = new RResult<>();
         return xiangqinService.putXiangqin(result, param);
     }
+
+    /**
+     * 获取一条相亲信息
+     * @param param
+     * @return
+     */
+    @PostMapping("/getBlinddateinfoByssid")
+    public RResult getBlinddateinfoByssid(@RequestBody DeleteBlinddateinfoParam param){
+        RResult result = new RResult<>();
+        return xiangqinService.getBlinddateinfoByssid(result, param);
+    }
+
+    /**
+     * 添加相亲信息
+     * @param param
+     * @return
+     */
+    @PostMapping("/addOrUpdateBlinddateinfo")
+    public RResult addOrUpdateBlinddateinfo(@RequestBody @Validated(Create.class) AddUpdateBlinddateinfoParam param){
+        RResult result = new RResult<>();
+        return xiangqinService.addOrUpdateBlinddateinfo(result, param);
+    }
+
+    /**
+     * 删除相亲信息
+     * @param param
+     * @return
+     */
+    @PostMapping("/delBlinddateinfo")
+    public RResult delBlinddateinfo(@RequestBody @Validated DeleteBlinddateinfoParam param){
+        RResult result = new RResult<>();
+        return xiangqinService.delBlinddateinfo(result, param);
+    }
+
 
 }

@@ -57,8 +57,8 @@ public class FriendsServiceImpl implements FriendsService {
     @Override
     public RResult getFriendsByssid(RResult result, DeleteFriendsParam param) {
         UpdateWrapper<Friends> ew = new UpdateWrapper();
-        ew.eq("ssid", param.getSsid());
-        List<Friends> friends = friendsMapper.selectList(ew);
+        ew.eq("f.ssid", param.getSsid());
+        List<Friends> friends = friendsMapper.getFriendsList(ew);
         if (null != friends && friends.size() > 0) {
             Friends friend = friends.get(0);
             result.changeToTrue(friend);

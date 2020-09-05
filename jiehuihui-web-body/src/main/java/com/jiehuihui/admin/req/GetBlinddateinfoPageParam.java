@@ -21,6 +21,7 @@ public class GetBlinddateinfoPageParam extends Page {
     private String myname; //相亲名字
     private String phone; //择偶条件描述
     private String keyword; //关键字
+    private String userid; //根据关联发表用户id查询
     private Integer sex = 0; //男或女
     private Integer topnum = 0; //置顶
 

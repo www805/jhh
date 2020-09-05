@@ -32,9 +32,9 @@ public class AddUpdateShopinfoParam {
 
     private List<String> jgimglist;//价格指南图片集合
 
-    @NotNull(message = "身份证图片不能为空", groups = {Create.class, Update.class})
+    @NotNull(message = "必须上传身份证", groups = {Create.class, Update.class})
     private List<String> sfzimglist;//身份证图片集合
-    @NotNull(message = "营业执照图片不能为空", groups = {Create.class, Update.class})
+    @NotNull(message = "必须上传营业执照", groups = {Create.class, Update.class})
     private List<String> yyzzimgs;//营业执照图片集合
 
     private List<String> qtimglist;//其他图片集合

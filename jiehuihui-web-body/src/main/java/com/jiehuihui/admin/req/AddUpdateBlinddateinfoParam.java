@@ -19,8 +19,6 @@ import java.util.List;
 
 @Data
 public class AddUpdateBlinddateinfoParam {
-
-    
     
     @NotBlank(message = "发表用户名不能为空", groups = {Create.class, Update.class})
     private String username; //名字

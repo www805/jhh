@@ -343,26 +343,54 @@ public class ShopinfoServiceImpl implements ShopinfoService {
 
         if(null != param.getShopyhmd()){
             Shopyhmd shopyhmd = param.getShopyhmd();
-            if(null == shopyhmd.getId() || shopyhmd.getId() == 0){
-                result.setMessage("免单参数有误，无法提交");
+
+            if(null == shopyhmd.getStarttime() || null == shopyhmd.getEndtime()){
+                result.setMessage("提交免单，活动时间不能为空！");
                 return result;
             }
+
             UpdateWrapper<Shopyhmd> sew = new UpdateWrapper<Shopyhmd>();
-            sew.eq("id", shopyhmd.getId());
             Shopyhmd shopmd = new Shopyhmd();
-            shopmd.setMdtitle(shopyhmd.getMdtitle());
-            shopmd.setMdtag(shopyhmd.getMdtag());
-            shopmd.setMddescribe(shopyhmd.getMddescribe());
-            shopmd.setContent(shopyhmd.getContent());
-            shopmd.setMdcontent(shopyhmd.getMdcontent());
-            shopmd.setTopnum(shopyhmd.getTopnum());
-            shopmd.setTopendtime(shopyhmd.getTopendtime());
+            if(StringUtils.isNoneBlank(shopyhmd.getMdtitle())){
+                shopmd.setMdtitle(shopyhmd.getMdtitle());
+            }
+            if(StringUtils.isNoneBlank(shopyhmd.getMdtag())){
+                shopmd.setMdtag(shopyhmd.getMdtag());
+            }
+            if(StringUtils.isNoneBlank(shopyhmd.getMddescribe())){
+                shopmd.setMddescribe(shopyhmd.getMddescribe());
+            }
+            if(StringUtils.isNoneBlank(shopyhmd.getContent())){
+                shopmd.setContent(shopyhmd.getContent());
+            }
+            if(StringUtils.isNoneBlank(shopyhmd.getMdcontent())){
+                shopmd.setMdcontent(shopyhmd.getMdcontent());
+            }
+            if(null != shopyhmd.getTopnum()){
+                shopmd.setTopnum(shopyhmd.getTopnum());
+            }
+            if(null != shopyhmd.getTopendtime()){
+                shopmd.setTopendtime(shopyhmd.getTopendtime());
+            }
+
             shopmd.setStarttime(shopyhmd.getStarttime());
             shopmd.setEndtime(shopyhmd.getEndtime());
             if(StringUtils.isNoneBlank(shopyhmd.getFmimglist())){
                 shopmd.setFmimglist(shopyhmd.getFmimglist().trim());
             }
-            shopyhmdMapper.update(shopmd, sew);
+
+            if(null == shopyhmd.getId() || shopyhmd.getId() == 0){
+                if(StringUtils.isBlank(param.getSsid())){
+                    result.setMessage("免单参数有误，无法提交");
+                    return result;
+                }
+                shopmd.setShopid(param.getSsid());
+                shopyhmdMapper.insert(shopmd);//新增免单
+            }else{
+                sew.eq("id", shopyhmd.getId());
+                shopyhmdMapper.update(shopmd, sew);//修改免单
+            }
+
         }
 
         if(null != param.getFmimglist() && param.getFmimglist().size() > 0){

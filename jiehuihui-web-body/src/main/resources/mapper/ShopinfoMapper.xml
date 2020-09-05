@@ -52,6 +52,19 @@
             <result property="vipstatetime" column="uvipstatetime" jdbcType="TIMESTAMP"/>
             <result property="vipendtime" column="uvipendtime" jdbcType="TIMESTAMP"/>
         </association>
+        <association property="card" javaType="com.jiehuihui.common.entity.Card">
+            <result property="id" column="cid" jdbcType="INTEGER"/>
+            <result property="cardnum" column="ccardnum" jdbcType="VARCHAR"/>
+            <result property="cardtype" column="ccardtype" jdbcType="INTEGER"/>
+            <result property="cardsupertype" column="ccardsupertype" jdbcType="INTEGER"/>
+            <result property="userid" column="cuserid" jdbcType="VARCHAR"/>
+            <result property="tupupid" column="ctupupid" jdbcType="VARCHAR"/>
+            <result property="parentuserid" column="cparentuserid" jdbcType="VARCHAR"/>
+            <result property="state" column="cstate" jdbcType="INTEGER"/>
+            <result property="ssid" column="cssid" jdbcType="VARCHAR"/>
+            <result property="createtime" column="ccreatetime" jdbcType="TIMESTAMP"/>
+            <result property="employtime" column="cemploytime" jdbcType="TIMESTAMP"/>
+        </association>
         <association property="city" column="{cityzhongid=cityzhongid}" select="getCity" javaType="com.jiehuihui.common.entity.ProvinceCityArea" />
         <association property="zhiding" column="{ssid=ssid}" select="getZhiding" javaType="com.jiehuihui.common.entity.Zhiding" />
         <association property="shopyhmd" column="{ssid=ssid}" select="getShopyhmd" javaType="com.jiehuihui.common.entity.Shopyhmd" />
@@ -125,12 +138,24 @@
             u.createtime AS ucreatetime,
             u.lastlogintime AS ulastlogintime,
             u.vipstatetime AS uvipstatetime,
-            u.vipendtime AS uvipendtime
+            u.vipendtime AS uvipendtime,
+            c.id AS cid,
+            c.cardnum AS ccardnum,
+            c.cardtype AS ccardtype,
+            c.cardsupertype AS ccardsupertype,
+            c.userid AS cuserid,
+            c.tupupid AS ctupupid,
+            c.parentuserid AS cparentuserid,
+            c.state AS cstate,
+            c.ssid AS cssid,
+            c.createtime AS ccreatetime,
+            c.employtime AS cemploytime
         FROM
             jhh_shopinfo s
             left join jhh_base_shoptype t on s.shoptypessid = t.ssid
             left join jhh_base_cityzhong z on s.cityzhongid = z.id
             left join jhh_user u on s.userid = u.ssid
+            left join jhh_base_card c on c.userid = u.ssid
 
             ${ew.customSqlSegment}
     </select>

@@ -57,8 +57,8 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
     @Override
     public RResult getBlinddateinfoByssid(RResult result, DeleteBlinddateinfoParam param) {
         UpdateWrapper<Blinddateinfo> ew = new UpdateWrapper();
-        ew.eq("ssid", param.getSsid());
-        List<Blinddateinfo> blinddateinfos = blinddateinfoMapper.selectList(ew);
+        ew.eq("b.ssid", param.getSsid());
+        List<Blinddateinfo> blinddateinfos = blinddateinfoMapper.selectBlinddateinfoList(ew);
         if (null != blinddateinfos && blinddateinfos.size() > 0) {
             Blinddateinfo blinddateinfo = blinddateinfos.get(0);
             result.changeToTrue(blinddateinfo);
@@ -90,10 +90,18 @@ public class BlinddateinfoServiceImpl implements BlinddateinfoService {
             if (StringUtils.isNoneBlank(param.getKeyword())) {
                 ew.like("b.myname", param.getKeyword());
             }
+            if (StringUtils.isNoneBlank(param.getUserid())) {
+                ew.eq("b.userid", param.getUserid());
+            }
             ew.eq("b.topnum", 1);
+            ew.eq("b.state", 1);
             ew.ge("b.topendtime", DateUtil.getDateAndMinute()).or();
         }
 
+        ew.eq("b.state", 1);
+        if (StringUtils.isNoneBlank(param.getUserid())) {
+            ew.eq("b.userid", param.getUserid());
+        }
         if(StringUtils.isNotEmpty(param.getUsername())){
             ew.like("b.myname", param.getUsername());
         }

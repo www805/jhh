@@ -102,6 +102,52 @@
             ${ew.customSqlSegment}
     </select>
 
+    <select id="selectBlinddateinfoList" resultMap="BaseResultMap">
+        SELECT
+            b.*,
+            mu.id AS muid,
+            mu.userlogin AS muuserlogin,
+            mu.username AS muusername,
+            mu.myname AS mumyname,
+            mu.password AS mupassword,
+            mu.tximg AS mutximg,
+            mu.phone AS muphone,
+            mu.sign AS musign,
+            mu.state AS mustate,
+            mu.ssid AS mussid,
+            mu.yhjid AS muyhjid,
+            mu.cityzhongid AS mucityzhongid,
+            mu.rolelistid AS murolelistid,
+            mu.createtime AS mucreatetime,
+            mu.lastlogintime AS mulastlogintime,
+            mu.vipstatetime AS muvipstatetime,
+            mu.vipendtime AS muvipendtime,
+            u.id AS uid,
+            u.userlogin AS uuserlogin,
+            u.username AS uusername,
+            u.myname AS umyname,
+            u.password AS upassword,
+            u.tximg AS utximg,
+            u.phone AS uphone,
+            u.sign AS usign,
+            u.state AS ustate,
+            u.ssid AS ussid,
+            u.yhjid AS uyhjid,
+            u.cityzhongid AS ucityzhongid,
+            u.rolelistid AS urolelistid,
+            u.createtime AS ucreatetime,
+            u.lastlogintime AS ulastlogintime,
+            u.vipstatetime AS uvipstatetime,
+            u.vipendtime AS uvipendtime
+        FROM
+            jhh_blinddateinfo b
+            LEFT JOIN jhh_user mu ON b.matchmakerid = mu.ssid
+            left join jhh_user u on b.userid = u.ssid
+            left join jhh_base_cityzhong z on b.cityzhongid = z.id
+
+            ${ew.customSqlSegment}
+    </select>
+
     <select id="selectBlinddateinfoCount" resultType="int">
         SELECT
             count(b.id)
