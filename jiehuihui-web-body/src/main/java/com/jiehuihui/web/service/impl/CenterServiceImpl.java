@@ -133,6 +133,7 @@ public class CenterServiceImpl implements CenterService {
 
         UpdateWrapper<User> ue = new UpdateWrapper<>();
         ue.eq("username", param.getUsername());
+        ue.ne("ssid", param.getUserssid());
         if(userMapper.selectCount(ue) > 0){
             result.setMessage("昵称已存在，不能重复");
             return result;

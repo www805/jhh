@@ -22,6 +22,7 @@ public class GetCardPageParam extends Page {
     private String topup; //充值人名
     private String parentname; //生成者名
 
+    private Integer state; //状态
     private String employtime; //使用时间
 
 }

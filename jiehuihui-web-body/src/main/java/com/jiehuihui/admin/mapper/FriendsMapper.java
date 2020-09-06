@@ -23,4 +23,5 @@ public interface FriendsMapper extends BaseMapper<Friends> {
 
     int selectFriendsCount(@Param("ew") Wrapper wrapper);
 
+    int updateTopNum();
 }

@@ -32,9 +32,10 @@ public class GetFriendsPageParam extends Page {
     private String cityid; //市
     private String areaid; //区
 
+    private Integer topnum = 0; //置顶1
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Integer topnum = 0; //置顶1
     private Date topendtime; //置顶到期时间
     private Integer state; //状态0禁用 1正常2删除
 

@@ -41,4 +41,13 @@
             ${ew.customSqlSegment}
     </select>
 
+    <update id="updateTopNum" >
+        UPDATE jhh_shopyhmd
+        SET topnum = 0,
+        topendtime = NULL
+        <where>
+            topendtime &lt; now()
+        </where>
+    </update>
+
 </mapper>

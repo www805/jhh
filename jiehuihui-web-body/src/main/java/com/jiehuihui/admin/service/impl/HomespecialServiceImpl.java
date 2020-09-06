@@ -103,6 +103,29 @@ public class HomespecialServiceImpl implements HomespecialService {
         GetSpecialPageVO getSpecialPageVO = new GetSpecialPageVO();
 
         UpdateWrapper<Homespecial> ew = new UpdateWrapper<>();
+        if(null != param.getTopnum() && param.getTopnum() > 0) {
+            if(StringUtils.isNotEmpty(param.getShopname())){
+                ew.like("h.shopname", param.getShopname());
+            }
+            if(StringUtils.isNotEmpty(param.getSpecialtitle())){
+                ew.like("h.specialtitle", param.getSpecialtitle());
+            }
+            if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
+                ew.eq("h.specialtypessid", param.getTypeid());
+            }
+            if(null != param.getState()){
+                ew.eq("h.state", 1);
+                if (StringUtils.isNoneBlank(param.getWeek())) {
+                    ew.like("h.settime", param.getWeek());
+                }
+            }else{
+                ew.le("h.state", 1);
+            }
+            ew.eq("h.topnum",1);
+            ew.ge("h.topendtime",DateUtil.getDateAndMinute()).or();
+        }
+
+
         if(StringUtils.isNotEmpty(param.getShopname())){
             ew.like("h.shopname", param.getShopname());
         }
@@ -112,7 +135,6 @@ public class HomespecialServiceImpl implements HomespecialService {
         if(StringUtils.isNotEmpty(param.getTypeid()) && !"0".equals(param.getTypeid())){
             ew.eq("h.specialtypessid", param.getTypeid());
         }
-
 
         if(null != param.getState()){
             ew.eq("h.state", 1);
@@ -146,6 +168,11 @@ public class HomespecialServiceImpl implements HomespecialService {
             ew.eq("z.areaid", param.getAreaid());
         }
 
+        if(null != param.getTopnum() && param.getTopnum() > 0) {
+            ew.orderByDesc("h.topendtime");
+        }else{
+            ew.orderByDesc("h.hometoptime");
+        }
         ew.orderByDesc("h.createtime");
 
         Integer count = homespecialMapper.selectHomespecialCount(ew);

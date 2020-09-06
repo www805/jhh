@@ -25,6 +25,8 @@ public interface ShopinfoMapper extends BaseMapper<Shopinfo> {
 
     void addCount(@Param("ssid")String ssid);
 
+    int updateTopNum();
+
     void upGZcount(@Param("ssid")String ssid,@Param("state")Integer state);
 
 }

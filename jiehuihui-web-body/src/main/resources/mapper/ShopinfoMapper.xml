@@ -175,6 +175,16 @@
 
     </update>
 
+    <update id="updateTopNum" >
+        UPDATE jhh_shopinfo
+            SET hometop = 0,
+            soutop = 0,
+            hometopendtime = NULL
+        <where>
+            hometopendtime &lt; now()
+        </where>
+    </update>
+
     <select id="getCity" resultType="com.jiehuihui.common.entity.ProvinceCityArea">
         SELECT
             z.id,

@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
@@ -17,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * 2、提供给业务前端的接口（部分特殊）web
  */
 @SpringBootApplication
+@EnableScheduling
 @EnableSwagger2 //添加swagger2启动注解
 //@EnableDiscoveryClient //注册到服务中
 @MapperScan({"com.jiehuihui.admin.mapper","com.jiehuihui.web.mapper"})

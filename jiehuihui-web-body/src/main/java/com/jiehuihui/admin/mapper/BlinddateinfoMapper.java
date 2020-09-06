@@ -23,4 +23,5 @@ public interface BlinddateinfoMapper extends BaseMapper<Blinddateinfo> {
 
     int selectBlinddateinfoCount(@Param("ew") Wrapper wrapper);
 
+    int updateTopNum();
 }

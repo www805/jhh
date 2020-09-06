@@ -96,7 +96,10 @@ public class CardServiceImpl implements CardService {
 
         //字符串转数组
         Boolean roleBoolean = false;
-        String replace = user.getRolelistid().replace("[", "").replace("]", "");
+        String replace = "";
+        if(StringUtils.isNoneBlank(user.getRolelistid())){
+            replace = user.getRolelistid().replace("[", "").replace("]", "");
+        }
         List<String> roles = new ArrayList<>();
         if(replace.indexOf(",") > -1){
             String[] split = replace.split(",");
@@ -231,6 +234,9 @@ public class CardServiceImpl implements CardService {
         }
         if(null != param.getCardtype() && param.getCardtype() > 0){
             ew.eq("c.cardtype", param.getCardtype());
+        }
+        if(null != param.getState() && param.getState() > 0){
+            ew.eq("c.state", param.getState());
         }
         if(StringUtils.isNotEmpty(param.getParentname())){
             ew.like("up.username", param.getParentname());

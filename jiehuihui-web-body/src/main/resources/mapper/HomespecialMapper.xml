@@ -184,4 +184,22 @@
         update jhh_base_homespecial set likesize=likesize+1 where ssid=#{ssid}
     </update>
 
+    <update id="updateTopNum" >
+        UPDATE jhh_base_homespecial
+        SET hometopnum = 0,
+        hometoptime = NULL
+        <where>
+            hometoptime &lt; now()
+        </where>
+    </update>
+
+    <update id="updateTopNum2" >
+        UPDATE jhh_base_homespecial
+        SET topnum = 0,
+        topendtime = NULL
+        <where>
+            topendtime &lt; now()
+        </where>
+    </update>
+
 </mapper>

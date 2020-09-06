@@ -17,4 +17,6 @@ public interface ShopyhmdMapper extends BaseMapper<Shopyhmd> {
 
     int selectShopyhmdCount(@Param("ew") Wrapper wrapper);
 
+    int updateTopNum();
+
 }

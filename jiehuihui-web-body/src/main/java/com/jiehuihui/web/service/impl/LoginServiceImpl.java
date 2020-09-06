@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.jiehuihui.admin.mapper.UserMapper;
 import com.jiehuihui.common.entity.User;
 import com.jiehuihui.common.utils.LogUtil;
+import com.jiehuihui.common.utils.OpenUtil;
 import com.jiehuihui.common.utils.RResult;
 import com.jiehuihui.web.req.LoginParam;
 import com.jiehuihui.web.service.LoginService;
@@ -96,6 +97,7 @@ public class LoginServiceImpl implements LoginService {
         User user = new User();
         user.setUserlogin(param.getUserlogin());
         user.setPassword(password);
+        user.setSsid(OpenUtil.getUUID_32());
         user.setState(1);
 
         int insert = userMapper.insert(user);

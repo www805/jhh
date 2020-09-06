@@ -12,6 +12,7 @@ public class GetSpecialPageParam extends Page {
     private String shopname; //店铺名字
     private String typeid; //类型
     private String week; //星期
+    private Integer topnum = 0; //置顶1
 
     private String provinceid; //省
     private String cityid; //市

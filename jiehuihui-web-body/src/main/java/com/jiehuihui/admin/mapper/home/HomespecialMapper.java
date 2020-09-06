@@ -25,4 +25,8 @@ public interface HomespecialMapper extends BaseMapper<Homespecial> {
 
     void addCount(@Param("ssid")String ssid);
 
+    int updateTopNum();
+
+    int updateTopNum2();
+
 }
