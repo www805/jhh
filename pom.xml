@@ -28,7 +28,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springBoot.version>2.2.5.RELEASE</springBoot.version>
+        <springBoot.version>2.5.12</springBoot.version>
         <mybatisplus.version>3.3.1</mybatisplus.version>
         <shiro.version>1.4.0</shiro.version>
         <nacosclient.version>0.2.2.RELEASE</nacosclient.version>
